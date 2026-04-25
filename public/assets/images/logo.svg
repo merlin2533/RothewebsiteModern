@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img" aria-label="Rothe-Transporte und Speditions GbR">
+  <style>
+    .wm { font: 600 44px/1 'Familjen Grotesk', 'Inter', system-ui, sans-serif; letter-spacing: -0.04em; fill: #0B2545; }
+    .sl { font: 500 12px/1 'Inter', system-ui, sans-serif; letter-spacing: 0.18em; fill: #6B7785; text-transform: uppercase; }
+    .ac { fill: #C2410C; }
+  </style>
+  <rect x="0" y="34" width="14" height="14" class="ac"/>
+  <text x="22" y="46" class="wm">ROTHE</text>
+  <text x="22" y="68" class="sl">Transporte · Spedition</text>
+</svg>

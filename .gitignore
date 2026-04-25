@@ -1,0 +1,36 @@
+# Database (never commit)
+data/database.sqlite
+data/database.sqlite-shm
+data/database.sqlite-wal
+
+# Sessions
+data/sessions/
+
+# Login attempts tracker
+data/login_attempts.json
+
+# Error log
+data/php-errors.log
+
+# Uploads (contents, not the directory itself)
+uploads/*
+!uploads/.gitkeep
+
+# Environment
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor junk
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Build artefacts / runtime
+data/mirror.log
+data/admin-build.log
