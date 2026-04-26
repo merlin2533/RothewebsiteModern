@@ -6,6 +6,9 @@ data/database.sqlite-wal
 # Sessions
 data/sessions/
 
+# Backups (created by scripts/backup.sh)
+backups/
+
 # Login attempts tracker
 data/login_attempts.json
 

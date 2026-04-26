@@ -4,6 +4,24 @@
    Mobile-first. ~30 KB unminified.
    ========================================================================== */
 
+/* ── Self-hosted variable fonts (latin) ──────────────────────────────────── */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/assets/fonts/Inter-Variable.woff2') format('woff2-variations'),
+       url('/assets/fonts/Inter-Variable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Familjen Grotesk';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fonts/FamiljenGrotesk-Variable.woff2') format('woff2-variations'),
+       url('/assets/fonts/FamiljenGrotesk-Variable.woff2') format('woff2');
+}
+
 /* ── Reset ────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }

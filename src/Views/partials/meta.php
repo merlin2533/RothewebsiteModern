@@ -118,9 +118,14 @@ if (isset($structured_data) && is_array($structured_data)) {
 
 <meta name="theme-color" content="#0B2545">
 <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Inter-Variable.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/FamiljenGrotesk-Variable.woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/styles.css">
 
 <?php foreach ($schemas as $schema): ?>

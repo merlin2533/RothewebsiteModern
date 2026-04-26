@@ -43,6 +43,8 @@ $router->get('/admin',                 [AdminDashboard::class, 'index']);
 $router->get('/admin/login',           [AdminAuth::class, 'showLogin']);
 $router->post('/admin/login',          [AdminAuth::class, 'login']);
 $router->post('/admin/logout',         [AdminAuth::class, 'logout']);
+$router->get('/admin/account',         [AdminAuth::class, 'showAccount']);
+$router->post('/admin/account/password', [AdminAuth::class, 'changePassword']);
 
 $router->get('/admin/pages',                   [AdminPages::class, 'index']);
 $router->get('/admin/pages/{id}/edit',         [AdminPages::class, 'edit']);

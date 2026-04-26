@@ -20,7 +20,7 @@ Browser: <http://127.0.0.1:8000>
 
 Admin: <http://127.0.0.1:8000/admin/login>
 - Default-User: `admin`
-- Default-Passwort: `ChangeMe!2026` ← **nach erstem Login aendern!**
+- Default-Passwort: `ChangeMe!2026` ← **nach erstem Login unter `/admin/account` aendern!** Mindestens 12 Zeichen, Gross-/Kleinbuchstaben, Ziffer.
 
 ## Verzeichnisse
 
@@ -81,9 +81,19 @@ location /uploads/ {
 
 ## Backup
 
+`scripts/backup.sh` erzeugt einen konsistenten SQLite-Snapshot (via `.backup`)
+plus alle Uploads in einem datierten `tar.gz` unter `backups/`:
+
 ```bash
-sqlite3 data/database.sqlite ".backup data/backup_$(date +%F).sqlite"
-tar czf backup_$(date +%F).tgz data/database.sqlite uploads/
+bash scripts/backup.sh
+# → backups/rothe-YYYYMMDDTHHMMSSZ.tar.gz
+```
+
+Cron-Beispiel (taeglich 03:15, 14 Tage Aufbewahrung):
+
+```cron
+15 3 * * * cd /var/www/rothe && bash scripts/backup.sh && \
+           find backups -name '*.tar.gz' -mtime +14 -delete
 ```
 
 ## SEO / Pruefung
