@@ -678,6 +678,28 @@ body.is-nav-open .nav-toggle__icon--close { display: block; }
   color: rgba(255,255,255,0.5);
 }
 
+/* ── FAQ accordion ─────────────────────────────────────────────────────── */
+.faq-list { margin-top: 2rem; border-top: 1px solid var(--c-line); }
+.faq-item { border-bottom: 1px solid var(--c-line); }
+.faq-item__q {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; padding: 1.2rem 0;
+  list-style: none; cursor: pointer;
+  font-family: var(--font-headline); font-weight: 600;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem); color: var(--c-ink);
+  transition: color var(--t-fast);
+}
+.faq-item__q::-webkit-details-marker { display: none; }
+.faq-item__q:hover { color: var(--c-accent); }
+.faq-item__chev {
+  flex-shrink: 0; stroke: var(--c-accent); fill: none; stroke-width: 2;
+  transition: transform var(--t-base);
+}
+.faq-item[open] .faq-item__chev { transform: rotate(90deg); }
+.faq-item__a { padding: 0 0 1.4rem; max-width: 65ch; }
+.faq-item__a > *:first-child { margin-top: 0; }
+.faq-item__a > *:last-child  { margin-bottom: 0; }
+
 /* ── Reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

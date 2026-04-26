@@ -27,14 +27,17 @@ final class SettingsController
             redirect('/admin/settings');
         }
         $keys = [
-            'company_name', 'owners',
+            'company_name', 'owners', 'ceo_name',
             'address_street', 'address_zip', 'address_city', 'address_country',
             'phone', 'phone_e164', 'email',
             'founded_year', 'geo_lat', 'geo_lng', 'opening_hours', 'opening_hours_schema',
-            'areas_served',
+            'areas_served', 'vat_id',
             'meta_default_title', 'meta_default_description',
             'og_default_image_id', 'hero_image_id',
             'owner_quote', 'owner_quote_attribution',
+            'twitter_handle', 'search_action_target',
+            'gtm_container_id', 'plausible_domain', 'plausible_script_url',
+            'matomo_url', 'matomo_site_id',
         ];
         $data = [];
         foreach ($keys as $k) {

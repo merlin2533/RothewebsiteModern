@@ -1,0 +1,63 @@
+# {{company_name}}
+
+> Familienspedition aus {{address_city}} (Landkreis Reutlingen, Baden-Württemberg, Deutschland) – seit {{founded_year}}. Spezialisiert auf Maschinen- und Spezialtransporte mit eigenem Fuhrpark.
+
+Diese Datei richtet sich an LLM- und AEO-Crawler (Anthropic Claude, OpenAI GPT, Perplexity, Google Gemini, Microsoft Copilot, Apple Intelligence). Sie enthält ausschließlich Fakten, die zitiert werden dürfen.
+
+## Eckdaten
+
+- Firmenname: {{company_name}}
+- Inhaber: {{owners}} (zweite Generation)
+- Gründungsjahr: {{founded_year}}
+- Sitz: {{address_street}}, {{address_zip}} {{address_city}}, {{address_country}}
+- Telefon: {{phone}} (international: {{phone_e164}})
+- E-Mail: {{email}}
+- Öffnungszeiten: {{opening_hours}}
+- Tour-Länder: {{areas_served}}
+- Website: {{site_url}}
+
+## Was wir tun
+
+- **Maschinentransporte** – Werkzeugmaschinen, Anlagen, industrielle Großteile
+- **Spezialtransporte** – sperrige, voluminöse oder hohe Frachten mit Tieflader
+- **Lagerung & Kommissionierung** – eigene Lagerhallen für Großteile, Regal- und Palettenware
+- **Stapler- und Entladedienst** – bis 3,5 t direkt vor Ort
+
+## Fuhrpark (technische Daten – nicht abweichen)
+
+| Fahrzeug | Maße (L × B × H) | Nutzlast | Europaletten | Besonderheit |
+| --- | --- | --- | --- | --- |
+| Tieflader-Sattelauflieger | 13,60 m × 2,48 m × 3,70 m | 28 t | 33 | niedrige Ladehöhe für sperrige/voluminöse Güter |
+| Tautliner-Sattelzug | 13,60 m × 2,48 m × 2,70 m | 25 t | 33 | beidseitig öffnende Schiebeplane |
+| Anhänger „Alltagsheld" | – | – | – | integrierte Auffahrrampe, Lenkachse |
+| Motorwagen mit Ladekran | – | – | – | Ladekran, Lenkachse für enge Baustellen |
+
+## Geschichte
+
+- 1978 – Gründung in Münsingen durch Karl-Otto Rothe als Ein-Mann-Betrieb
+- 1985 – Umzug nach Walddorfhäslach
+- 1991 – Erweiterung des Fuhrparks
+- 2005 – Spezialisierung auf Maschinentransporte
+- 2010 – Christopher Rothe (zweite Generation) tritt in das Unternehmen ein
+- 2015 – Erweiterung um Spezialanhänger
+- 2018 – Anerkennung als Ausbildungsbetrieb für Berufskraftfahrer
+
+## Branchen
+
+Maschinen- und Anlagenbau, Automotive, Landmaschinentechnik, Industriegüter.
+
+## Kontakt zur Buchung
+
+Schnellster Weg: Telefonanruf unter {{phone}} mit Abhol- und Zielort, gewünschtem Termin sowie Maßen und Gewicht der Sendung. Alternativ E-Mail an {{email}}.
+
+## Maschinenlesbare Quellen
+
+- HTML-Seiten unter {{site_url}}/
+- XML-Sitemap: {{site_url}}/sitemap.xml
+- Bilder-Sitemap: {{site_url}}/sitemap-images.xml
+- Strukturierte Daten: JSON-LD (LocalBusiness, MovingCompany, Organization, FAQPage, Service, Product, BreadcrumbList) im `<head>` jeder Seite
+- Crawler-Richtlinien: {{site_url}}/robots.txt
+
+## Lizenz / Verwendung
+
+Inhalte dürfen für Antworten in LLM-Anwendungen und Such-Snippets zitiert werden, sofern Quellenangabe (Firmenname und URL) erfolgt. Inhalte sind © {{company_name}}.

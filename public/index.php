@@ -21,6 +21,7 @@ use App\Controllers\Admin\ServicesController as AdminServices;
 use App\Controllers\Admin\TimelineController as AdminTimeline;
 use App\Controllers\Admin\MediaController as AdminMedia;
 use App\Controllers\Admin\SettingsController as AdminSettings;
+use App\Controllers\Admin\FaqsController as AdminFaqs;
 
 $router = new Router();
 
@@ -36,7 +37,10 @@ $router->get('/kontakt',               [ContactController::class, 'index']);
 $router->get('/impressum',             [LegalController::class, 'imprint']);
 $router->get('/datenschutz',           [LegalController::class, 'privacy']);
 $router->get('/sitemap.xml',           [SitemapController::class, 'xml']);
+$router->get('/sitemap-images.xml',    [SitemapController::class, 'imageSitemap']);
 $router->get('/robots.txt',            [SitemapController::class, 'robots']);
+$router->get('/llms.txt',              [SitemapController::class, 'llmsTxt']);
+$router->get('/ai.txt',                [SitemapController::class, 'aiTxt']);
 
 // ── Admin ────────────────────────────────────────────────────────────────────
 $router->get('/admin',                 [AdminDashboard::class, 'index']);
@@ -78,6 +82,13 @@ $router->post('/admin/media/{id}/delete',      [AdminMedia::class, 'delete']);
 
 $router->get('/admin/settings',                [AdminSettings::class, 'edit']);
 $router->post('/admin/settings',               [AdminSettings::class, 'update']);
+
+$router->get('/admin/faqs',                    [AdminFaqs::class, 'index']);
+$router->get('/admin/faqs/new',                [AdminFaqs::class, 'create']);
+$router->post('/admin/faqs',                   [AdminFaqs::class, 'store']);
+$router->get('/admin/faqs/{id}/edit',          [AdminFaqs::class, 'edit']);
+$router->post('/admin/faqs/{id}',              [AdminFaqs::class, 'update']);
+$router->post('/admin/faqs/{id}/delete',       [AdminFaqs::class, 'delete']);
 
 // ── Dispatch ─────────────────────────────────────────────────────────────────
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

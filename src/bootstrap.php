@@ -66,6 +66,7 @@ $serviceRepo  = new \App\Repositories\ServiceRepository($pdo);
 $timelineRepo = new \App\Repositories\TimelineRepository($pdo);
 $settingRepo  = new \App\Repositories\SettingRepository($pdo);
 $mediaRepo    = new \App\Repositories\MediaRepository($pdo);
+$faqRepo      = new \App\Repositories\FaqRepository($pdo);
 
 $GLOBALS['pageRepo']     = $pageRepo;
 $GLOBALS['vehicleRepo']  = $vehicleRepo;
@@ -73,3 +74,4 @@ $GLOBALS['serviceRepo']  = $serviceRepo;
 $GLOBALS['timelineRepo'] = $timelineRepo;
 $GLOBALS['settingRepo']  = $settingRepo;
 $GLOBALS['mediaRepo']    = $mediaRepo;
+$GLOBALS['faqRepo']      = $faqRepo;

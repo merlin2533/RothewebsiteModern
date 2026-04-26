@@ -83,7 +83,67 @@ $organization = [
     ]],
 ];
 
-$schemas = [$localBusiness, $organization];
+// ── WebSite + SearchAction (Brand-SERP-Sitelinks) ─────────────────────────
+$searchTarget = setting('search_action_target', '');
+$website = [
+    '@context' => 'https://schema.org',
+    '@type'    => 'WebSite',
+    'name'     => $companyName,
+    'url'      => $siteUrl,
+    'inLanguage' => 'de-DE',
+    'publisher' => ['@type' => 'Organization', 'name' => $companyName],
+];
+if ($searchTarget !== '') {
+    $website['potentialAction'] = [
+        '@type' => 'SearchAction',
+        'target' => [
+            '@type' => 'EntryPoint',
+            'urlTemplate' => $searchTarget,
+        ],
+        'query-input' => 'required name=search_term_string',
+    ];
+}
+
+// ── BreadcrumbList (auto, anhand der URL-Segmente) ────────────────────────
+$crumbs = [['name' => 'Startseite', 'url' => $siteUrl . '/']];
+$segments = array_values(array_filter(explode('/', trim((string) $reqPath, '/'))));
+$accum = '';
+$labels = [
+    'ueber-uns' => 'Über uns',
+    'leistungen' => 'Leistungen',
+    'fahrzeuge' => 'Fahrzeuge',
+    'karriere' => 'Karriere',
+    'kontakt' => 'Kontakt',
+    'impressum' => 'Impressum',
+    'datenschutz' => 'Datenschutz',
+];
+foreach ($segments as $seg) {
+    $accum .= '/' . $seg;
+    $name = $labels[$seg] ?? ucfirst(str_replace('-', ' ', $seg));
+    $crumbs[] = ['name' => $name, 'url' => $siteUrl . $accum];
+}
+$breadcrumbList = null;
+if (count($crumbs) > 1) {
+    $breadcrumbList = [
+        '@context' => 'https://schema.org',
+        '@type'    => 'BreadcrumbList',
+        'itemListElement' => array_map(
+            static fn(int $i, array $c) => [
+                '@type'    => 'ListItem',
+                'position' => $i + 1,
+                'name'     => $c['name'],
+                'item'     => $c['url'],
+            ],
+            array_keys($crumbs),
+            $crumbs
+        ),
+    ];
+}
+
+$schemas = [$localBusiness, $organization, $website];
+if ($breadcrumbList) {
+    $schemas[] = $breadcrumbList;
+}
 if (isset($structured_data) && is_array($structured_data)) {
     foreach ($structured_data as $s) {
         $schemas[] = $s;
@@ -117,6 +177,7 @@ if (isset($structured_data) && is_array($structured_data)) {
 <meta name="twitter:image" content="<?= e($ogImage) ?>">
 
 <meta name="theme-color" content="#0B2545">
+<meta name="format-detection" content="telephone=yes">
 <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -124,9 +185,24 @@ if (isset($structured_data) && is_array($structured_data)) {
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 
+<?php
+// Conditional resource hints for analytics endpoints (only when configured)
+$pl  = trim((string) setting('plausible_script_url', ''));
+$gtm = trim((string) setting('gtm_container_id', ''));
+$mat = trim((string) setting('matomo_url', ''));
+$preconnects = [];
+if ($pl !== '')  { $u = parse_url($pl,  PHP_URL_HOST); if ($u) $preconnects['https://' . $u] = true; }
+if ($gtm !== '') { $preconnects['https://www.googletagmanager.com'] = true; }
+if ($mat !== '') { $u = parse_url($mat, PHP_URL_HOST); if ($u) $preconnects['https://' . $u] = true; }
+foreach (array_keys($preconnects) as $origin) {
+    echo '<link rel="preconnect" href="' . e($origin) . '" crossorigin>' . "\n";
+    echo '<link rel="dns-prefetch" href="' . e($origin) . '">' . "\n";
+}
+?>
+
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Inter-Variable.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/FamiljenGrotesk-Variable.woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="<?= e(asset('css/styles.css')) ?>">
 
 <?php foreach ($schemas as $schema): ?>
 <script type="application/ld+json"><?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>

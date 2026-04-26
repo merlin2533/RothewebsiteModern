@@ -27,10 +27,32 @@ final class ServicesController
             (new LegalController())->notFound([]);
             return;
         }
+
+        $cfg = $GLOBALS['config'];
+        $base = rtrim((string) $cfg['site_url'], '/');
+        $serviceSchema = [
+            '@context'   => 'https://schema.org',
+            '@type'      => 'Service',
+            'serviceType'=> $service['title'],
+            'name'       => $service['title'],
+            'description'=> $service['summary'] ?? '',
+            'url'        => $base . '/leistungen/' . $service['slug'],
+            'provider'   => [
+                '@type' => 'MovingCompany',
+                'name'  => setting('company_name'),
+                'url'   => $base,
+            ],
+            'areaServed' => array_map(
+                static fn($c) => ['@type' => 'Country', 'name' => trim($c)],
+                explode(',', (string) setting('areas_served', 'DE'))
+            ),
+        ];
+
         echo View::render('service_detail', [
-            'service'     => $service,
-            'currentSlug' => 'leistungen',
-            'page'        => [
+            'service'         => $service,
+            'currentSlug'     => 'leistungen',
+            'structured_data' => [$serviceSchema],
+            'page'            => [
                 'title'            => $service['title'],
                 'meta_title'       => $service['title'] . ' – Rothe-Transporte',
                 'meta_description' => $service['summary'] ?? '',

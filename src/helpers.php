@@ -12,7 +12,15 @@ if (!function_exists('e')) {
 if (!function_exists('asset')) {
     function asset(string $path): string
     {
-        return '/assets/' . ltrim($path, '/');
+        $rel  = '/assets/' . ltrim($path, '/');
+        $base = $GLOBALS['config']['base_dir'] ?? null;
+        if ($base) {
+            $abs = $base . '/public' . $rel;
+            if (is_file($abs)) {
+                $rel .= '?v=' . substr((string) filemtime($abs), -8);
+            }
+        }
+        return $rel;
     }
 }
 

@@ -14,9 +14,11 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
 <html lang="de">
 <head>
 <?php echo \App\Core\View::partial('meta', ['page' => $page ?? null, 'structured_data' => $structured_data ?? null]); ?>
+<?php echo \App\Core\View::partial('tracking_head'); ?>
 <script src="<?= asset('js/main.js') ?>" defer></script>
 </head>
 <body>
+<?php echo \App\Core\View::partial('tracking_body'); ?>
 <?php echo \App\Core\View::partial('icons'); ?>
 
 <a class="skip-link" href="#main">Zum Inhalt springen</a>

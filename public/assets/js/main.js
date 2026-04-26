@@ -77,4 +77,46 @@
   } else {
     counters.forEach(animateCounter);
   }
+
+  // ── Conversion-tracking dataLayer events (vendor neutral) ────────────────
+  // Pushed regardless of analytics setup; tag managers may consume them.
+  const push = (payload) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(payload);
+    if (window._paq) {
+      window._paq.push(['trackEvent', payload.event, payload.label || '', payload.value || '']);
+    }
+  };
+
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    if (href.startsWith('tel:')) {
+      push({ event: 'phone_click', label: href.replace('tel:', ''), source: a.dataset.source || a.closest('section')?.id || 'page' });
+    } else if (href.startsWith('mailto:')) {
+      push({ event: 'email_click', label: href.replace('mailto:', '').split('?')[0], source: a.dataset.source || a.closest('section')?.id || 'page' });
+    } else if (a.matches('.btn--primary, .primary-nav__cta')) {
+      push({ event: 'cta_click', label: (a.textContent || '').trim().slice(0, 60) });
+    }
+  }, { passive: true });
+
+  // Scroll-depth milestones (25/50/75/100)
+  if (!reduceMotion) {
+    const milestones = [25, 50, 75, 100];
+    const fired = new Set();
+    const scrollDepth = () => {
+      const h = document.documentElement;
+      const scrollable = h.scrollHeight - h.clientHeight;
+      if (scrollable <= 0) return;
+      const pct = (window.scrollY / scrollable) * 100;
+      for (const m of milestones) {
+        if (pct >= m && !fired.has(m)) {
+          fired.add(m);
+          push({ event: 'scroll_depth', value: m });
+        }
+      }
+    };
+    document.addEventListener('scroll', scrollDepth, { passive: true });
+  }
 })();

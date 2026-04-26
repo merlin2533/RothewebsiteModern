@@ -122,6 +122,8 @@ $email = setting('email', 'info@rothe-transporte.de');
   </div>
 </section>
 
+<?= \App\Core\View::partial('faqs', ['faqs' => $faqs ?? []]) ?>
+
 <div class="cargo-strap" aria-hidden="true">
   <span></span><span></span><span></span>
 </div>

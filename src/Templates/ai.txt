@@ -1,0 +1,19 @@
+# ai.txt – AI training & content usage policy
+# {{site_url}} – Rothe-Transporte und Speditions GbR
+
+# This file declares how AI systems may use the content of this website.
+# It complements robots.txt and llms.txt.
+
+User-Agent: *
+
+# Indexing for retrieval-augmented generation (RAG), search results, and
+# direct quotations with attribution is permitted.
+Allow-Search: /
+Allow-Citation: /
+
+# Use as training data for foundation models is NOT permitted.
+Disallow-Train: /
+
+# Generation of derivative content that misrepresents the company,
+# its services, or its technical specifications is NOT permitted.
+Disallow-Derivative: /

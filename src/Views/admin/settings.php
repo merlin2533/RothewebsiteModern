@@ -170,6 +170,61 @@ $s = static function (string $key) use ($settings): string {
         </div>
     </div>
 
+    <!-- Section: Suche & Brand-SERP -->
+    <div class="form-section">
+        <h2 class="form-section__title">Brand-Suche</h2>
+        <p class="form-section__hint">URL-Template für die WebSite-SearchAction (wird in Brand-Sitelinks verwendet, optional). Beispiel: <code>https://www.google.com/search?q=site%3Arothe-transporte.de+{search_term_string}</code></p>
+        <div class="form-group">
+            <label class="form-label" for="set-search">Search-Action Target</label>
+            <input class="form-input" type="text" id="set-search" name="search_action_target" value="<?= e($s('search_action_target')) ?>">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="set-twitter">X / Twitter Handle (mit @)</label>
+            <input class="form-input" type="text" id="set-twitter" name="twitter_handle" value="<?= e($s('twitter_handle')) ?>" placeholder="@firma">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="set-vat">USt-IdNr. (Impressum)</label>
+            <input class="form-input" type="text" id="set-vat" name="vat_id" value="<?= e($s('vat_id')) ?>" placeholder="DE000000000">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="set-ceo">Geschäftsführer (für JSON-LD/Impressum)</label>
+            <input class="form-input" type="text" id="set-ceo" name="ceo_name" value="<?= e($s('ceo_name')) ?>">
+        </div>
+    </div>
+
+    <!-- Section: Conversion-Tracking -->
+    <div class="form-section">
+        <h2 class="form-section__title">Conversion-Tracking</h2>
+        <p class="form-section__hint">Alle Felder leer lassen = kein Tracking. Vor dem Aktivieren in der Datenschutzerklärung dokumentieren und ggf. Cookie-/Consent-Banner ergänzen.</p>
+
+        <div class="form-group">
+            <label class="form-label" for="set-gtm">Google Tag Manager Container-ID</label>
+            <input class="form-input" type="text" id="set-gtm" name="gtm_container_id" value="<?= e($s('gtm_container_id')) ?>" placeholder="GTM-XXXXXX">
+        </div>
+
+        <div class="input-row">
+            <div class="form-group">
+                <label class="form-label" for="set-pl-domain">Plausible Domain</label>
+                <input class="form-input" type="text" id="set-pl-domain" name="plausible_domain" value="<?= e($s('plausible_domain')) ?>" placeholder="rothe-transporte.de">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="set-pl-url">Plausible Script-URL</label>
+                <input class="form-input" type="text" id="set-pl-url" name="plausible_script_url" value="<?= e($s('plausible_script_url')) ?>" placeholder="https://plausible.io/js/script.js">
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div class="form-group">
+                <label class="form-label" for="set-matomo-url">Matomo URL</label>
+                <input class="form-input" type="text" id="set-matomo-url" name="matomo_url" value="<?= e($s('matomo_url')) ?>" placeholder="https://stats.example.com/">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="set-matomo-id">Matomo Site-ID</label>
+                <input class="form-input form-input--narrow" type="text" id="set-matomo-id" name="matomo_site_id" value="<?= e($s('matomo_site_id')) ?>" placeholder="1">
+            </div>
+        </div>
+    </div>
+
     <div class="form-actions">
         <button type="submit" class="btn-primary">Einstellungen speichern</button>
     </div>
