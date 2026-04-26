@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -18,6 +19,34 @@ final class MediaController
         'image/gif'  => 'gif',
     ];
     private const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
+
+    private function generateWebpSibling(string $absFile, string $mime): void
+    {
+        if (!extension_loaded('gd') || !function_exists('imagewebp')) {
+            return;
+        }
+        if (!in_array($mime, ['image/jpeg', 'image/png'], true)) {
+            return; // skip svg/gif/already-webp
+        }
+        try {
+            $img = $mime === 'image/jpeg'
+                ? @imagecreatefromjpeg($absFile)
+                : @imagecreatefrompng($absFile);
+            if (!$img) return;
+            if ($mime === 'image/png') {
+                imagepalettetotruecolor($img);
+                imagealphablending($img, true);
+                imagesavealpha($img, true);
+            }
+            $webpPath = preg_replace('/\.(jpe?g|png)$/i', '.webp', $absFile);
+            if ($webpPath && $webpPath !== $absFile) {
+                imagewebp($img, $webpPath, 85);
+            }
+            imagedestroy($img);
+        } catch (\Throwable) {
+            // best-effort, never block upload
+        }
+    }
 
     public function index(array $args): void
     {
@@ -72,6 +101,9 @@ final class MediaController
 
         [$w, $h] = @getimagesize($absFile) ?: [null, null];
 
+        // Auto-generate WebP variant for jpg/png originals (front-end perf)
+        $this->generateWebpSibling($absFile, $mime);
+
         $id = $GLOBALS['mediaRepo']->save([
             'filename'      => $relPath . '/' . $randomName,
             'original_name' => $file['name'],
@@ -81,6 +113,7 @@ final class MediaController
             'alt_text'      => $alt,
             'size_bytes'    => (int) $file['size'],
         ]);
+        AuditLogger::log('media.upload', 'media', $id, ['mime' => $mime]);
         flash('success', 'Bild hochgeladen (#' . $id . ').');
         redirect('/admin/media');
     }
@@ -93,6 +126,7 @@ final class MediaController
         }
         $id = (int) ($args['id'] ?? 0);
         $GLOBALS['mediaRepo']->updateAlt($id, (string) post('alt_text', ''));
+        AuditLogger::log('media.alt_update', 'media', $id);
         flash('success', 'Alt-Text aktualisiert.');
         redirect('/admin/media');
     }
@@ -113,6 +147,7 @@ final class MediaController
             }
             $GLOBALS['mediaRepo']->delete($id);
         }
+        AuditLogger::log('media.delete', 'media', $id);
         flash('success', 'Datei gelöscht.');
         redirect('/admin/media');
     }

@@ -77,6 +77,8 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
 <?= $content ?>
 </main>
 
+<?php echo \App\Core\View::partial('consent_banner'); ?>
+
 <footer class="site-footer">
   <div class="container site-footer__grid">
     <div>

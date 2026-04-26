@@ -97,59 +97,42 @@ final class Auth
         session_destroy();
     }
 
-    private static function attemptsFile(): string
-    {
-        $config = $GLOBALS['config'] ?? [];
-        $base = $config['base_dir'] ?? dirname(__DIR__);
-        return $base . '/data/login_attempts.json';
-    }
-
-    private static function loadAttempts(): array
-    {
-        $file = self::attemptsFile();
-        if (!is_readable($file)) {
-            return [];
-        }
-        $json = file_get_contents($file);
-        if ($json === false) {
-            return [];
-        }
-        $data = json_decode($json, true);
-        return is_array($data) ? $data : [];
-    }
-
-    private static function saveAttempts(array $data): void
-    {
-        $file = self::attemptsFile();
-        $dir = dirname($file);
-        if (!is_dir($dir)) {
-            mkdir($dir, 0750, true);
-        }
-        file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT), LOCK_EX);
-    }
-
     private static function isLocked(string $ip): bool
     {
-        $data = self::loadAttempts();
-        $cutoff = time() - self::ATTEMPT_WINDOW;
-        $recent = array_filter($data[$ip] ?? [], static fn($t) => $t > $cutoff);
-        return count($recent) >= self::MAX_ATTEMPTS;
+        try {
+            $pdo = Database::getInstance();
+            $cutoff = date('Y-m-d H:i:s', time() - self::ATTEMPT_WINDOW);
+            $stmt = $pdo->prepare(
+                'SELECT COUNT(*) FROM login_failures WHERE ip = ? AND occurred_at >= ?'
+            );
+            $stmt->execute([$ip, $cutoff]);
+            return ((int) $stmt->fetchColumn()) >= self::MAX_ATTEMPTS;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     private static function recordFailure(string $ip): void
     {
-        $data = self::loadAttempts();
-        $cutoff = time() - self::ATTEMPT_WINDOW;
-        $existing = array_filter($data[$ip] ?? [], static fn($t) => $t > $cutoff);
-        $existing[] = time();
-        $data[$ip] = array_values($existing);
-        self::saveAttempts($data);
+        try {
+            $pdo = Database::getInstance();
+            $pdo->prepare('INSERT INTO login_failures (ip) VALUES (?)')->execute([$ip]);
+            // Garbage-collect: alte Eintraege ausserhalb des Fensters loeschen
+            $cutoff = date('Y-m-d H:i:s', time() - self::ATTEMPT_WINDOW * 4);
+            $pdo->prepare('DELETE FROM login_failures WHERE occurred_at < ?')->execute([$cutoff]);
+        } catch (\Throwable) {
+            // Tabelle existiert evtl. noch nicht (vor Migration) – stillschweigend
+        }
     }
 
     private static function clearFailures(string $ip): void
     {
-        $data = self::loadAttempts();
-        unset($data[$ip]);
-        self::saveAttempts($data);
+        try {
+            Database::getInstance()
+                ->prepare('DELETE FROM login_failures WHERE ip = ?')
+                ->execute([$ip]);
+        } catch (\Throwable) {
+            // ignore
+        }
     }
 }

@@ -78,6 +78,22 @@
     counters.forEach(animateCounter);
   }
 
+  // ── Consent banner ───────────────────────────────────────────────────────
+  const banner = document.getElementById('consent-banner');
+  if (banner) {
+    banner.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-consent]');
+      if (!btn) return;
+      const value = btn.dataset.consent;
+      // 12-month cookie, SameSite=Lax, Secure when served over HTTPS
+      const secure = location.protocol === 'https:' ? '; Secure' : '';
+      document.cookie = `rt_consent=${value}; Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
+      banner.style.display = 'none';
+      // Reload only on grant so tracking scripts can boot in head
+      if (value === 'granted') location.reload();
+    });
+  }
+
   // ── Conversion-tracking dataLayer events (vendor neutral) ────────────────
   // Pushed regardless of analytics setup; tag managers may consume them.
   const push = (payload) => {

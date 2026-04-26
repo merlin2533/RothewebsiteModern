@@ -22,6 +22,7 @@ use App\Controllers\Admin\TimelineController as AdminTimeline;
 use App\Controllers\Admin\MediaController as AdminMedia;
 use App\Controllers\Admin\SettingsController as AdminSettings;
 use App\Controllers\Admin\FaqsController as AdminFaqs;
+use App\Controllers\Admin\AuditController as AdminAudit;
 
 $router = new Router();
 
@@ -89,6 +90,9 @@ $router->post('/admin/faqs',                   [AdminFaqs::class, 'store']);
 $router->get('/admin/faqs/{id}/edit',          [AdminFaqs::class, 'edit']);
 $router->post('/admin/faqs/{id}',              [AdminFaqs::class, 'update']);
 $router->post('/admin/faqs/{id}/delete',       [AdminFaqs::class, 'delete']);
+
+$router->get('/admin/audit',                   [AdminAudit::class, 'index']);
+$router->get('/admin/attribution',             [AdminAudit::class, 'attribution']);
 
 // ── Dispatch ─────────────────────────────────────────────────────────────────
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -34,7 +35,9 @@ final class VehiclesController
             flash('error', 'Ungültiges Sicherheits-Token.');
             redirect('/admin/vehicles');
         }
-        $id = $GLOBALS['vehicleRepo']->save($this->payload());
+        $payload = $this->payload();
+        $id = $GLOBALS['vehicleRepo']->save($payload);
+        AuditLogger::log('vehicle.create', 'vehicle', $id, ['slug' => $payload['slug']]);
         flash('success', 'Fahrzeug angelegt.');
         redirect('/admin/vehicles/' . $id . '/edit');
     }
@@ -65,6 +68,7 @@ final class VehiclesController
         $data = $this->payload();
         $data['id'] = $id;
         $GLOBALS['vehicleRepo']->save($data);
+        AuditLogger::log('vehicle.update', 'vehicle', $id, ['slug' => $data['slug']]);
         flash('success', 'Fahrzeug gespeichert.');
         redirect('/admin/vehicles/' . $id . '/edit');
     }
@@ -78,6 +82,7 @@ final class VehiclesController
         }
         $id = (int) ($args['id'] ?? 0);
         $GLOBALS['vehicleRepo']->delete($id);
+        AuditLogger::log('vehicle.delete', 'vehicle', $id);
         flash('success', 'Fahrzeug gelöscht.');
         redirect('/admin/vehicles');
     }

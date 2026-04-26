@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -29,7 +30,9 @@ final class ServicesController
             flash('error', 'Ungültiges Sicherheits-Token.');
             redirect('/admin/services');
         }
-        $id = $GLOBALS['serviceRepo']->save($this->payload());
+        $payload = $this->payload();
+        $id = $GLOBALS['serviceRepo']->save($payload);
+        AuditLogger::log('service.create', 'service', $id, ['slug' => $payload['slug']]);
         flash('success', 'Leistung angelegt.');
         redirect('/admin/services/' . $id . '/edit');
     }
@@ -55,6 +58,7 @@ final class ServicesController
         $data = $this->payload();
         $data['id'] = $id;
         $GLOBALS['serviceRepo']->save($data);
+        AuditLogger::log('service.update', 'service', $id, ['slug' => $data['slug']]);
         flash('success', 'Leistung gespeichert.');
         redirect('/admin/services/' . $id . '/edit');
     }
@@ -65,7 +69,9 @@ final class ServicesController
         if (!Csrf::verify(post('_token'))) {
             redirect('/admin/services');
         }
-        $GLOBALS['serviceRepo']->delete((int) ($args['id'] ?? 0));
+        $sid = (int) ($args['id'] ?? 0);
+        $GLOBALS['serviceRepo']->delete($sid);
+        AuditLogger::log('service.delete', 'service', $sid);
         flash('success', 'Leistung gelöscht.');
         redirect('/admin/services');
     }

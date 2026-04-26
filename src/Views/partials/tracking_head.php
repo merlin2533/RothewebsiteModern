@@ -5,8 +5,17 @@ $plDomain = trim((string) setting('plausible_domain', ''));
 $plScript = trim((string) setting('plausible_script_url', ''));
 $matomoUrl    = trim((string) setting('matomo_url', ''));
 $matomoSiteId = trim((string) setting('matomo_site_id', ''));
+
+// GTM braucht expliziten Consent (Cookies). Plausible/Matomo (Cookieless-Modus)
+// werden nur durch Consent geblockt, falls "matomo_site_id" gesetzt ist und der
+// Server-Operator den Cookieless-Mode nicht aktiviert hat – konservativer Default.
+$consent = ($_COOKIE['rt_consent'] ?? '') === 'granted';
+$gtmActive    = $gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm) && $consent;
+$plActive     = $plDomain !== '' && $plScript !== '' && $consent;
+$matomoActive = $matomoUrl !== '' && $matomoSiteId !== '' && $consent;
+$anyActive    = $gtmActive || $plActive || $matomoActive;
 ?>
-<?php if ($gtm !== '' || $plDomain !== '' || $matomoUrl !== ''): ?>
+<?php if ($anyActive): ?>
 <script>
   // vendor-neutral dataLayer (any tag manager / analytics may consume)
   window.dataLayer = window.dataLayer || [];
@@ -14,7 +23,7 @@ $matomoSiteId = trim((string) setting('matomo_site_id', ''));
 </script>
 <?php endif; ?>
 
-<?php if ($gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm)): ?>
+<?php if ($gtmActive): ?>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -24,11 +33,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 <?php endif; ?>
 
-<?php if ($plDomain !== '' && $plScript !== ''): ?>
+<?php if ($plActive): ?>
 <script defer data-domain="<?= e($plDomain) ?>" src="<?= e($plScript) ?>"></script>
 <?php endif; ?>
 
-<?php if ($matomoUrl !== '' && $matomoSiteId !== ''): ?>
+<?php if ($matomoActive): ?>
 <script>
   var _paq = window._paq = window._paq || [];
   _paq.push(['trackPageView']);

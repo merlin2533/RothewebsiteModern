@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -28,7 +29,9 @@ final class TimelineController
         if (!Csrf::verify(post('_token'))) {
             redirect('/admin/timeline');
         }
-        $id = $GLOBALS['timelineRepo']->save($this->payload());
+        $payload = $this->payload();
+        $id = $GLOBALS['timelineRepo']->save($payload);
+        AuditLogger::log('timeline.create', 'timeline', $id);
         flash('success', 'Eintrag angelegt.');
         redirect('/admin/timeline/' . $id . '/edit');
     }
@@ -53,6 +56,7 @@ final class TimelineController
         $data = $this->payload();
         $data['id'] = $id;
         $GLOBALS['timelineRepo']->save($data);
+        AuditLogger::log('timeline.update', 'timeline', $id);
         flash('success', 'Eintrag gespeichert.');
         redirect('/admin/timeline/' . $id . '/edit');
     }
@@ -63,7 +67,9 @@ final class TimelineController
         if (!Csrf::verify(post('_token'))) {
             redirect('/admin/timeline');
         }
-        $GLOBALS['timelineRepo']->delete((int) ($args['id'] ?? 0));
+        $tid = (int) ($args['id'] ?? 0);
+        $GLOBALS['timelineRepo']->delete($tid);
+        AuditLogger::log('timeline.delete', 'timeline', $tid);
         flash('success', 'Eintrag gelöscht.');
         redirect('/admin/timeline');
     }

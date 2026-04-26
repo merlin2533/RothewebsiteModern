@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -60,6 +61,7 @@ final class PagesController
             'sort_order'       => (int) post('sort_order', '0'),
         ];
         $GLOBALS['pageRepo']->save($data);
+        AuditLogger::log('page.update', 'page', $id, ['slug' => $data['slug']]);
         flash('success', 'Seite gespeichert.');
         redirect('/admin/pages/' . $id . '/edit');
     }

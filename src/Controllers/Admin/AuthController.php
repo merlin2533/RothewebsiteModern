@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -31,14 +32,17 @@ final class AuthController
         $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 
         if (Auth::attempt($username, $password, $ip)) {
+            AuditLogger::log('auth.login', 'user', null, ['username' => $username]);
             redirect('/admin');
         }
+        AuditLogger::log('auth.login_failed', 'user', null, ['username' => $username]);
         flash('error', 'Login fehlgeschlagen oder zu viele Fehlversuche.');
         redirect('/admin/login');
     }
 
     public function logout(array $args): void
     {
+        AuditLogger::log('auth.logout');
         Auth::logout();
         redirect('/admin/login');
     }
@@ -96,6 +100,7 @@ final class AuthController
         $pdo->prepare('UPDATE users SET password_hash = ? WHERE id = ?')
             ->execute([$newHash, $user['id']]);
 
+        AuditLogger::log('auth.password_changed', 'user', (int) $user['id']);
         flash('success', 'Passwort geändert.');
         redirect('/admin/account');
     }

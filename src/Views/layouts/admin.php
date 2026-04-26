@@ -95,6 +95,20 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/admin/audit"
+                       <?= ($_template ?? '') === 'audit_log' ? 'aria-current="page"' : '' ?>>
+                        <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                        Audit-Log
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/attribution"
+                       <?= ($_template ?? '') === 'attribution' ? 'aria-current="page"' : '' ?>>
+                        <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-7a1 1 0 011 1v4.5l3 1.7a1 1 0 11-1 1.7l-3.5-2A1 1 0 019 9V4a1 1 0 011-1z"/></svg>
+                        Attribution
+                    </a>
+                </li>
+                <li>
                     <a href="/admin/account"
                        <?= ($_template ?? '') === 'account' ? 'aria-current="page"' : '' ?>>
                         <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>

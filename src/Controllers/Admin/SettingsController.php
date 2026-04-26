@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -44,6 +45,7 @@ final class SettingsController
             $data[$k] = (string) post($k, '');
         }
         $GLOBALS['settingRepo']->setMany($data);
+        AuditLogger::log('settings.update', 'settings', null, ['keys' => array_keys($data)]);
         flash('success', 'Einstellungen gespeichert.');
         redirect('/admin/settings');
     }

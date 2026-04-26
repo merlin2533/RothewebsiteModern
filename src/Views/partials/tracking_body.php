@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 $gtm = trim((string) setting('gtm_container_id', ''));
+$consent = ($_COOKIE['rt_consent'] ?? '') === 'granted';
 ?>
-<?php if ($gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm)): ?>
+<?php if ($consent && $gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm)): ?>
 <!-- Google Tag Manager (noscript) -->
 <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=<?= e($gtm) ?>"

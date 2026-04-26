@@ -75,3 +75,6 @@ $GLOBALS['timelineRepo'] = $timelineRepo;
 $GLOBALS['settingRepo']  = $settingRepo;
 $GLOBALS['mediaRepo']    = $mediaRepo;
 $GLOBALS['faqRepo']      = $faqRepo;
+
+// ── UTM / Click-ID Capture (silent, GET-only, no admin/asset paths) ───────
+\App\Core\UtmCapture::run();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Auth;
+use App\Core\AuditLogger;
 use App\Core\Csrf;
 use App\Core\View;
 
@@ -31,7 +32,9 @@ final class FaqsController
             flash('error', 'Ungültiges Sicherheits-Token.');
             redirect('/admin/faqs');
         }
-        $id = $GLOBALS['faqRepo']->save($this->payload());
+        $payload = $this->payload();
+        $id = $GLOBALS['faqRepo']->save($payload);
+        AuditLogger::log('faq.create', 'faq', $id);
         flash('success', 'FAQ angelegt.');
         redirect('/admin/faqs/' . $id . '/edit');
     }
@@ -56,6 +59,7 @@ final class FaqsController
         $data = $this->payload();
         $data['id'] = $id;
         $GLOBALS['faqRepo']->save($data);
+        AuditLogger::log('faq.update', 'faq', $id);
         flash('success', 'FAQ gespeichert.');
         redirect('/admin/faqs/' . $id . '/edit');
     }
@@ -66,7 +70,9 @@ final class FaqsController
         if (!Csrf::verify(post('_token'))) {
             redirect('/admin/faqs');
         }
-        $GLOBALS['faqRepo']->delete((int) ($args['id'] ?? 0));
+        $fid = (int) ($args['id'] ?? 0);
+        $GLOBALS['faqRepo']->delete($fid);
+        AuditLogger::log('faq.delete', 'faq', $fid);
         flash('success', 'FAQ gelöscht.');
         redirect('/admin/faqs');
     }
