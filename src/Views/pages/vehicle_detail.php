@@ -87,12 +87,26 @@ $structured_data = [
       <h2>Weitere Fahrzeuge im Fuhrpark</h2>
     </header>
     <ul class="card-grid card-grid--3">
-      <?php foreach ($allVehicles as $other): if ($other['id'] === $v['id']) continue; ?>
+      <?php foreach ($allVehicles as $other): if ($other['id'] === $v['id']) continue;
+        $otherMedia = !empty($other['image_filename']) ? [
+            'filename' => $other['image_filename'],
+            'alt_text' => $other['image_alt'] ?? $other['name'],
+            'width'    => $other['image_width'] ?? null,
+            'height'   => $other['image_height'] ?? null,
+        ] : null;
+      ?>
       <li class="card card--vehicle-mini">
         <a href="/fahrzeuge/<?= e($other['slug']) ?>">
-          <img loading="lazy" decoding="async"
-               src="<?= e($other['image_filename'] ? '/uploads/' . $other['image_filename'] : '/assets/images/placeholders/vehicle-' . preg_replace('#-.*$#', '', $other['slug']) . '.svg') ?>"
-               alt="<?= e($other['image_alt'] ?? $other['name']) ?>">
+          <div class="card__media">
+            <?php if ($otherMedia):
+              echo media_picture($otherMedia, $other['image_alt'] ?? $other['name'],
+                  '(min-width: 700px) 30vw, 100vw', [800, 400], 'lazy');
+            else: ?>
+            <img loading="lazy" decoding="async"
+                 src="/assets/images/placeholders/vehicle-<?= e(preg_replace('#-.*$#', '', $other['slug'])) ?>.svg"
+                 alt="<?= e($other['name']) ?>">
+            <?php endif; ?>
+          </div>
           <h3><?= e($other['name']) ?></h3>
           <p><?= e($other['special_features'] ?? '') ?></p>
         </a>

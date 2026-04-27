@@ -41,7 +41,7 @@ if (!str_starts_with($dbPath, '/')) {
     $dbPath = $baseDir . '/' . $dbPath;
 }
 
-$uploadsPath = $e('UPLOADS_PATH', 'uploads');
+$uploadsPath = $e('UPLOADS_PATH', 'public/uploads');
 if (!str_starts_with($uploadsPath, '/')) {
     $uploadsPath = $baseDir . '/' . $uploadsPath;
 }

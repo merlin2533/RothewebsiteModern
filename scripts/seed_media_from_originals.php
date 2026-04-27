@@ -107,10 +107,28 @@ foreach ($manifest['images'] as $entry) {
         $absFile = dirname(__DIR__) . '/public/assets/images/from-original/' . $variant['jpg'];
         $size    = is_file($absFile) ? (int) filesize($absFile) : null;
 
-        $altGuess = pathinfo($entry['source'], PATHINFO_FILENAME);
-        $altGuess = preg_replace('/[-_]+/', ' ', $altGuess) ?? $altGuess;
-        $altGuess = trim(preg_replace('/\b[A-F0-9]{20,}\b/i', '', $altGuess) ?? $altGuess);
-        $altGuess = $altGuess !== '' ? ucfirst($altGuess) : 'Foto Rothe-Transporte';
+        // Descriptive German alt text based on vehicle classification or filename
+        $vehicleAltMap = [
+            'tieflader-sattelauflieger' => 'Tieflader-Sattelauflieger Rothe-Transporte – Schwerlasttransport und Maschinentransport',
+            'tautliner-sattelzug'       => 'Tautliner-Sattelzug Rothe-Transporte – Standardtransport mit Schiebeplane',
+            'motorwagen-mit-ladekran'   => 'Motorwagen mit Ladekran Rothe-Transporte – Stadtlieferung und enge Baustellen',
+            'logo'                      => 'Rothe Transporte und Speditions GbR – Logo',
+        ];
+        $cls2 = classify($entry['source'], $rules);
+        if ($cls2 && isset($vehicleAltMap[$cls2])) {
+            $altGuess = $vehicleAltMap[$cls2];
+        } else {
+            $altGuess = pathinfo($entry['source'], PATHINFO_FILENAME);
+            $altGuess = preg_replace('/[-_]+/', ' ', $altGuess) ?? $altGuess;
+            $altGuess = trim(preg_replace('/\b[A-F0-9]{20,}\b/i', '', $altGuess) ?? $altGuess);
+            $lc = strtolower($altGuess);
+            if (str_contains($lc, 'whatsapp') || preg_match('/^\d{10,}/', $altGuess)) {
+                $altGuess = 'Rothe-Transporte – Fahrzeug und Maschinentransport Foto';
+            } elseif (str_contains($lc, 'img') || str_contains($lc, 'photo') || str_contains($lc, 'nik')) {
+                $altGuess = 'Rothe-Transporte – Transportfahrzeug';
+            }
+            $altGuess = $altGuess !== '' ? ucfirst($altGuess) : 'Rothe-Transporte – Foto';
+        }
 
         $mediaId = $mediaRepo->save([
             'filename'      => $rel,
