@@ -6,13 +6,18 @@ $plScript = trim((string) setting('plausible_script_url', ''));
 $matomoUrl    = trim((string) setting('matomo_url', ''));
 $matomoSiteId = trim((string) setting('matomo_site_id', ''));
 
-// GTM braucht expliziten Consent (Cookies). Plausible/Matomo (Cookieless-Modus)
-// werden nur durch Consent geblockt, falls "matomo_site_id" gesetzt ist und der
-// Server-Operator den Cookieless-Mode nicht aktiviert hat – konservativer Default.
-$consent = ($_COOKIE['rt_consent'] ?? '') === 'granted';
-$gtmActive    = $gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm) && $consent;
-$plActive     = $plDomain !== '' && $plScript !== '' && $consent;
-$matomoActive = $matomoUrl !== '' && $matomoSiteId !== '' && $consent;
+// Kategorisiertes Consent: rt_consent_v2 ist eine kommagetrennte Liste der
+// erlaubten Kategorien (z.B. "necessary,statistics" oder "necessary,statistics,marketing").
+// "necessary" ist immer impliziert; "statistics" und "marketing" sind opt-in.
+$consentRaw = (string) ($_COOKIE['rt_consent_v2'] ?? '');
+$consentCats = $consentRaw === '' ? [] : array_map('trim', explode(',', $consentRaw));
+$hasStats     = in_array('statistics', $consentCats, true);
+$hasMarketing = in_array('marketing', $consentCats, true);
+
+// Plausible/Matomo zaehlen als Statistik. GTM kann beides laden → braucht Marketing.
+$gtmActive    = $gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm) && $hasMarketing;
+$plActive     = $plDomain !== '' && $plScript !== '' && $hasStats;
+$matomoActive = $matomoUrl !== '' && $matomoSiteId !== '' && $hasStats;
 $anyActive    = $gtmActive || $plActive || $matomoActive;
 ?>
 <?php if ($anyActive): ?>

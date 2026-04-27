@@ -9,6 +9,9 @@ data/sessions/
 # Backups (created by scripts/backup.sh)
 backups/
 
+# Generated OG image cache
+data/og-cache/
+
 # Login attempts tracker
 data/login_attempts.json
 

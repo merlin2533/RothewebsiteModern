@@ -14,6 +14,7 @@ final class SitemapController
         $pages    = $GLOBALS['pageRepo']->all();
         $vehicles = $GLOBALS['vehicleRepo']->allActive();
         $services = $GLOBALS['serviceRepo']->allActive();
+        $landings = $GLOBALS['landingRepo']->allPublished();
 
         $entries = [];
         foreach ($pages as $p) {
@@ -29,6 +30,9 @@ final class SitemapController
         }
         foreach ($services as $s) {
             $entries[] = [$base . '/leistungen/' . $s['slug'], $s['updated_at'] ?? date('Y-m-d'), 'monthly', '0.7'];
+        }
+        foreach ($landings as $lp) {
+            $entries[] = [$base . '/' . $lp['slug'], $lp['updated_at'] ?? date('Y-m-d'), 'monthly', '0.8'];
         }
 
         $latest = max(array_map(static fn($e) => $e[1], $entries));

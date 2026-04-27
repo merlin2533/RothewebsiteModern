@@ -31,8 +31,9 @@ final class VehiclesController
 
         $cfg = $GLOBALS['config'];
         $base = rtrim((string) $cfg['site_url'], '/');
-        $imageUrl = $base . '/assets/images/placeholders/vehicle-' .
-            preg_replace('/[^a-z]+/', '', $vehicle['slug']) . '.svg';
+        // Dynamic per-vehicle OG image (1200x630 PNG, file-cached)
+        $ogUrl = $base . '/og/vehicle/' . $vehicle['slug'] . '.png';
+        $imageUrl = $ogUrl;
         if (!empty($vehicle['image_filename'])) {
             $imageUrl = $base . '/uploads/' . ltrim((string) $vehicle['image_filename'], '/');
         }
@@ -73,6 +74,7 @@ final class VehiclesController
                     : '',
                 'hero_headline'    => $vehicle['name'],
                 'hero_sub'         => $vehicle['special_features'] ?? '',
+                'og_image_url'     => $ogUrl,
             ],
         ]);
     }

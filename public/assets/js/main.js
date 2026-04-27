@@ -78,30 +78,47 @@
     counters.forEach(animateCounter);
   }
 
-  // ── Consent banner ───────────────────────────────────────────────────────
+  // ── Consent banner (categorised: necessary / statistics / marketing) ─────
   const banner = document.getElementById('consent-banner');
   if (banner) {
     banner.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-consent]');
       if (!btn) return;
-      const value = btn.dataset.consent;
-      // 12-month cookie, SameSite=Lax, Secure when served over HTTPS
+      const mode = btn.dataset.consent;
+      let cats = ['necessary'];
+      if (mode === 'all') {
+        cats = ['necessary', 'statistics', 'marketing'];
+      } else if (mode === 'custom') {
+        banner.querySelectorAll('[data-cat]:checked').forEach(c => cats.push(c.dataset.cat));
+      } // 'denied' → only necessary
       const secure = location.protocol === 'https:' ? '; Secure' : '';
-      document.cookie = `rt_consent=${value}; Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
+      document.cookie = `rt_consent_v2=${cats.join(',')}; Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
       banner.style.display = 'none';
-      // Reload only on grant so tracking scripts can boot in head
-      if (value === 'granted') location.reload();
+      // Reload only when at least one analytics/marketing tag was granted, so
+      // the head can boot the corresponding scripts.
+      if (cats.length > 1) location.reload();
     });
   }
 
   // ── Conversion-tracking dataLayer events (vendor neutral) ────────────────
   // Pushed regardless of analytics setup; tag managers may consume them.
+  // Also forwarded to /api/track for server-side tagging (consent-gated server-side).
   const push = (payload) => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(payload);
     if (window._paq) {
       window._paq.push(['trackEvent', payload.event, payload.label || '', payload.value || '']);
     }
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/api/track', new Blob([JSON.stringify({
+          event: payload.event,
+          label: payload.label || '',
+          value: payload.value || null,
+          page:  location.pathname,
+        })], { type: 'application/json' }));
+      }
+    } catch (_) { /* ignore */ }
   };
 
   document.addEventListener('click', (e) => {

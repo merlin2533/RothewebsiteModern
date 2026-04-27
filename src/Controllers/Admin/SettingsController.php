@@ -38,7 +38,10 @@ final class SettingsController
             'owner_quote', 'owner_quote_attribution',
             'twitter_handle', 'search_action_target',
             'gtm_container_id', 'plausible_domain', 'plausible_script_url',
+            'plausible_events_api',
             'matomo_url', 'matomo_site_id',
+            'ga4_measurement_id', 'ga4_api_secret',
+            'meta_pixel_id', 'meta_capi_token',
         ];
         $data = [];
         foreach ($keys as $k) {

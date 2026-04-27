@@ -714,14 +714,18 @@ body.is-nav-open .nav-toggle__icon--close { display: block; }
 .consent-banner__inner {
   display: grid; gap: 1rem;
   grid-template-columns: 1fr;
-  align-items: center;
-}
-@media (min-width: 700px) {
-  .consent-banner__inner { grid-template-columns: 1fr auto; }
+  align-items: start;
 }
 .consent-banner__title { font-family: var(--font-headline); font-weight: 700; color: #fff; margin: 0 0 0.3rem; }
 .consent-banner__sub   { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 0; }
 .consent-banner__sub a { color: var(--c-accent-soft); text-decoration: underline; }
+.consent-banner__categories {
+  display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 0.4rem;
+  font-size: 0.9rem;
+}
+.consent-cat { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; }
+.consent-cat input[type="checkbox"] { accent-color: var(--c-accent); }
+.consent-cat--locked { opacity: 0.7; cursor: not-allowed; }
 .consent-banner__actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .consent-banner__actions .btn--ghost {
   border-color: rgba(255,255,255,0.4); color: #fff !important;

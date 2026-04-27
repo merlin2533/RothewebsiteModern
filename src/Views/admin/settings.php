@@ -225,6 +225,39 @@ $s = static function (string $key) use ($settings): string {
         </div>
     </div>
 
+    <!-- Section: Server-Side Tagging -->
+    <div class="form-section">
+        <h2 class="form-section__title">Server-Side Tagging</h2>
+        <p class="form-section__hint">Wird durch <code>POST /api/track</code> ausgelöst (z. B. fuer cookie-loses Tracking oder iOS-/AdBlocker-resistente Conversions). Felder leer = Sink deaktiviert.</p>
+
+        <div class="input-row">
+            <div class="form-group">
+                <label class="form-label" for="set-ga4-id">GA4 Measurement-ID</label>
+                <input class="form-input" type="text" id="set-ga4-id" name="ga4_measurement_id" value="<?= e($s('ga4_measurement_id')) ?>" placeholder="G-XXXXXXX">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="set-ga4-sec">GA4 API-Secret</label>
+                <input class="form-input" type="text" id="set-ga4-sec" name="ga4_api_secret" value="<?= e($s('ga4_api_secret')) ?>" placeholder="****">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="set-pl-events">Plausible Events-API</label>
+            <input class="form-input" type="text" id="set-pl-events" name="plausible_events_api" value="<?= e($s('plausible_events_api')) ?>" placeholder="https://plausible.io/api/event">
+        </div>
+
+        <div class="input-row">
+            <div class="form-group">
+                <label class="form-label" for="set-meta-pixel">Meta Pixel-ID</label>
+                <input class="form-input" type="text" id="set-meta-pixel" name="meta_pixel_id" value="<?= e($s('meta_pixel_id')) ?>" placeholder="000000000000000">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="set-meta-token">Meta CAPI Access-Token</label>
+                <input class="form-input" type="text" id="set-meta-token" name="meta_capi_token" value="<?= e($s('meta_capi_token')) ?>" placeholder="EAA...">
+            </div>
+        </div>
+    </div>
+
     <div class="form-actions">
         <button type="submit" class="btn-primary">Einstellungen speichern</button>
     </div>

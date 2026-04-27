@@ -13,6 +13,9 @@ use App\Controllers\CareerController;
 use App\Controllers\ContactController;
 use App\Controllers\LegalController;
 use App\Controllers\SitemapController;
+use App\Controllers\LandingPagesController;
+use App\Controllers\OgImageController;
+use App\Controllers\TrackController;
 use App\Controllers\Admin\AuthController as AdminAuth;
 use App\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Controllers\Admin\PagesController as AdminPages;
@@ -23,6 +26,8 @@ use App\Controllers\Admin\MediaController as AdminMedia;
 use App\Controllers\Admin\SettingsController as AdminSettings;
 use App\Controllers\Admin\FaqsController as AdminFaqs;
 use App\Controllers\Admin\AuditController as AdminAudit;
+use App\Controllers\Admin\LandingPagesController as AdminLandingPages;
+use App\Controllers\Admin\RedirectsController as AdminRedirects;
 
 $router = new Router();
 
@@ -42,6 +47,17 @@ $router->get('/sitemap-images.xml',    [SitemapController::class, 'imageSitemap'
 $router->get('/robots.txt',            [SitemapController::class, 'robots']);
 $router->get('/llms.txt',              [SitemapController::class, 'llmsTxt']);
 $router->get('/ai.txt',                [SitemapController::class, 'aiTxt']);
+
+// ── Dynamic OG image per vehicle (PHP+GD, file-cached) ───────────────────
+$router->get('/og/vehicle/{slug}.png', [OgImageController::class, 'vehicle']);
+
+// ── Server-side tagging endpoint (vendor-neutral relay) ──────────────────
+$router->post('/api/track',            [TrackController::class, 'event']);
+
+// ── Landing pages (industry / city) – registered LAST so it doesn't shadow
+// known top-level paths like /fahrzeuge or /admin (slug constraint matches all
+// non-slash, but the router walks routes in registration order).
+$router->get('/{slug}',                [LandingPagesController::class, 'show']);
 
 // ── Admin ────────────────────────────────────────────────────────────────────
 $router->get('/admin',                 [AdminDashboard::class, 'index']);
@@ -93,6 +109,20 @@ $router->post('/admin/faqs/{id}/delete',       [AdminFaqs::class, 'delete']);
 
 $router->get('/admin/audit',                   [AdminAudit::class, 'index']);
 $router->get('/admin/attribution',             [AdminAudit::class, 'attribution']);
+
+$router->get('/admin/landing-pages',           [AdminLandingPages::class, 'index']);
+$router->get('/admin/landing-pages/new',       [AdminLandingPages::class, 'create']);
+$router->post('/admin/landing-pages',          [AdminLandingPages::class, 'store']);
+$router->get('/admin/landing-pages/{id}/edit', [AdminLandingPages::class, 'edit']);
+$router->post('/admin/landing-pages/{id}',     [AdminLandingPages::class, 'update']);
+$router->post('/admin/landing-pages/{id}/delete', [AdminLandingPages::class, 'delete']);
+
+$router->get('/admin/redirects',               [AdminRedirects::class, 'index']);
+$router->get('/admin/redirects/new',           [AdminRedirects::class, 'create']);
+$router->post('/admin/redirects',              [AdminRedirects::class, 'store']);
+$router->get('/admin/redirects/{id}/edit',     [AdminRedirects::class, 'edit']);
+$router->post('/admin/redirects/{id}',         [AdminRedirects::class, 'update']);
+$router->post('/admin/redirects/{id}/delete',  [AdminRedirects::class, 'delete']);
 
 // ── Dispatch ─────────────────────────────────────────────────────────────────
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

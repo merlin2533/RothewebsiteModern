@@ -15,7 +15,9 @@ $description = $page['meta_description'] ?? setting('meta_default_description', 
 $noindex = !empty($page['noindex']);
 
 $ogImage = $siteUrl . '/assets/images/placeholders/og-default.svg';
-if (!empty($page['og_image_id'])) {
+if (!empty($page['og_image_url'])) {
+    $ogImage = (string) $page['og_image_url'];
+} elseif (!empty($page['og_image_id'])) {
     $m = $GLOBALS['mediaRepo']->find((int) $page['og_image_id']);
     if ($m) {
         $ogImage = $siteUrl . '/uploads/' . ltrim((string) $m['filename'], '/');
@@ -202,7 +204,11 @@ foreach (array_keys($preconnects) as $origin) {
 
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Inter-Variable.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/FamiljenGrotesk-Variable.woff2" crossorigin>
-<link rel="stylesheet" href="<?= e(asset('css/styles.css')) ?>">
+
+<?php // Inline above-the-fold critical CSS, then defer the rest ?>
+<?= \App\Core\View::partial('critical_css') ?>
+<link rel="preload" href="<?= e(asset('css/styles.css')) ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="<?= e(asset('css/styles.css')) ?>"></noscript>
 
 <?php foreach ($schemas as $schema): ?>
 <script type="application/ld+json"><?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>

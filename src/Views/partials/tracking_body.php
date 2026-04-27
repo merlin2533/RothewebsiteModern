@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 $gtm = trim((string) setting('gtm_container_id', ''));
-$consent = ($_COOKIE['rt_consent'] ?? '') === 'granted';
+$cats = (string) ($_COOKIE['rt_consent_v2'] ?? '');
+$hasMarketing = in_array('marketing', array_map('trim', explode(',', $cats)), true);
 ?>
-<?php if ($consent && $gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm)): ?>
+<?php if ($hasMarketing && $gtm !== '' && preg_match('/^GTM-[A-Z0-9]+$/', $gtm)): ?>
 <!-- Google Tag Manager (noscript) -->
 <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=<?= e($gtm) ?>"

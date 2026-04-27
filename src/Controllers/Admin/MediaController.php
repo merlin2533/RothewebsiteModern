@@ -20,6 +20,35 @@ final class MediaController
     ];
     private const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
 
+    private function generateAvifSibling(string $absFile, string $mime): void
+    {
+        if (!function_exists('imageavif')) {
+            return; // PHP not built with libavif
+        }
+        if (!in_array($mime, ['image/jpeg', 'image/png'], true)) {
+            return;
+        }
+        try {
+            $img = $mime === 'image/jpeg'
+                ? @imagecreatefromjpeg($absFile)
+                : @imagecreatefrompng($absFile);
+            if (!$img) return;
+            if ($mime === 'image/png') {
+                imagepalettetotruecolor($img);
+                imagealphablending($img, true);
+                imagesavealpha($img, true);
+            }
+            $avifPath = preg_replace('/\.(jpe?g|png)$/i', '.avif', $absFile);
+            if ($avifPath && $avifPath !== $absFile) {
+                // quality=70, speed=6 → strong compression at sane CPU cost
+                imageavif($img, $avifPath, 70, 6);
+            }
+            imagedestroy($img);
+        } catch (\Throwable) {
+            // best-effort
+        }
+    }
+
     private function generateWebpSibling(string $absFile, string $mime): void
     {
         if (!extension_loaded('gd') || !function_exists('imagewebp')) {
@@ -103,6 +132,8 @@ final class MediaController
 
         // Auto-generate WebP variant for jpg/png originals (front-end perf)
         $this->generateWebpSibling($absFile, $mime);
+        // Auto-generate AVIF variant if PHP/GD supports it (best compression)
+        $this->generateAvifSibling($absFile, $mime);
 
         $id = $GLOBALS['mediaRepo']->save([
             'filename'      => $relPath . '/' . $randomName,

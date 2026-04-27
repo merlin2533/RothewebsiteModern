@@ -67,6 +67,8 @@ $timelineRepo = new \App\Repositories\TimelineRepository($pdo);
 $settingRepo  = new \App\Repositories\SettingRepository($pdo);
 $mediaRepo    = new \App\Repositories\MediaRepository($pdo);
 $faqRepo      = new \App\Repositories\FaqRepository($pdo);
+$landingRepo  = new \App\Repositories\LandingPageRepository($pdo);
+$redirectRepo = new \App\Repositories\RedirectRepository($pdo);
 
 $GLOBALS['pageRepo']     = $pageRepo;
 $GLOBALS['vehicleRepo']  = $vehicleRepo;
@@ -75,6 +77,11 @@ $GLOBALS['timelineRepo'] = $timelineRepo;
 $GLOBALS['settingRepo']  = $settingRepo;
 $GLOBALS['mediaRepo']    = $mediaRepo;
 $GLOBALS['faqRepo']      = $faqRepo;
+$GLOBALS['landingRepo']  = $landingRepo;
+$GLOBALS['redirectRepo'] = $redirectRepo;
+
+// ── 301 Redirect Map (DB-pflegbar) – vor allem anderen pruefen ────────────
+\App\Core\RedirectMap::handle($redirectRepo);
 
 // ── UTM / Click-ID Capture (silent, GET-only, no admin/asset paths) ───────
 \App\Core\UtmCapture::run();
