@@ -43,13 +43,18 @@ $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https')
     || (($_SERVER['SERVER_PORT'] ?? 0) == 443);
 
+// SameSite=Lax instead of Strict: Strict drops the cookie when the user
+// arrives via any cross-site context (e.g. clicking a link from email,
+// search engine, the post-redirect after login). Lax keeps the session
+// stable for normal navigation while still blocking CSRF-relevant
+// scenarios. Our explicit CSRF token gives the additional protection.
 session_set_cookie_params([
     'lifetime' => 0,
     'path'     => '/',
     'domain'   => '',
     'secure'   => $isHttps,
     'httponly' => true,
-    'samesite' => 'Strict',
+    'samesite' => 'Lax',
 ]);
 ini_set('session.use_strict_mode', '1');
 ini_set('session.gc_maxlifetime', (string) ($config['session_lifetime'] ?? 3600));

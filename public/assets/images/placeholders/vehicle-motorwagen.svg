@@ -1,20 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="MOTORWAGEN">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"
+     role="img" aria-label="Punktgenau abgesetzt.">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#050F22" stop-opacity="1"/>
-      <stop offset="1" stop-color="#050F22" stop-opacity="0.85"/>
-    </linearGradient>
-    <pattern id="p" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1"/>
-    </pattern>
-  </defs>
-  <rect width="1600" height="900" fill="url(#g)"/>
-  <rect width="1600" height="900" fill="url(#p)"/>
-  <rect x="0" y="450" width="1600" height="6" fill="#C2410C"/>
-  <text x="800" y="450" dy="-24" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" font-weight="600"
-        fill="#FFFFFF" letter-spacing="-0.02em">MOTORWAGEN</text>
-  <text x="800" y="450" dy="32" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="400"
-        fill="#FFFFFF" fill-opacity="0.7" letter-spacing="0.08em">PLATZHALTER</text>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#050F22"/>
+    <stop offset="1" stop-color="#0B2545"/>
+  </linearGradient>
+  <radialGradient id="halo" cx="0.7" cy="0.25" r="0.7">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+    <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  </pattern>
+  <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#C2410C"/>
+    <stop offset="1" stop-color="#E5734A"/>
+  </linearGradient>
+</defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect width="1600" height="900" fill="url(#halo)"/>
+
+  <!-- ground line -->
+  <rect x="0" y="" width="1600" height="3" fill="#000" fill-opacity="0.25"
+        transform="translate(0 ".((int)(900 * 0.78)).")"/>
+
+  <!-- vehicle / scene -->
+  <g fill="#1B2D4D" fill-opacity="1">
+  <!-- hood -->
+  <path d="M 280,702 L 280,572 Q 280,572 280,572
+           L 410,572
+           Q 410,502 410,502
+           L 390,502
+           Q 390,502 390,502
+           L 390,702 Z"/>
+  <!-- windscreen highlight -->
+  <path d="M 410 572 L 390 502 L 390 572 Z" fill="#ffffff" fill-opacity="0.08"/>
+</g><rect x='500' y='482' width='620' height='190' fill='#1B2D4D'/><rect x='500' y='482' width='620' height='5' fill='#C2410C'/><rect x='530' y='412' width='80' height='70' fill='#1B2D4D'/><rect x='560' y='292' width='30' height='130' fill='#1B2D4D'/><path d='M 575,292 L 940,322 L 940,342 L 575,322 Z'
+            fill='#C2410C'/><line x1='940' y1='322' x2='940' y2='422' stroke='#1B2D4D' stroke-width='3'/><circle cx='940' cy='432' r='10' fill='#C2410C'/><circle cx="320" cy="660" r="42" fill="#0a0a12"/><circle cx="320" cy="660" r="16" fill="#3a4a64"/><circle cx="400" cy="660" r="42" fill="#0a0a12"/><circle cx="400" cy="660" r="16" fill="#3a4a64"/><circle cx="980" cy="660" r="42" fill="#0a0a12"/><circle cx="980" cy="660" r="16" fill="#3a4a64"/><circle cx="1060" cy="660" r="42" fill="#0a0a12"/><circle cx="1060" cy="660" r="16" fill="#3a4a64"/>
+
+  <!-- copper accent strip bottom -->
+  <rect x="0" y="" width="1600" height="6" fill="url(#copperGrad)"
+        transform="translate(0 ".(900 - 6).")"/>
+
+  <!-- wordmark -->
+  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <rect x="80" y="198" width="36" height="3" fill="#C2410C"/>
+  <text x="80" y="198" dy="28" font-size="14" font-weight="600"
+        letter-spacing="3.5" fill="#C2410C" text-transform="uppercase">MOTORWAGEN MIT LADEKRAN</text>
+  <text x="80" y="198" dy="92" font-size="64" font-weight="700"
+        letter-spacing="-2" fill="#FFFFFF">Punktgenau abgesetzt.</text>
+  <text x="80" y="198" dy="130" font-size="20" font-weight="400"
+        fill="#FFFFFF" fill-opacity="0.7">Ladekran · Lenkachse · für enge Baustellen und Innenstadt.</text>
+</g>
 </svg>

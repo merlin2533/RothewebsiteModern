@@ -24,6 +24,11 @@ final class Csrf
         if ($token === null || $token === '') {
             return false;
         }
+        // Ensure the session is active – callers (e.g. POST handlers) often
+        // do not boot it themselves, so $_SESSION would be empty otherwise.
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $expected = $_SESSION[self::SESSION_KEY] ?? '';
         if ($expected === '') {
             return false;

@@ -99,11 +99,6 @@ $router->get('/og/vehicle/{slug}.png', [OgImageController::class, 'vehicle']);
 // ── Server-side tagging endpoint (vendor-neutral relay) ──────────────────
 $router->post('/api/track',            [TrackController::class, 'event']);
 
-// ── Landing pages (industry / city) – registered LAST so it doesn't shadow
-// known top-level paths like /fahrzeuge or /admin (slug constraint matches all
-// non-slash, but the router walks routes in registration order).
-$router->get('/{slug}',                [LandingPagesController::class, 'show']);
-
 // ── Admin ────────────────────────────────────────────────────────────────────
 $router->get('/admin',                 [AdminDashboard::class, 'index']);
 $router->get('/admin/login',           [AdminAuth::class, 'showLogin']);
@@ -168,6 +163,13 @@ $router->post('/admin/redirects',              [AdminRedirects::class, 'store'])
 $router->get('/admin/redirects/{id}/edit',     [AdminRedirects::class, 'edit']);
 $router->post('/admin/redirects/{id}',         [AdminRedirects::class, 'update']);
 $router->post('/admin/redirects/{id}/delete',  [AdminRedirects::class, 'delete']);
+
+// ── Catch-all: Landing pages (industry / city) ───────────────────────────
+// Registered LAST so it does not shadow known top-level paths. The
+// LandingPagesController itself returns 404 when the slug is reserved
+// (admin, api, og, install, sitemap, robots, etc.) or when no DB row
+// matches the slug.
+$router->get('/{slug}',                [LandingPagesController::class, 'show']);
 
 // ── Dispatch ─────────────────────────────────────────────────────────────────
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

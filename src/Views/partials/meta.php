@@ -205,10 +205,14 @@ foreach (array_keys($preconnects) as $origin) {
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Inter-Variable.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/FamiljenGrotesk-Variable.woff2" crossorigin>
 
-<?php // Inline above-the-fold critical CSS, then defer the rest ?>
+<?php // Inline above-the-fold critical CSS, then load the full stylesheet.
+// We keep the stylesheet as a normal blocking <link> instead of the
+// rel=preload + inline onload swap, because that swap is silently blocked
+// by our CSP (script-src 'self', no unsafe-inline). With critical CSS
+// inlined the additional blocking is small and the page renders
+// reliably across all browsers and CSP configurations. ?>
 <?= \App\Core\View::partial('critical_css') ?>
-<link rel="preload" href="<?= e(asset('css/styles.css')) ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="<?= e(asset('css/styles.css')) ?>"></noscript>
+<link rel="stylesheet" href="<?= e(asset('css/styles.css')) ?>">
 
 <?php foreach ($schemas as $schema): ?>
 <script type="application/ld+json"><?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>

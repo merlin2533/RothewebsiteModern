@@ -8,9 +8,22 @@ use App\Core\View;
 
 final class LandingPagesController
 {
+    /** Slugs that must never resolve to a landing page – defence-in-depth. */
+    private const RESERVED = [
+        'admin', 'api', 'og', 'install', 'install.php', 'sitemap.xml',
+        'sitemap-images.xml', 'robots.txt', 'llms.txt', 'ai.txt',
+        'assets', 'uploads', 'manifest.webmanifest',
+        'favicon.ico', 'favicon-16.png', 'favicon-32.png',
+        'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-1024.png',
+    ];
+
     public function show(array $args): void
     {
         $slug = (string) ($args['slug'] ?? '');
+        if ($slug === '' || in_array(strtolower($slug), self::RESERVED, true)) {
+            (new LegalController())->notFound([]);
+            return;
+        }
         $lp = $GLOBALS['landingRepo']->findBySlug($slug);
         if (!$lp || (int) $lp['is_published'] !== 1) {
             (new LegalController())->notFound([]);

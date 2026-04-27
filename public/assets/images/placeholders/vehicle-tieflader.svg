@@ -1,20 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="TIEFLADER 28 t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"
+     role="img" aria-label="13,60 × 2,48 × 3,70 m">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0B2545" stop-opacity="1"/>
-      <stop offset="1" stop-color="#0B2545" stop-opacity="0.85"/>
-    </linearGradient>
-    <pattern id="p" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1"/>
-    </pattern>
-  </defs>
-  <rect width="1600" height="900" fill="url(#g)"/>
-  <rect width="1600" height="900" fill="url(#p)"/>
-  <rect x="0" y="450" width="1600" height="6" fill="#C2410C"/>
-  <text x="800" y="450" dy="-24" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" font-weight="600"
-        fill="#FFFFFF" letter-spacing="-0.02em">TIEFLADER 28 t</text>
-  <text x="800" y="450" dy="32" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="400"
-        fill="#FFFFFF" fill-opacity="0.7" letter-spacing="0.08em">PLATZHALTER</text>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0B2545"/>
+    <stop offset="1" stop-color="#050F22"/>
+  </linearGradient>
+  <radialGradient id="halo" cx="0.7" cy="0.25" r="0.7">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+    <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  </pattern>
+  <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#C2410C"/>
+    <stop offset="1" stop-color="#E5734A"/>
+  </linearGradient>
+</defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect width="1600" height="900" fill="url(#halo)"/>
+
+  <!-- ground line -->
+  <rect x="0" y="" width="1600" height="3" fill="#000" fill-opacity="0.25"
+        transform="translate(0 ".((int)(900 * 0.78)).")"/>
+
+  <!-- vehicle / scene -->
+  <g fill="#1B2D4D" fill-opacity="1">
+  <!-- hood -->
+  <path d="M 180,702 L 180,572 Q 180,572 180,572
+           L 310,572
+           Q 310,502 310,502
+           L 290,502
+           Q 290,502 290,502
+           L 290,702 Z"/>
+  <!-- windscreen highlight -->
+  <path d="M 310 572 L 290 502 L 290 572 Z" fill="#ffffff" fill-opacity="0.08"/>
+</g><path d='
+        M 420,572
+        L 520,572
+        L 560,607
+        L 560,642
+        L 1260,642
+        L 1260,592
+        L 1340,592
+        L 1340,672
+        L 420,672
+        Z' fill='#1B2D4D'/><path d='M 560,642 L 1260,642'
+            stroke='#C2410C' stroke-width='3' fill='none'/><circle cx="220" cy="660" r="42" fill="#0a0a12"/><circle cx="220" cy="660" r="16" fill="#3a4a64"/><circle cx="300" cy="660" r="42" fill="#0a0a12"/><circle cx="300" cy="660" r="16" fill="#3a4a64"/><circle cx="1130" cy="660" r="42" fill="#0a0a12"/><circle cx="1130" cy="660" r="16" fill="#3a4a64"/><circle cx="1200" cy="660" r="42" fill="#0a0a12"/><circle cx="1200" cy="660" r="16" fill="#3a4a64"/><circle cx="1260" cy="660" r="42" fill="#0a0a12"/><circle cx="1260" cy="660" r="16" fill="#3a4a64"/><circle cx="1330" cy="660" r="42" fill="#0a0a12"/><circle cx="1330" cy="660" r="16" fill="#3a4a64"/>
+
+  <!-- copper accent strip bottom -->
+  <rect x="0" y="" width="1600" height="6" fill="url(#copperGrad)"
+        transform="translate(0 ".(900 - 6).")"/>
+
+  <!-- wordmark -->
+  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <rect x="80" y="198" width="36" height="3" fill="#C2410C"/>
+  <text x="80" y="198" dy="28" font-size="14" font-weight="600"
+        letter-spacing="3.5" fill="#C2410C" text-transform="uppercase">TIEFLADER 28 T</text>
+  <text x="80" y="198" dy="92" font-size="64" font-weight="700"
+        letter-spacing="-2" fill="#FFFFFF">13,60 × 2,48 × 3,70 m</text>
+  <text x="80" y="198" dy="130" font-size="20" font-weight="400"
+        fill="#FFFFFF" fill-opacity="0.7">33 Europaletten · niedrige Ladehöhe · für sperrige Maschinen.</text>
+</g>
 </svg>

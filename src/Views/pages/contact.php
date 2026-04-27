@@ -16,7 +16,7 @@ $mapUrl = "https://www.openstreetmap.org/export/embed.html?bbox={$mapBox}&layer=
 <section class="hero hero--inner" data-reveal>
   <div class="container">
     <p class="eyebrow">Kontakt</p>
-    <h1><?= e($page['hero_headline'] ?? 'Direkt zur Disposition.') ?></h1>
+    <h1 class="hero__headline"><?= e($page['hero_headline'] ?? 'Direkt zur Disposition.') ?></h1>
     <p class="hero__sub"><?= e($page['hero_sub'] ?? '') ?></p>
   </div>
 </section>
