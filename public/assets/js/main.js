@@ -3,15 +3,29 @@
 (() => {
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ── Header condense on scroll ─────────────────────────────────────────────
+  // ── Header condense on scroll + sync --header-h for mobile nav ──────────
+  const header = document.querySelector('[data-header]');
+  const syncHeaderH = () => {
+    if (header) {
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    }
+  };
   const onScroll = () => {
     document.documentElement.classList.toggle('is-scrolled', window.scrollY > 32);
+    syncHeaderH();
   };
   document.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', syncHeaderH);
   onScroll();
+  syncHeaderH();
 
   // ── Mobile nav toggle ────────────────────────────────────────────────────
   const toggle = document.querySelector('[data-nav-toggle]');
+  const closeNav = () => {
+    document.body.classList.remove('is-nav-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Menü öffnen');
+  };
   if (toggle) {
     toggle.addEventListener('click', () => {
       const open = document.body.classList.toggle('is-nav-open');
@@ -19,11 +33,17 @@
       toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
     });
   }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.body.classList.contains('is-nav-open')) {
-      document.body.classList.remove('is-nav-open');
-      toggle?.setAttribute('aria-expanded', 'false');
+  // Close nav when clicking the backdrop (body::after pseudo-element area)
+  document.addEventListener('click', (e) => {
+    if (!document.body.classList.contains('is-nav-open')) return;
+    const nav = document.getElementById('primary-nav');
+    const btn = document.querySelector('[data-nav-toggle]');
+    if (nav && !nav.contains(e.target) && btn && !btn.contains(e.target)) {
+      closeNav();
     }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav();
   });
 
   // ── Reveal sections on scroll ────────────────────────────────────────────
