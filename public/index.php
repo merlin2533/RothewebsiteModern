@@ -2,7 +2,52 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../src/bootstrap.php';
+// ── Bootstrap with self-healing fallback ─────────────────────────────────────
+// If anything during bootstrap (missing .env, unwritable data/, missing
+// migrations, empty DB) fails, redirect the visitor to the installer
+// instead of returning a bare 500. This keeps fresh deployments accessible.
+try {
+    require __DIR__ . '/../src/bootstrap.php';
+
+    // Smoke-check: is the schema actually present? If not, the installer
+    // has not run yet on this hosting account.
+    if (!is_file(__DIR__ . '/../data/installed.lock')) {
+        $needInstall = true;
+        try {
+            $pdo = $GLOBALS['pdo'] ?? null;
+            if ($pdo instanceof \PDO) {
+                $pdo->query('SELECT 1 FROM pages LIMIT 1');
+                $needInstall = false;
+            }
+        } catch (\Throwable) {
+            $needInstall = true;
+        }
+        if ($needInstall && !str_starts_with((string) ($_SERVER['REQUEST_URI'] ?? ''), '/install.php')) {
+            header('Location: /install.php', true, 302);
+            exit;
+        }
+    }
+} catch (\Throwable $e) {
+    // Hard failure – render a helpful page instead of a blank 500.
+    http_response_code(500);
+    header('Content-Type: text/html; charset=utf-8');
+    $msg = htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    echo '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+    echo '<title>Setup erforderlich – Rothe-Transporte</title>';
+    echo '<style>body{font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;max-width:680px;margin:3rem auto;padding:0 1.5rem;color:#0F1419;background:#F4F2EE}h1{color:#0B2545}a{color:#C2410C}code,pre{font-family:ui-monospace,Menlo,monospace}pre{background:#050F22;color:#fff;padding:1rem;border-radius:8px;overflow-x:auto}.card{background:#fff;border:1px solid #E3E8EF;border-radius:12px;padding:2rem;box-shadow:0 16px 36px -24px rgba(11,37,69,.2)}</style>';
+    echo '<div class="card"><h1>Setup erforderlich</h1>';
+    echo '<p>Die Webseite kann noch nicht geladen werden, weil das initiale Setup fehlt oder unvollstaendig ist.</p>';
+    echo '<p><strong>Naechste Schritte:</strong></p>';
+    echo '<ol>';
+    echo '<li>Pruefen, ob der DocumentRoot auf <code>public/</code> zeigt.</li>';
+    echo '<li>Pruefen, ob <code>data/</code> und <code>uploads/</code> beschreibbar sind (CHMOD 750/755).</li>';
+    echo '<li>Den Installer aufrufen: <a href="/install.php">/install.php</a></li>';
+    echo '</ol>';
+    echo '<p>Technische Meldung (fuer den Admin):</p><pre>' . $msg . '</pre>';
+    echo '<p style="color:#6B7785;font-size:0.9em">Vollstaendige Anleitung: <a href="https://github.com/merlin2533/rothewebsitemodern/blob/HEAD/DEPLOY.md">DEPLOY.md</a></p>';
+    echo '</div>';
+    exit;
+}
 
 use App\Core\Router;
 use App\Controllers\HomeController;
