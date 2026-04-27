@@ -4,9 +4,15 @@ Moderne PHP-Webseite fuer **Rothe-Transporte und Speditions GbR** (Walddorfhaesl
 
 Stack: PHP 8.2+ · SQLite · selbst gehostete Fonts · kein Build-Schritt · kein Tracker.
 
-## Schnellstart (lokal)
+## Schnellstart
 
-Voraussetzungen: PHP 8.2+ mit `pdo_sqlite`, `fileinfo`, `mbstring`, `session`.
+### Auf einen Webserver deployen
+
+➡️ **Komplette Deployment-Anleitung: [DEPLOY.md](DEPLOY.md)** – Repo hochladen, DocumentRoot auf `public/` zeigen, dann **`https://deine-domain.de/install.php`** aufrufen. Der Web-Installer prüft alles, schreibt `.env`, baut die DB auf, generiert Favicons und sperrt sich danach selbst.
+
+### Lokal entwickeln
+
+Voraussetzungen: PHP 8.2+ mit `pdo_sqlite`, `fileinfo`, `mbstring`, `session`, `gd`.
 
 ```bash
 git clone <repo>
