@@ -251,6 +251,30 @@ if ($step === 'run' && $post) {
     if (is_file($genFav))  { ob_start(); include $genFav; ob_end_clean(); $log[] = 'Favicons erzeugt'; }
     if (is_file($genPlc))  { ob_start(); include $genPlc; ob_end_clean(); $log[] = 'SVG-Platzhalter erzeugt'; }
 
+    // 5e.b. uploads/ enthaelt Originalbilder? -> resizen + Media-Library seeden
+    $uploadsDir = $baseDir . '/uploads';
+    $origCount  = 0;
+    if (is_dir($uploadsDir)) {
+        foreach (scandir($uploadsDir) ?: [] as $f) {
+            if ($f === '.' || $f === '..' || str_starts_with($f, '.')) continue;
+            if (is_file($uploadsDir . '/' . $f) && preg_match('/\.(jpe?g|png|webp|gif)$/i', $f)) {
+                $origCount++;
+            }
+        }
+    }
+    if ($origCount > 0) {
+        $resizer = $baseDir . '/scripts/resize_uploads.php';
+        $seeder  = $baseDir . '/scripts/seed_media_from_originals.php';
+        if (is_file($resizer)) {
+            ob_start(); include $resizer; ob_end_clean();
+            $log[] = "Resize: {$origCount} Originalbilder verarbeitet (JPG + WebP, 1600/1200/800 px)";
+        }
+        if (is_file($seeder)) {
+            ob_start(); include $seeder; ob_end_clean();
+            $log[] = 'Media-Library mit ' . $origCount . ' Eintraegen geseedet (Logo + Fahrzeug-Bilder zugeordnet)';
+        }
+    }
+
     // 5f. Symlink public/uploads anlegen, falls noch nicht da
     $sym = $baseDir . '/public/uploads';
     if (!is_link($sym) && !is_dir($sym)) {
