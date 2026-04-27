@@ -155,6 +155,27 @@ final class SitemapController
         $this->serveTemplate('ai.txt');
     }
 
+    /**
+     * Sitemap-Index: zeigt auf alle Sub-Sitemaps.
+     * Convention: Search Console findet beides automatisch via robots.txt,
+     * aber ein expliziter Index hilft Bing/Yandex und macht spaetere
+     * Erweiterungen trivial (Blog-Sitemap etc.).
+     */
+    public function index(array $args): void
+    {
+        $base = rtrim((string) $GLOBALS['config']['site_url'], '/');
+        $this->sendCacheable('application/xml; charset=utf-8', date('Y-m-d'));
+        echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        foreach (['sitemap.xml', 'sitemap-images.xml'] as $sm) {
+            echo "  <sitemap>\n";
+            echo '    <loc>' . htmlspecialchars($base . '/' . $sm, ENT_QUOTES) . "</loc>\n";
+            echo '    <lastmod>' . date('Y-m-d') . "</lastmod>\n";
+            echo "  </sitemap>\n";
+        }
+        echo '</sitemapindex>' . "\n";
+    }
+
     private function serveTemplate(string $filename): void
     {
         $path = $GLOBALS['config']['base_dir'] . '/src/Templates/' . $filename;

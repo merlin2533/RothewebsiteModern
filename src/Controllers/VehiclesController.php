@@ -75,6 +75,9 @@ final class VehiclesController
                 'hero_headline'    => $vehicle['name'],
                 'hero_sub'         => $vehicle['special_features'] ?? '',
                 'og_image_url'     => $ogUrl,
+                // LCP-Preload: das Fahrzeug-Bild ist above-the-fold
+                'lcp_image_url'    => $imageUrl,
+                'lcp_image_type'   => str_ends_with($imageUrl, '.png') ? 'image/png' : 'image/jpeg',
             ],
         ]);
     }
