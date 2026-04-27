@@ -866,6 +866,46 @@ input:focus, select:focus, textarea:focus {
 /* iOS Safari: prevent the orange tap highlight on links and buttons. */
 a, button { -webkit-tap-highlight-color: transparent; }
 
+/* ── Page-level section modifiers (audit gap-fill) ──────────────────────
+   Klassen die als Section-Marker an existierenden Komponenten haengen,
+   damit Sections genug Atemraum + ggf. einen leichten Akzent bekommen. */
+
+.about-content { background: var(--c-bg); }
+.about-content .prose h2 { margin-top: 2rem; }
+.about-content .prose h2:first-child { margin-top: 0; }
+
+.values .card-grid { margin-top: 1.5rem; }
+.values .card { background: var(--c-bg); border-top: 3px solid var(--c-accent); }
+.values .card h3 { color: var(--c-ink); }
+
+.timeline-section { background: var(--c-surface); }
+.timeline-section .timeline { margin-top: 1.5rem; }
+
+/* Contact tiles: 3-Kachel-Grid auf Desktop, gestapelt mobil */
+.contact-tiles { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.contact-tiles .card-grid { margin-top: 1rem; }
+.contact-tiles .card { gap: 1rem; }
+
+.contact-map { background: var(--c-surface); }
+.contact-map .map-wrap { background: #fff; }
+
+/* Home: services teaser + fleet highlights */
+.services-teaser { padding-block: clamp(3rem, 6vw, 5rem); }
+.services-teaser .card-grid { margin-top: 1.5rem; }
+
+.fleet-highlights { padding-block: clamp(3rem, 6vw, 5rem); }
+.fleet-highlights .card-grid { margin-top: 1.5rem; }
+
+/* Services list page (was rendered without these specific markers) */
+.services-grid { padding-block: clamp(3rem, 6vw, 5rem); }
+.services-grid .card-grid { margin-top: 1.5rem; }
+
+/* Vehicle-block body container (prose-like inside the alternating block) */
+.vehicle-block__body { padding-inline: 0; }
+.vehicle-block__body .eyebrow { margin-bottom: 0.6rem; }
+.vehicle-block__body h2 { margin-bottom: 0.8rem; }
+.vehicle-block__body p { margin-bottom: 1rem; }
+
 /* ── Reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
