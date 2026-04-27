@@ -35,7 +35,7 @@ final class SettingsController
             'areas_served', 'vat_id',
             'meta_default_title', 'meta_default_description',
             'og_default_image_id', 'hero_image_id',
-            'owner_quote', 'owner_quote_attribution',
+            'owner_quote', 'owner_quote_attribution', 'quote_portrait_image_id',
             'twitter_handle', 'search_action_target',
             'gtm_container_id', 'plausible_domain', 'plausible_script_url',
             'plausible_events_api',

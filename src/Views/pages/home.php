@@ -138,7 +138,15 @@ $email = setting('email', 'info@rothe-transporte.de');
       <footer>— <?= e(setting('owner_quote_attribution', '')) ?></footer>
     </blockquote>
     <div class="quote__media" aria-hidden="true">
-      <img src="/assets/images/placeholders/quote-portrait.svg" alt="" loading="lazy">
+      <?php
+        $portraitId = (int) setting('quote_portrait_image_id', '0');
+        $portraitMedia = $portraitId > 0 ? $GLOBALS['mediaRepo']->find($portraitId) : null;
+        if ($portraitMedia) {
+            echo media_picture($portraitMedia, '', '(min-width:700px) 400px, 100vw', [800, 400], 'lazy');
+        } else {
+            echo '<img src="/assets/images/placeholders/quote-portrait.svg" alt="" loading="lazy">';
+        }
+      ?>
     </div>
   </div>
 </section>
