@@ -11,7 +11,8 @@ final class LandingPagesController
     /** Slugs that must never resolve to a landing page – defence-in-depth. */
     private const RESERVED = [
         'admin', 'api', 'og', 'install', 'install.php', 'sitemap.xml',
-        'sitemap-images.xml', 'robots.txt', 'llms.txt', 'ai.txt',
+        'sitemap_index.xml', 'sitemap-images.xml', 'robots.txt',
+        'llms.txt', 'ai.txt', 'galerie',
         'assets', 'uploads', 'manifest.webmanifest',
         'favicon.ico', 'favicon-16.png', 'favicon-32.png',
         'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-1024.png',
