@@ -34,19 +34,19 @@ table { border-collapse: collapse; }
 
 /* ── Tokens ───────────────────────────────────────────────────────────────── */
 :root {
-  --c-primary:      #C2410C;   /* brand orange – replaces dark navy */
-  --c-primary-deep: #1A1A2E;   /* deep charcoal for footer/dark surfaces */
-  --c-accent:       #C2410C;
-  --c-accent-soft:  #EA580C;
-  --c-ink:          #0F172A;
+  --c-primary:      #1B5DB3;   /* brand blue */
+  --c-primary-deep: #0D2547;   /* deep navy for footer/dark surfaces */
+  --c-accent:       #1B5DB3;
+  --c-accent-soft:  #2E7DD1;   /* lighter blue */
+  --c-ink:          #0F1F3D;   /* very dark navy for headings */
   --c-text:         #334155;
   --c-muted:        #64748B;
   --c-muted-soft:   #94A3B8;
   --c-bg:           #FFFFFF;
-  --c-surface:      #F8F5F1;   /* warm off-white */
-  --c-haze:         #F1EDE7;   /* slightly richer warm */
-  --c-line:         #E5DDD4;   /* warm gray border */
-  --c-line-dark:    #7C2D12;   /* deep orange for accents */
+  --c-surface:      #EEF3F9;   /* cool blue-tinted bg */
+  --c-haze:         #E1EBF4;   /* slightly richer cool */
+  --c-line:         #C8D9EA;   /* cool blue-gray border */
+  --c-line-dark:    #1A4D91;   /* dark blue for accents */
 
   --font-headline: 'Familjen Grotesk', 'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body:     'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -294,7 +294,7 @@ body.is-nav-open .nav-toggle__icon--close { display: block; }
 }
 .btn svg { stroke: currentColor; fill: none; stroke-width: 2; }
 .btn--primary { background: var(--c-accent); color: #fff !important; }
-.btn--primary:hover { background: #a3370a; transform: translateY(-1px); }
+.btn--primary:hover { background: #1451A0; transform: translateY(-1px); }
 .btn--ghost { border: 1.5px solid var(--c-ink); color: var(--c-ink) !important; }
 .btn--ghost:hover { background: var(--c-ink); color: #fff !important; }
 

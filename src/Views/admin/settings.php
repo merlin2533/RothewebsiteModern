@@ -156,6 +156,13 @@ $s = static function (string $key) use ($settings): string {
             <label class="form-label" for="set-quote-attr">Zuschreibung (Name, Funktion)</label>
             <input class="form-input" type="text" id="set-quote-attr" name="owner_quote_attribution" value="<?= e($s('owner_quote_attribution')) ?>" placeholder="Karl-Otto Rothe, Inhaber">
         </div>
+        <?= \App\Core\View::partial('admin_media_picker', [
+            'name'       => 'quote_portrait_image_id',
+            'value'      => (int) $s('quote_portrait_image_id'),
+            'media'      => $media,
+            'label'      => 'Porträtfoto (neben dem Zitat auf der Startseite)',
+            'allowEmpty' => true,
+        ]) ?>
     </div>
 
     <!-- Section: Suche & Brand-SERP -->

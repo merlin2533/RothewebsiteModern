@@ -153,6 +153,16 @@ foreach ($manifest['images'] as $entry) {
 
 echo "  ✓ {$insertedCount} neue, {$skippedCount} bereits vorhandene media-Eintraege.\n\n";
 
+// Fallback: Fahrzeuge ohne eigenes Bild erhalten ein ähnliches vorhandenes
+$fallbackAssign = [
+    'anhaenger-alltagsheld' => 'motorwagen-mit-ladekran',
+];
+foreach ($fallbackAssign as $slug => $sourceSlug) {
+    if (!isset($mediaIdByVehicle[$slug]) && isset($mediaIdByVehicle[$sourceSlug])) {
+        $mediaIdByVehicle[$slug] = $mediaIdByVehicle[$sourceSlug];
+    }
+}
+
 // Vehicle-Bilder zuweisen
 foreach ($mediaIdByVehicle as $vehicleSlug => $mediaId) {
     $v = $vehicleRepo->findBySlug($vehicleSlug);
