@@ -22,9 +22,15 @@ data/login_attempts.json
 # Error log
 data/php-errors.log
 
-# Uploads (contents, not the directory itself)
-uploads/*
-!uploads/.gitkeep
+# Uploads – die Originalbilder gehoeren ab jetzt ins Repo
+# (resize_uploads.php erzeugt daraus Web-Varianten unter
+#  public/assets/images/from-original/, die nicht commited werden).
+# Cache-/Temp-Dateien ausschliessen:
+uploads/*.tmp
+uploads/.DS_Store
+
+# Vom Resize-Skript erzeugte Web-Varianten – pro Server neu generierbar
+public/assets/images/from-original/
 
 # Environment
 .env
