@@ -12,6 +12,10 @@ backups/
 # Generated OG image cache
 data/og-cache/
 
+# Installer artefacts (per-deployment, never commit)
+data/install_token.txt
+data/installed.lock
+
 # Login attempts tracker
 data/login_attempts.json
 

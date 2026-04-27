@@ -12,12 +12,10 @@
  *   6.  Setzt das Admin-Passwort + sperrt den Installer per Lock-Datei
  *
  * Sicherheit:
- *   - Wenn data/installed.lock existiert: Installer ist gesperrt, einzige
- *     Anzeige ist ein Hinweis. Datei muss manuell geloescht werden, um
- *     erneut zu installieren.
- *   - Verbindungs-Token (1 Stunde gueltig) wird in data/install_token.txt
- *     abgelegt, sobald die Seite zum ersten Mal aufgerufen wird. Ohne das
- *     Token (per ?t=…) sind keine destruktiven Aktionen erlaubt.
+ *   - WICHTIG: Diese Datei MUSS nach erfolgreicher Installation vom
+ *     Server geloescht werden – ein erneuter Aufruf zeigt zwar nur einen
+ *     Hinweis, aber sicherer ist die Loeschung.
+ *   - Wenn data/installed.lock existiert, ist der Installer gesperrt.
  */
 
 declare(strict_types=1);
@@ -28,7 +26,6 @@ error_reporting(E_ALL);
 $baseDir   = dirname(__DIR__);
 $dataDir   = $baseDir . '/data';
 $lockFile  = $dataDir . '/installed.lock';
-$tokenFile = $dataDir . '/install_token.txt';
 
 @mkdir($dataDir, 0750, true);
 
@@ -39,41 +36,9 @@ if (is_file($lockFile)) {
         <div class="alert alert--ok">
           <h2>Bereits installiert</h2>
           <p>Diese Website wurde am <code>' . htmlspecialchars((string) file_get_contents($lockFile)) . '</code> initialisiert.</p>
-          <p>Loeschen Sie <code>data/installed.lock</code> auf dem Server, falls Sie den Installer erneut nutzen wollen.</p>
+          <p>Loeschen Sie <code>data/installed.lock</code> auf dem Server, falls Sie den Installer erneut nutzen wollen.<br>
+          Empfohlen: <code>public/install.php</code> jetzt vom Server entfernen.</p>
           <p><a href="/">→ Zur Webseite</a> · <a href="/admin/login">→ Admin-Login</a></p>
-        </div>
-    ');
-    exit;
-}
-
-// ── 1) Token-Handling ──────────────────────────────────────────────────────
-$existingToken = is_file($tokenFile) ? trim((string) file_get_contents($tokenFile)) : '';
-if ($existingToken === '' || (filemtime($tokenFile) ?: 0) < time() - 3600) {
-    // Erstaufruf oder abgelaufen: neues Token, Anzeige der URL und Stop.
-    $token = bin2hex(random_bytes(16));
-    file_put_contents($tokenFile, $token);
-    chmod($tokenFile, 0640);
-
-    $url = '/install.php?t=' . $token;
-    render_layout('Installer-Token', '
-        <h1>Sicherheits-Token erforderlich</h1>
-        <p>Aus Sicherheitsgruenden braucht der Installer ein Einmal-Token, damit er nicht zufaellig vom oeffentlichen Internet ausgefuehrt werden kann.</p>
-        <p>Das Token liegt jetzt auf dem Server unter <code>data/install_token.txt</code>. Holen Sie es per SSH oder FTP und rufen Sie folgende URL auf:</p>
-        <pre><code>' . htmlspecialchars($url) . '</code></pre>
-        <p>Oder &mdash; wenn Sie Shell-Zugriff haben:</p>
-        <pre><code>cat data/install_token.txt</code></pre>
-        <p>Das Token ist <strong>1 Stunde</strong> gueltig.</p>
-    ');
-    exit;
-}
-
-$presentedToken = (string) ($_GET['t'] ?? $_POST['_t'] ?? '');
-if (!hash_equals($existingToken, $presentedToken)) {
-    http_response_code(403);
-    render_layout('Falsches Token', '
-        <div class="alert alert--err">
-          <h2>Token ungueltig</h2>
-          <p>Bitte rufen Sie die URL aus <code>data/install_token.txt</code> auf.</p>
         </div>
     ');
     exit;
@@ -154,7 +119,7 @@ if ($step === 'check' && !$systemOk) {
         <h1>System-Check fehlgeschlagen</h1>
         <ul class="checks">' . $li . '</ul>
         <p class="small">Sobald alle Punkte gruen sind, laden Sie diese Seite neu.</p>
-        <p><a href="/install.php?t=' . htmlspecialchars($existingToken) . '">↻ Erneut pruefen</a></p>
+        <p><a href="/install.php">↻ Erneut pruefen</a></p>
     ');
     exit;
 }
@@ -169,10 +134,11 @@ if ($step === 'check' && $systemOk) {
         <p class="step">Schritt 2 von 3</p>
         <h1>System bereit</h1>
         <ul class="checks">' . $li . '</ul>
+        <div class="alert alert--err" style="margin-top:1.5rem">
+            <strong>Sicherheitshinweis:</strong> Loeschen Sie <code>public/install.php</code> nach Abschluss vom Server.
+        </div>
         <h2>Konfiguration</h2>
-        <form method="post" action="/install.php?step=run&t=' . htmlspecialchars($existingToken) . '">
-            <input type="hidden" name="_t" value="' . htmlspecialchars($existingToken) . '">
-
+        <form method="post" action="/install.php?step=run">
             <label for="site_url">Site-URL (ohne Slash am Ende)</label>
             <input type="text" id="site_url" name="site_url" required value="' . htmlspecialchars($defaultUrl) . '">
 
@@ -223,7 +189,7 @@ if ($step === 'run' && $post) {
     if ($errors) {
         $errHtml = '<div class="alert alert--err"><strong>Bitte korrigieren:</strong><ul>';
         foreach ($errors as $e) $errHtml .= '<li>' . htmlspecialchars($e) . '</li>';
-        $errHtml .= '</ul></div><p><a href="/install.php?t=' . htmlspecialchars($existingToken) . '">← Zurueck</a></p>';
+        $errHtml .= '</ul></div><p><a href="/install.php">← Zurueck</a></p>';
         render_layout('Validierungsfehler', $errHtml);
         exit;
     }
@@ -295,7 +261,8 @@ if ($step === 'run' && $post) {
     // 5g. Lock + Cleanup
     file_put_contents($lockFile, date('c'));
     chmod($lockFile, 0640);
-    @unlink($tokenFile);
+    // remove any leftover token from previous installer versions
+    @unlink($baseDir . '/data/install_token.txt');
     $log[] = 'Installer gesperrt (data/installed.lock)';
 
     $li = '';
