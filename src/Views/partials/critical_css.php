@@ -46,8 +46,8 @@ h2{font-size:clamp(1.8rem,2vw + .6rem,2.6rem)}
 .hero--inner{background:var(--c-primary-deep);color:#fff;padding:clamp(4rem,7vw,6rem) 0 clamp(3rem,5vw,4rem);position:relative}
 .hero--inner::before{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--c-accent)}
 .hero--inner .container{max-width:880px}
-.hero--inner .hero__headline{color:#fff}
-.hero--inner .hero__sub{color:rgba(255,255,255,.78);margin-top:1rem}
+.hero--inner h1,.hero--inner h2,.hero--inner .hero__headline{color:#fff}
+.hero--inner p,.hero--inner .hero__sub{color:rgba(255,255,255,.78);margin-top:1rem}
 .nav-toggle{display:none;padding:.4rem}
 @media(max-width:899px){.nav-toggle{display:inline-flex}.primary-nav{position:fixed;inset:0 0 0 auto;width:min(360px,86vw);background:var(--c-primary-deep);color:#fff;flex-direction:column;align-items:stretch;padding:6rem 2rem 2rem;gap:.5rem;transform:translateX(100%);transition:transform .22s ease-out;z-index:60}body.is-nav-open .primary-nav{transform:translateX(0)}body.is-nav-open{overflow:hidden}}
 @media(min-width:900px){.hero--home{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}}

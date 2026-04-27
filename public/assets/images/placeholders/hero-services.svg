@@ -1,20 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 720" preserveAspectRatio="xMidYMid slice" role="img" aria-label="LEISTUNGEN">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 720" preserveAspectRatio="xMidYMid slice"
+     role="img" aria-label="Vier Disziplinen.">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0B2545" stop-opacity="1"/>
-      <stop offset="1" stop-color="#0B2545" stop-opacity="0.85"/>
-    </linearGradient>
-    <pattern id="p" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1"/>
-    </pattern>
-  </defs>
-  <rect width="1920" height="720" fill="url(#g)"/>
-  <rect width="1920" height="720" fill="url(#p)"/>
-  <rect x="0" y="360" width="1920" height="6" fill="#C2410C"/>
-  <text x="960" y="360" dy="-24" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" font-weight="600"
-        fill="#FFFFFF" letter-spacing="-0.02em">LEISTUNGEN</text>
-  <text x="960" y="360" dy="32" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="400"
-        fill="#FFFFFF" fill-opacity="0.7" letter-spacing="0.08em">PLATZHALTER · LADUNGSSICHERUNG</text>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0B2545"/>
+    <stop offset="1" stop-color="#050F22"/>
+  </linearGradient>
+  <radialGradient id="halo" cx="0.7" cy="0.25" r="0.7">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+    <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  </pattern>
+  <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#C2410C"/>
+    <stop offset="1" stop-color="#E5734A"/>
+  </linearGradient>
+</defs>
+  <rect width="1920" height="720" fill="url(#bg)"/>
+  <rect width="1920" height="720" fill="url(#grid)"/>
+  <rect width="1920" height="720" fill="url(#halo)"/>
+
+  <!-- ground line -->
+  <rect x="0" y="" width="1920" height="3" fill="#000" fill-opacity="0.25"
+        transform="translate(0 ".((int)(720 * 0.78)).")"/>
+
+  <!-- vehicle / scene -->
+  <g fill="#13223D" fill-opacity="1">
+  <!-- hood -->
+  <path d="M -44,561 L -44,431 Q -44,431 -44,431
+           L 86,431
+           Q 86,361 86,361
+           L 66,361
+           Q 66,361 66,361
+           L 66,561 Z"/>
+  <!-- windscreen highlight -->
+  <path d="M 86 431 L 66 361 L 66 431 Z" fill="#ffffff" fill-opacity="0.08"/>
+</g><rect x='196' y='321' width='920' height='210' fill='#13223D'/><line x1='216' y1='321' x2='216' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='291' y1='321' x2='291' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='366' y1='321' x2='366' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='441' y1='321' x2='441' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='516' y1='321' x2='516' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='591' y1='321' x2='591' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='666' y1='321' x2='666' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='741' y1='321' x2='741' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='816' y1='321' x2='816' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='891' y1='321' x2='891' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='966' y1='321' x2='966' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><line x1='1041' y1='321' x2='1041' y2='531'
+                stroke='#ffffff' stroke-opacity='0.07' stroke-width='2'/><rect x='196' y='321' width='920' height='6' fill='#C2410C'/><circle cx="-4" cy="519" r="42" fill="#0a0a12"/><circle cx="-4" cy="519" r="16" fill="#3a4a64"/><circle cx="76" cy="519" r="42" fill="#0a0a12"/><circle cx="76" cy="519" r="16" fill="#3a4a64"/><circle cx="886" cy="519" r="42" fill="#0a0a12"/><circle cx="886" cy="519" r="16" fill="#3a4a64"/><circle cx="956" cy="519" r="42" fill="#0a0a12"/><circle cx="956" cy="519" r="16" fill="#3a4a64"/><circle cx="1036" cy="519" r="42" fill="#0a0a12"/><circle cx="1036" cy="519" r="16" fill="#3a4a64"/><g fill="#1B2D4D" fill-opacity="1">
+  <!-- hood -->
+  <path d="M 456,561 L 456,431 Q 456,431 456,431
+           L 586,431
+           Q 586,361 586,361
+           L 566,361
+           Q 566,361 566,361
+           L 566,561 Z"/>
+  <!-- windscreen highlight -->
+  <path d="M 586 431 L 566 361 L 566 431 Z" fill="#ffffff" fill-opacity="0.08"/>
+</g><path d='
+        M 696,431
+        L 796,431
+        L 836,466
+        L 836,501
+        L 1536,501
+        L 1536,451
+        L 1616,451
+        L 1616,531
+        L 696,531
+        Z' fill='#1B2D4D'/><path d='M 836,501 L 1536,501'
+            stroke='#C2410C' stroke-width='3' fill='none'/><circle cx="496" cy="519" r="42" fill="#0a0a12"/><circle cx="496" cy="519" r="16" fill="#3a4a64"/><circle cx="576" cy="519" r="42" fill="#0a0a12"/><circle cx="576" cy="519" r="16" fill="#3a4a64"/><circle cx="1406" cy="519" r="42" fill="#0a0a12"/><circle cx="1406" cy="519" r="16" fill="#3a4a64"/><circle cx="1476" cy="519" r="42" fill="#0a0a12"/><circle cx="1476" cy="519" r="16" fill="#3a4a64"/><circle cx="1536" cy="519" r="42" fill="#0a0a12"/><circle cx="1536" cy="519" r="16" fill="#3a4a64"/><circle cx="1606" cy="519" r="42" fill="#0a0a12"/><circle cx="1606" cy="519" r="16" fill="#3a4a64"/>
+
+  <!-- copper accent strip bottom -->
+  <rect x="0" y="" width="1920" height="6" fill="url(#copperGrad)"
+        transform="translate(0 ".(720 - 6).")"/>
+
+  <!-- wordmark -->
+  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <rect x="80" y="158" width="36" height="3" fill="#C2410C"/>
+  <text x="80" y="158" dy="28" font-size="14" font-weight="600"
+        letter-spacing="3.5" fill="#C2410C" text-transform="uppercase">LEISTUNGEN</text>
+  <text x="80" y="158" dy="92" font-size="64" font-weight="700"
+        letter-spacing="-2" fill="#FFFFFF">Vier Disziplinen.</text>
+  <text x="80" y="158" dy="130" font-size="20" font-weight="400"
+        fill="#FFFFFF" fill-opacity="0.7">Maschinen-, Spezialtransport, Lagerung, Stapler-Dienst.</text>
+</g>
 </svg>

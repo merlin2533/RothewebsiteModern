@@ -1,20 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ROTHE-TRANSPORTE">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice"
+     role="img" aria-label="Schweres bewegen.">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0B2545" stop-opacity="1"/>
-      <stop offset="1" stop-color="#0B2545" stop-opacity="0.85"/>
-    </linearGradient>
-    <pattern id="p" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1"/>
-    </pattern>
-  </defs>
-  <rect width="1920" height="1080" fill="url(#g)"/>
-  <rect width="1920" height="1080" fill="url(#p)"/>
-  <rect x="0" y="540" width="1920" height="6" fill="#C2410C"/>
-  <text x="960" y="540" dy="-24" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" font-weight="600"
-        fill="#FFFFFF" letter-spacing="-0.02em">ROTHE-TRANSPORTE</text>
-  <text x="960" y="540" dy="32" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="400"
-        fill="#FFFFFF" fill-opacity="0.7" letter-spacing="0.08em">PLATZHALTER · TIEFLADER MIT MASCHINE</text>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0B2545"/>
+    <stop offset="1" stop-color="#050F22"/>
+  </linearGradient>
+  <radialGradient id="halo" cx="0.7" cy="0.25" r="0.7">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+    <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  </pattern>
+  <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#C2410C"/>
+    <stop offset="1" stop-color="#E5734A"/>
+  </linearGradient>
+</defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  <rect width="1920" height="1080" fill="url(#halo)"/>
+
+  <!-- ground line -->
+  <rect x="0" y="" width="1920" height="3" fill="#000" fill-opacity="0.25"
+        transform="translate(0 ".((int)(1080 * 0.78)).")"/>
+
+  <!-- vehicle / scene -->
+  <g fill="#1B2D4D" fill-opacity="1">
+  <!-- hood -->
+  <path d="M 356,842 L 356,712 Q 356,712 356,712
+           L 486,712
+           Q 486,642 486,642
+           L 466,642
+           Q 466,642 466,642
+           L 466,842 Z"/>
+  <!-- windscreen highlight -->
+  <path d="M 486 712 L 466 642 L 466 712 Z" fill="#ffffff" fill-opacity="0.08"/>
+</g><path d='
+        M 596,712
+        L 696,712
+        L 736,747
+        L 736,782
+        L 1436,782
+        L 1436,732
+        L 1516,732
+        L 1516,812
+        L 596,812
+        Z' fill='#1B2D4D'/><path d='M 736,782 L 1436,782'
+            stroke='#C2410C' stroke-width='3' fill='none'/><circle cx="396" cy="800" r="42" fill="#0a0a12"/><circle cx="396" cy="800" r="16" fill="#3a4a64"/><circle cx="476" cy="800" r="42" fill="#0a0a12"/><circle cx="476" cy="800" r="16" fill="#3a4a64"/><circle cx="1306" cy="800" r="42" fill="#0a0a12"/><circle cx="1306" cy="800" r="16" fill="#3a4a64"/><circle cx="1376" cy="800" r="42" fill="#0a0a12"/><circle cx="1376" cy="800" r="16" fill="#3a4a64"/><circle cx="1436" cy="800" r="42" fill="#0a0a12"/><circle cx="1436" cy="800" r="16" fill="#3a4a64"/><circle cx="1506" cy="800" r="42" fill="#0a0a12"/><circle cx="1506" cy="800" r="16" fill="#3a4a64"/>
+
+  <!-- copper accent strip bottom -->
+  <rect x="0" y="" width="1920" height="6" fill="url(#copperGrad)"
+        transform="translate(0 ".(1080 - 6).")"/>
+
+  <!-- wordmark -->
+  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <rect x="80" y="237" width="36" height="3" fill="#C2410C"/>
+  <text x="80" y="237" dy="28" font-size="14" font-weight="600"
+        letter-spacing="3.5" fill="#C2410C" text-transform="uppercase">MASCHINENTRANSPORT · SEIT 1978</text>
+  <text x="80" y="237" dy="92" font-size="64" font-weight="700"
+        letter-spacing="-2" fill="#FFFFFF">Schweres bewegen.</text>
+  <text x="80" y="237" dy="130" font-size="20" font-weight="400"
+        fill="#FFFFFF" fill-opacity="0.7">Tieflader, Tautliner, Spezialanhänger – aus Walddorfhäslach in sechs Länder.</text>
+</g>
 </svg>

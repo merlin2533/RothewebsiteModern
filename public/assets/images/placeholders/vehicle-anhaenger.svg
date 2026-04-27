@@ -1,20 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ANHÄNGER">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"
+     role="img" aria-label="Klein. Wendig. Robust.">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0B2545" stop-opacity="1"/>
-      <stop offset="1" stop-color="#0B2545" stop-opacity="0.85"/>
-    </linearGradient>
-    <pattern id="p" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1"/>
-    </pattern>
-  </defs>
-  <rect width="1600" height="900" fill="url(#g)"/>
-  <rect width="1600" height="900" fill="url(#p)"/>
-  <rect x="0" y="450" width="1600" height="6" fill="#C2410C"/>
-  <text x="800" y="450" dy="-24" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" font-weight="600"
-        fill="#FFFFFF" letter-spacing="-0.02em">ANHÄNGER</text>
-  <text x="800" y="450" dy="32" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="400"
-        fill="#FFFFFF" fill-opacity="0.7" letter-spacing="0.08em">PLATZHALTER</text>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0B2545"/>
+    <stop offset="1" stop-color="#050F22"/>
+  </linearGradient>
+  <radialGradient id="halo" cx="0.7" cy="0.25" r="0.7">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+    <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  </pattern>
+  <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#C2410C"/>
+    <stop offset="1" stop-color="#E5734A"/>
+  </linearGradient>
+</defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect width="1600" height="900" fill="url(#halo)"/>
+
+  <!-- ground line -->
+  <rect x="0" y="" width="1600" height="3" fill="#000" fill-opacity="0.25"
+        transform="translate(0 ".((int)(900 * 0.78)).")"/>
+
+  <!-- vehicle / scene -->
+  <rect x='530' y='572' width='600' height='100' fill='#1B2D4D'/><path d='M 1130,662 L 1260,702 L 1260,674 L 1150,642 Z'
+            fill='#1B2D4D'/><rect x='420' y='642' width='110' height='12' fill='#1B2D4D'/><line x1='530' y1='572' x2='1130' y2='572'
+            stroke='#C2410C' stroke-width='3'/><circle cx="680" cy="660" r="42" fill="#0a0a12"/><circle cx="680" cy="660" r="16" fill="#3a4a64"/><circle cx="800" cy="660" r="42" fill="#0a0a12"/><circle cx="800" cy="660" r="16" fill="#3a4a64"/><circle cx="960" cy="660" r="42" fill="#0a0a12"/><circle cx="960" cy="660" r="16" fill="#3a4a64"/>
+
+  <!-- copper accent strip bottom -->
+  <rect x="0" y="" width="1600" height="6" fill="url(#copperGrad)"
+        transform="translate(0 ".(900 - 6).")"/>
+
+  <!-- wordmark -->
+  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <rect x="80" y="198" width="36" height="3" fill="#C2410C"/>
+  <text x="80" y="198" dy="28" font-size="14" font-weight="600"
+        letter-spacing="3.5" fill="#C2410C" text-transform="uppercase">ANHÄNGER „ALLTAGSHELD&quot;</text>
+  <text x="80" y="198" dy="92" font-size="64" font-weight="700"
+        letter-spacing="-2" fill="#FFFFFF">Klein. Wendig. Robust.</text>
+  <text x="80" y="198" dy="130" font-size="20" font-weight="400"
+        fill="#FFFFFF" fill-opacity="0.7">Auffahrrampe · Lenkachse · ebenerdiges Be- und Entladen.</text>
+</g>
 </svg>
