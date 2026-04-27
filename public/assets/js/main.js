@@ -7,7 +7,10 @@
   const header = document.querySelector('[data-header]');
   const syncHeaderH = () => {
     if (header) {
-      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+      // getBoundingClientRect().bottom = distance from viewport top to header bottom,
+      // which correctly accounts for marquee + topbar above the sticky header.
+      const bottom = Math.max(0, header.getBoundingClientRect().bottom);
+      document.documentElement.style.setProperty('--header-h', bottom + 'px');
     }
   };
   const onScroll = () => {
@@ -28,6 +31,7 @@
   };
   if (toggle) {
     toggle.addEventListener('click', () => {
+      syncHeaderH(); // refresh before opening so nav position is accurate
       const open = document.body.classList.toggle('is-nav-open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
