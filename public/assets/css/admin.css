@@ -187,10 +187,13 @@ h1, h2, h3, h4 {
 
 /* ── Admin Layout ───────────────────────────────────────────── */
 .admin-layout {
-  display: grid;
-  grid-template-columns: var(--admin-sidebar-w) 1fr;
+  /* Kein Grid: die Sidebar ist position:fixed und zaehlt damit nicht als
+     Grid-Item -> .admin-main wuerde in die schmale linke Spalte rutschen
+     und hinter der Sidebar verschwinden (genau das war der Bug).
+     Stattdessen padding-left auf den Container, Main fliesst normal. */
   min-height: 100vh;
   padding-top: var(--admin-topbar-h);
+  padding-left: var(--admin-sidebar-w);
 }
 
 /* ── Sidebar ────────────────────────────────────────────────── */
@@ -889,7 +892,7 @@ h1, h2, h3, h4 {
   .admin-topbar__hamburger { display: flex; }
 
   .admin-layout {
-    grid-template-columns: 1fr;
+    padding-left: 0;
   }
 
   .admin-sidebar {
@@ -1106,5 +1109,5 @@ h1, h2, h3, h4 {
 /* ── Print: hide admin chrome ───────────────────────────────── */
 @media print {
   .admin-topbar, .admin-sidebar { display: none; }
-  .admin-layout { grid-template-columns: 1fr; }
+  .admin-layout { padding-left: 0; padding-top: 0; }
 }
