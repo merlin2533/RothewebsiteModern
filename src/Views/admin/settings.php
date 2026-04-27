@@ -130,31 +130,19 @@ $s = static function (string $key) use ($settings): string {
             ><?= e($s('meta_default_description')) ?></textarea>
             <p class="form-hint">Ideal: 140–160 Zeichen.</p>
         </div>
-        <div class="input-row">
-            <div class="form-group">
-                <label class="form-label" for="set-og-image">Standard-OG-Bild</label>
-                <select class="form-input form-select" id="set-og-image" name="og_default_image_id">
-                    <option value="">— kein Bild —</option>
-                    <?php foreach ($media as $m): ?>
-                        <option value="<?= (int) $m['id'] ?>" <?= $s('og_default_image_id') === (string) $m['id'] ? 'selected' : '' ?>>
-                            <?= e($m['original_name'] ?? $m['filename']) ?><?= !empty($m['alt_text']) ? ' – ' . e($m['alt_text']) : '' ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <p class="form-hint">Fallback-Bild für Social-Media-Sharing (min. 1200×630 px).</p>
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="set-hero-image">Standard-Hero-Bild</label>
-                <select class="form-input form-select" id="set-hero-image" name="hero_image_id">
-                    <option value="">— kein Bild —</option>
-                    <?php foreach ($media as $m): ?>
-                        <option value="<?= (int) $m['id'] ?>" <?= $s('hero_image_id') === (string) $m['id'] ? 'selected' : '' ?>>
-                            <?= e($m['original_name'] ?? $m['filename']) ?><?= !empty($m['alt_text']) ? ' – ' . e($m['alt_text']) : '' ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
+        <?= \App\Core\View::partial('admin_media_picker', [
+            'name'  => 'og_default_image_id',
+            'value' => (int) $s('og_default_image_id'),
+            'media' => $media,
+            'label' => 'Standard-OG-Bild (Social-Sharing-Fallback, min. 1200 × 630 px)',
+        ]) ?>
+
+        <?= \App\Core\View::partial('admin_media_picker', [
+            'name'  => 'hero_image_id',
+            'value' => (int) $s('hero_image_id'),
+            'media' => $media,
+            'label' => 'Standard-Hero-Bild (Startseite)',
+        ]) ?>
     </div>
 
     <!-- Section: Inhaber-Zitat -->

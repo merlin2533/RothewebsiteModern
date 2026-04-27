@@ -86,12 +86,62 @@ if (!function_exists('setting')) {
 }
 
 if (!function_exists('media_url')) {
-    function media_url(?array $media): string
+    function media_url(?array $media, int $width = 1600, string $format = 'jpg'): string
     {
         if (!$media || empty($media['filename'])) {
             return '';
         }
-        return '/uploads/' . ltrim((string) $media['filename'], '/');
+        return (string) (\App\Core\MediaResolver::variantUrl($media, $width, $format) ?? '');
+    }
+}
+
+if (!function_exists('media_picture')) {
+    /**
+     * Render a responsive <picture> element with WebP + JPG sources and srcset.
+     *
+     * @param array|null $media   Row from the `media` table
+     * @param string     $alt     Alt text (falls back to media.alt_text)
+     * @param string     $sizes   CSS sizes attribute (default 100vw)
+     * @param array      $widths  Variants to emit (descending). Defaults to 1600/1200/800
+     * @param string     $loading 'lazy' | 'eager'
+     * @param string     $cls     Additional CSS classes for the <img>
+     */
+    function media_picture(?array $media, string $alt = '', string $sizes = '100vw',
+                           array $widths = [1600, 1200, 800], string $loading = 'lazy',
+                           string $cls = ''): string
+    {
+        if (!$media) return '';
+        $altText = $alt !== '' ? $alt : (string) ($media['alt_text'] ?? '');
+
+        $jpgSrcset  = [];
+        $webpSrcset = [];
+        $largestJpg = '';
+        foreach ($widths as $w) {
+            $j = \App\Core\MediaResolver::variantUrl($media, (int) $w, 'jpg');
+            $p = \App\Core\MediaResolver::variantUrl($media, (int) $w, 'webp');
+            if ($j) { $jpgSrcset[] = $j . ' ' . (int) $w . 'w';  $largestJpg = $j; }
+            if ($p) { $webpSrcset[] = $p . ' ' . (int) $w . 'w'; }
+        }
+        if ($largestJpg === '') {
+            // Fallback fuer Pre-Resize-Eintraege
+            $largestJpg = '/uploads/' . ltrim((string) $media['filename'], '/');
+        }
+
+        $w = (int) ($media['width']  ?? 0);
+        $h = (int) ($media['height'] ?? 0);
+        $dim = ($w && $h) ? sprintf(' width="%d" height="%d"', $w, $h) : '';
+        $clsAttr = $cls !== '' ? ' class="' . e($cls) . '"' : '';
+
+        $html  = '<picture>';
+        if ($webpSrcset) {
+            $html .= '<source type="image/webp" srcset="' . e(implode(', ', $webpSrcset)) . '" sizes="' . e($sizes) . '">';
+        }
+        if ($jpgSrcset) {
+            $html .= '<source type="image/jpeg" srcset="' . e(implode(', ', $jpgSrcset)) . '" sizes="' . e($sizes) . '">';
+        }
+        $html .= '<img src="' . e($largestJpg) . '" alt="' . e($altText) . '" loading="' . e($loading) . '" decoding="async"' . $dim . $clsAttr . '>';
+        $html .= '</picture>';
+        return $html;
     }
 }
 
