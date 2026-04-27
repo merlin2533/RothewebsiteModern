@@ -1,6 +1,16 @@
 <?php declare(strict_types=1); ?>
-<div class="page-header">
-    <h1 class="page-header__title">Medien-Bibliothek</h1>
+<div class="page-head">
+    <div>
+        <h1>Medien-Bibliothek</h1>
+        <p class="page-head__sub">Originalbilder aus uploads/ + Web-Varianten unter assets/images/from-original/.</p>
+    </div>
+    <form method="post" action="/admin/media/sync" style="display:inline">
+        <?= \App\Core\Csrf::field() ?>
+        <button type="submit" class="btn-primary"
+                data-confirm="Web-Varianten aus uploads/ neu generieren? Das kann ein paar Sekunden dauern.">
+            Medien neu generieren
+        </button>
+    </form>
 </div>
 
 <!-- Upload-Form -->

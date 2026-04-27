@@ -83,6 +83,44 @@ final class MediaController
         echo View::admin('media_index', ['media' => $GLOBALS['mediaRepo']->all()]);
     }
 
+    /**
+     * Erzeugt aus allen uploads/ Originalbildern Web-Varianten in
+     * public/assets/images/from-original/ und seedet die media-Tabelle
+     * (idempotent). Idle-safe: kann beliebig oft ausgeloest werden.
+     */
+    public function sync(array $args): void
+    {
+        Auth::requireLogin();
+        if (!Csrf::verify(post('_token'))) {
+            flash('error', 'Ungültiges Sicherheits-Token.');
+            redirect('/admin/media');
+        }
+
+        set_time_limit(0);
+        @ini_set('memory_limit', '512M');
+
+        $base = $GLOBALS['config']['base_dir'];
+
+        ob_start();
+        $resizer = $base . '/scripts/resize_uploads.php';
+        if (is_file($resizer)) include $resizer;
+        $resizeOut = (string) ob_get_clean();
+
+        ob_start();
+        $seeder = $base . '/scripts/seed_media_from_originals.php';
+        if (is_file($seeder)) include $seeder;
+        $seedOut = (string) ob_get_clean();
+
+        AuditLogger::log('media.sync', 'media', null, [
+            'resize_lines' => substr_count($resizeOut, "\n"),
+            'seed_lines'   => substr_count($seedOut, "\n"),
+        ]);
+
+        $countMedia = (int) $GLOBALS['pdo']->query('SELECT COUNT(*) FROM media')->fetchColumn();
+        flash('success', "Mediensync ausgefuehrt: {$countMedia} Eintraege in der Library, Web-Varianten regeneriert.");
+        redirect('/admin/media');
+    }
+
     public function upload(array $args): void
     {
         Auth::requireLogin();

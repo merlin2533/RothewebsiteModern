@@ -347,10 +347,25 @@ body.is-nav-open .nav-toggle__icon--close { display: block; }
   line-height: 0.95;
   display: inline-block;
 }
-/* Solid copper – outline variant looked doubled-up on heavy weights. */
+/* Telefonnummer im CTA: weiss + sub-copper Akzent. Outline-Klasse hatte
+   schlechte Lesbarkeit auf Dunkelblau, jetzt klar Hochkontrast. */
 .industrial-num--outline {
-  color: var(--c-accent);
+  color: #fff;
 }
+.industrial-num--outline a {
+  color: #fff !important;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 0.15em;
+}
+.industrial-num--outline a::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 4px; background: var(--c-accent);
+  transform: scaleX(0.35); transform-origin: left;
+  transition: transform var(--t-base);
+}
+.industrial-num--outline a:hover::after { transform: scaleX(1); }
 
 /* ── Stats strip (dark) ──────────────────────────────────────────────────── */
 .stats { padding-block: clamp(3rem, 6vw, 5rem); }

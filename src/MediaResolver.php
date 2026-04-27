@@ -45,7 +45,18 @@ final class MediaResolver
             self::generateOnDemand($media, $width, $format);
         }
         if (!is_file($abs)) {
-            // Variante nicht erzeugbar -> fallback auf das in media.filename gespeicherte
+            // Fallback A: Original aus uploads/ direkt ausliefern (besser als
+            // ein 404-Bild). Der MediaResolver weiss dank Symlink
+            // public/uploads -> ../uploads, dass /uploads/<file> erreichbar ist.
+            $orig = self::findOriginal($media);
+            if ($orig !== null) {
+                $relUploads = '/uploads/' . basename($orig);
+                if (is_file(self::baseDir() . '/public' . $relUploads)
+                    || is_file(self::baseDir() . '/uploads/' . basename($orig))) {
+                    return $relUploads;
+                }
+            }
+            // Fallback B: was in media.filename steht (Vor-Resize-Stand)
             return '/' . ltrim(self::ensureWebPathFromFilename($media['filename'] ?? ''), '/');
         }
         return $rel;
@@ -90,50 +101,49 @@ final class MediaResolver
     }
 
     /**
-     * Versucht, die Variante on-the-fly aus dem Original in uploads/ zu erzeugen.
+     * Versucht, das Original-File in uploads/ zu finden (verschiedene
+     * Naming-Conventions werden geprueft: exakt, lowercase, base-prefix).
      */
-    private static function generateOnDemand(array $media, int $width, string $format): void
+    private static function findOriginal(array $media): ?string
     {
-        if (!extension_loaded('gd')) return;
+        $uploadsDir = self::baseDir() . '/uploads';
+        if (!is_dir($uploadsDir)) return null;
 
         $base = self::baseFromFilename($media['filename'] ?? '');
-        if ($base === null) return;
-
-        // Original suchen: probiere jpg/jpeg/png/webp
-        $uploadsDir = self::baseDir() . '/uploads';
-        $orig = null;
-        foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
-            // basename in our media row is the cleaned/lowercased version, so
-            // we try original names too via the media.original_name field
-        }
-
         $tryNames = array_filter([
             $media['original_name'] ?? null,
-            $base . '.jpg',
-            $base . '.jpeg',
-            $base . '.png',
-            $base . '.webp',
-            // Versions with capitalised originals (WordPress)
+            $base ? $base . '.jpg' : null,
+            $base ? $base . '.jpeg' : null,
+            $base ? $base . '.png' : null,
+            $base ? $base . '.webp' : null,
         ]);
         foreach ($tryNames as $name) {
             $candidate = $uploadsDir . '/' . $name;
-            if (is_file($candidate)) {
-                $orig = $candidate;
-                break;
-            }
+            if (is_file($candidate)) return $candidate;
         }
-        if (!$orig) {
-            // Letzter Versuch: case-insensitive search im uploads/-Verzeichnis
+        // Case-insensitive Suche
+        if ($base) {
             $low = strtolower($base);
             foreach ((scandir($uploadsDir) ?: []) as $f) {
                 if ($f === '.' || $f === '..' || str_starts_with($f, '.')) continue;
                 if (strtolower(pathinfo($f, PATHINFO_FILENAME)) === $low
                     || str_starts_with(strtolower(pathinfo($f, PATHINFO_FILENAME)), $low)) {
-                    $orig = $uploadsDir . '/' . $f;
-                    break;
+                    return $uploadsDir . '/' . $f;
                 }
             }
         }
+        return null;
+    }
+
+    /**
+     * Erzeugt die Variante on-the-fly aus dem Original in uploads/.
+     */
+    private static function generateOnDemand(array $media, int $width, string $format): void
+    {
+        if (!extension_loaded('gd')) return;
+        $base = self::baseFromFilename($media['filename'] ?? '');
+        if ($base === null) return;
+        $orig = self::findOriginal($media);
         if (!$orig) return;
 
         $finfo = new \finfo(FILEINFO_MIME_TYPE);

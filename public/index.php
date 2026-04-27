@@ -136,6 +136,7 @@ $router->post('/admin/timeline/{id}',          [AdminTimeline::class, 'update'])
 $router->post('/admin/timeline/{id}/delete',   [AdminTimeline::class, 'delete']);
 
 $router->get('/admin/media',                   [AdminMedia::class, 'index']);
+$router->post('/admin/media/sync',             [AdminMedia::class, 'sync']);
 $router->post('/admin/media/upload',           [AdminMedia::class, 'upload']);
 $router->post('/admin/media/{id}/alt',         [AdminMedia::class, 'updateAlt']);
 $router->post('/admin/media/{id}/delete',      [AdminMedia::class, 'delete']);
