@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /home/user/RothewebsiteModern*)",
+      "Bash(grep -r *)",
+      "Bash(grep -n *)",
+      "Bash(grep -A *)",
+      "Bash(grep -B *)",
+      "Bash(grep -i *)",
+      "Bash(grep -E *)",
+      "Bash(ls /home/user/RothewebsiteModern*)",
+      "Bash(ls -la *)",
+      "Bash(php -l *)",
+      "Bash(git fetch *)",
+      "mcp__github__pull_request_read",
+      "mcp__github__list_pull_requests"
+    ]
+  }
+}
