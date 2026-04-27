@@ -205,14 +205,38 @@ foreach (array_keys($preconnects) as $origin) {
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Inter-Variable.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/FamiljenGrotesk-Variable.woff2" crossorigin>
 
-<?php // Inline above-the-fold critical CSS, then load the full stylesheet.
-// We keep the stylesheet as a normal blocking <link> instead of the
-// rel=preload + inline onload swap, because that swap is silently blocked
-// by our CSP (script-src 'self', no unsafe-inline). With critical CSS
-// inlined the additional blocking is small and the page renders
-// reliably across all browsers and CSP configurations. ?>
+<?php // Hero/LCP image preload – wenn der Controller eines markiert hat
+if (!empty($page['lcp_image_url'])):
+    $lcpType = !empty($page['lcp_image_type']) ? (string) $page['lcp_image_type'] : 'image/jpeg';
+?>
+<link rel="preload" as="image" href="<?= e((string) $page['lcp_image_url']) ?>"
+      type="<?= e($lcpType) ?>" fetchpriority="high">
+<?php endif; ?>
+
+<?php // Inline above-the-fold critical CSS, then load the full stylesheet. ?>
 <?= \App\Core\View::partial('critical_css') ?>
 <link rel="stylesheet" href="<?= e(asset('css/styles.css')) ?>">
+
+<?php // ── Speculation Rules: prerender hovered/focussed internal links ──
+// Schneller Page-Wechsel ohne Tracking-Risiko: Same-Origin only,
+// max. 2 prerenders, "moderate" eagerness = bei Hover/Focus, nicht bei
+// Page-Load. Alle /admin und /api Pfade ausgeschlossen. ?>
+<script type="speculationrules">
+{
+  "prerender": [{
+    "where": {
+      "and": [
+        { "href_matches": "/*" },
+        { "not": { "href_matches": "/admin/*" } },
+        { "not": { "href_matches": "/api/*" } },
+        { "not": { "href_matches": "/install*" } },
+        { "not": { "selector_matches": "[data-no-prerender]" } }
+      ]
+    },
+    "eagerness": "moderate"
+  }]
+}
+</script>
 
 <?php foreach ($schemas as $schema): ?>
 <script type="application/ld+json"><?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>

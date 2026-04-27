@@ -108,7 +108,7 @@ if (!function_exists('media_picture')) {
      */
     function media_picture(?array $media, string $alt = '', string $sizes = '100vw',
                            array $widths = [1600, 1200, 800], string $loading = 'lazy',
-                           string $cls = ''): string
+                           string $cls = '', string $fetchpriority = ''): string
     {
         if (!$media) return '';
         $altText = $alt !== '' ? $alt : (string) ($media['alt_text'] ?? '');
@@ -116,10 +116,15 @@ if (!function_exists('media_picture')) {
         $jpgSrcset  = [];
         $webpSrcset = [];
         $largestJpg = '';
+        // $widths ist absteigend sortiert (1600, 1200, 800) – der ERSTE
+        // erfolgreiche jpg-URL ist die groesste Variante.
         foreach ($widths as $w) {
             $j = \App\Core\MediaResolver::variantUrl($media, (int) $w, 'jpg');
             $p = \App\Core\MediaResolver::variantUrl($media, (int) $w, 'webp');
-            if ($j) { $jpgSrcset[] = $j . ' ' . (int) $w . 'w';  $largestJpg = $j; }
+            if ($j) {
+                $jpgSrcset[] = $j . ' ' . (int) $w . 'w';
+                if ($largestJpg === '') $largestJpg = $j;
+            }
             if ($p) { $webpSrcset[] = $p . ' ' . (int) $w . 'w'; }
         }
         if ($largestJpg === '') {
@@ -131,6 +136,7 @@ if (!function_exists('media_picture')) {
         $h = (int) ($media['height'] ?? 0);
         $dim = ($w && $h) ? sprintf(' width="%d" height="%d"', $w, $h) : '';
         $clsAttr = $cls !== '' ? ' class="' . e($cls) . '"' : '';
+        $fpAttr  = $fetchpriority !== '' ? ' fetchpriority="' . e($fetchpriority) . '"' : '';
 
         $html  = '<picture>';
         if ($webpSrcset) {
@@ -139,7 +145,7 @@ if (!function_exists('media_picture')) {
         if ($jpgSrcset) {
             $html .= '<source type="image/jpeg" srcset="' . e(implode(', ', $jpgSrcset)) . '" sizes="' . e($sizes) . '">';
         }
-        $html .= '<img src="' . e($largestJpg) . '" alt="' . e($altText) . '" loading="' . e($loading) . '" decoding="async"' . $dim . $clsAttr . '>';
+        $html .= '<img src="' . e($largestJpg) . '" alt="' . e($altText) . '" loading="' . e($loading) . '" decoding="async"' . $fpAttr . $dim . $clsAttr . '>';
         $html .= '</picture>';
         return $html;
     }

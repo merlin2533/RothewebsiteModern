@@ -55,9 +55,20 @@ final class VehiclesController
                 ? mb_substr(strip_tags((string) $vehicle['marketing_text']), 0, 250)
                 : (string) ($vehicle['special_features'] ?? ''),
             'category'    => 'Transport-Equipment',
-            'image'       => $imageUrl,
+            'image'       => [
+                '@type'  => 'ImageObject',
+                'url'    => $imageUrl,
+                'width'  => 1200,
+                'height' => 630,
+            ],
             'url'         => $base . '/fahrzeuge/' . $vehicle['slug'],
             'brand'       => ['@type' => 'Brand', 'name' => setting('company_name')],
+            'manufacturer'=> [
+                '@type'    => 'MovingCompany',
+                'name'     => setting('company_name'),
+                'url'      => $base,
+                'telephone'=> setting('phone_e164'),
+            ],
             'additionalProperty' => $additional,
         ];
 
@@ -75,6 +86,9 @@ final class VehiclesController
                 'hero_headline'    => $vehicle['name'],
                 'hero_sub'         => $vehicle['special_features'] ?? '',
                 'og_image_url'     => $ogUrl,
+                // LCP-Preload: das Fahrzeug-Bild ist above-the-fold
+                'lcp_image_url'    => $imageUrl,
+                'lcp_image_type'   => str_ends_with($imageUrl, '.png') ? 'image/png' : 'image/jpeg',
             ],
         ]);
     }
