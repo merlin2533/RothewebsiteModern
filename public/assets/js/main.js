@@ -121,6 +121,86 @@
     } catch (_) { /* ignore */ }
   };
 
+  // ── Initial page_view + click-IDs / UTM ins dataLayer ────────────────────
+  // Wird VOR allen User-Aktionen gepushed, damit Tag-Manager das Event
+  // beim ersten "consent.granted" zur Verfuegung haben.
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var attr = {};
+    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid','msclkid'].forEach(function (k) {
+      var v = p.get(k);
+      if (v) attr[k] = v.slice(0, 200);
+    });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({
+      event: 'page_view_enriched',
+      page:  location.pathname,
+      lang:  document.documentElement.lang || 'de'
+    }, attr));
+  })();
+
+  // ── Web Vitals via PerformanceObserver → /api/track ──────────────────────
+  // Sammelt LCP, INP (oder FID Fallback), CLS und sendet sie via sendBeacon
+  // wenn der Tab in den Hintergrund geht (zuverlaessigster Zeitpunkt).
+  (function () {
+    if (!('PerformanceObserver' in window)) return;
+    var vitals = { lcp: 0, cls: 0, inp: 0, ttfb: 0 };
+
+    try { vitals.ttfb = performance.getEntriesByType('navigation')[0]?.responseStart || 0; } catch (_) {}
+
+    var lcpObs;
+    try {
+      lcpObs = new PerformanceObserver(function (list) {
+        var entries = list.getEntries();
+        var last = entries[entries.length - 1];
+        if (last && last.renderTime) vitals.lcp = last.renderTime;
+        else if (last && last.loadTime) vitals.lcp = last.loadTime;
+      });
+      lcpObs.observe({ type: 'largest-contentful-paint', buffered: true });
+    } catch (_) {}
+
+    try {
+      new PerformanceObserver(function (list) {
+        list.getEntries().forEach(function (e) {
+          if (!e.hadRecentInput) vitals.cls += e.value;
+        });
+      }).observe({ type: 'layout-shift', buffered: true });
+    } catch (_) {}
+
+    try {
+      new PerformanceObserver(function (list) {
+        list.getEntries().forEach(function (e) {
+          if (e.duration && e.duration > vitals.inp) vitals.inp = e.duration;
+        });
+      }).observe({ type: 'event', buffered: true, durationThreshold: 16 });
+    } catch (_) {}
+
+    function flush() {
+      try {
+        if (lcpObs) lcpObs.takeRecords();
+      } catch (_) {}
+      var payload = {
+        event: 'web_vitals',
+        page:  location.pathname,
+        lcp:   Math.round(vitals.lcp),
+        cls:   Math.round(vitals.cls * 1000) / 1000,
+        inp:   Math.round(vitals.inp),
+        ttfb:  Math.round(vitals.ttfb)
+      };
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(payload);
+      try {
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('/api/track', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+        }
+      } catch (_) {}
+    }
+    addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') flush();
+    });
+    addEventListener('pagehide', flush);
+  })();
+
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;

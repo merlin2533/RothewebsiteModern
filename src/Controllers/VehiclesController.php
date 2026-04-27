@@ -55,9 +55,20 @@ final class VehiclesController
                 ? mb_substr(strip_tags((string) $vehicle['marketing_text']), 0, 250)
                 : (string) ($vehicle['special_features'] ?? ''),
             'category'    => 'Transport-Equipment',
-            'image'       => $imageUrl,
+            'image'       => [
+                '@type'  => 'ImageObject',
+                'url'    => $imageUrl,
+                'width'  => 1200,
+                'height' => 630,
+            ],
             'url'         => $base . '/fahrzeuge/' . $vehicle['slug'],
             'brand'       => ['@type' => 'Brand', 'name' => setting('company_name')],
+            'manufacturer'=> [
+                '@type'    => 'MovingCompany',
+                'name'     => setting('company_name'),
+                'url'      => $base,
+                'telephone'=> setting('phone_e164'),
+            ],
             'additionalProperty' => $additional,
         ];
 

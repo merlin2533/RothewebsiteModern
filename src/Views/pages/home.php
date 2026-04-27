@@ -10,7 +10,16 @@ $email = setting('email', 'info@rothe-transporte.de');
 ?>
 <section class="hero hero--home" data-reveal>
   <div class="hero__media" aria-hidden="true">
-    <img src="/assets/images/placeholders/hero-home.svg" alt="" loading="eager" fetchpriority="high">
+    <?php
+      // Bevorzuge echtes Hero-Foto aus Settings, falle auf SVG-Platzhalter zurueck.
+      $heroId = (int) setting('hero_image_id', '0');
+      $heroMedia = $heroId > 0 ? $GLOBALS['mediaRepo']->find($heroId) : null;
+      if ($heroMedia) {
+          echo media_picture($heroMedia, '', '100vw', [1600, 1200, 800], 'eager', '', 'high');
+      } else {
+          echo '<img src="/assets/images/placeholders/hero-home.svg" alt="" loading="eager" fetchpriority="high">';
+      }
+    ?>
   </div>
   <div class="hero__panel">
     <div class="container">

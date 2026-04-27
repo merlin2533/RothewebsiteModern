@@ -88,6 +88,7 @@ $router->get('/kontakt',               [ContactController::class, 'index']);
 $router->get('/impressum',             [LegalController::class, 'imprint']);
 $router->get('/datenschutz',           [LegalController::class, 'privacy']);
 $router->get('/sitemap.xml',           [SitemapController::class, 'xml']);
+$router->get('/sitemap_index.xml',     [SitemapController::class, 'index']);
 $router->get('/sitemap-images.xml',    [SitemapController::class, 'imageSitemap']);
 $router->get('/robots.txt',            [SitemapController::class, 'robots']);
 $router->get('/llms.txt',              [SitemapController::class, 'llmsTxt']);

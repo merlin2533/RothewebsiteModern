@@ -52,7 +52,7 @@ $structured_data = [
         $vMedia = !empty($v['image_id']) ? $GLOBALS['mediaRepo']->find((int) $v['image_id']) : null;
         if ($vMedia) {
             echo media_picture($vMedia, $v['image_alt'] ?? $v['name'],
-                '(min-width: 900px) 60vw, 100vw', [1600, 1200, 800], 'eager');
+                '(min-width: 900px) 60vw, 100vw', [1600, 1200, 800], 'eager', '', 'high');
         } else {
             $fallback = '/assets/images/placeholders/vehicle-' . preg_replace('#-.*$#', '', $v['slug']) . '.svg';
             echo '<img src="' . e($fallback) . '" alt="' . e($v['name']) . '" loading="eager">';

@@ -141,6 +141,7 @@ final class SitemapController
         }
 
         // Sitemaps
+        echo "Sitemap: {$base}/sitemap_index.xml\n";
         echo "Sitemap: {$base}/sitemap.xml\n";
         echo "Sitemap: {$base}/sitemap-images.xml\n";
     }
