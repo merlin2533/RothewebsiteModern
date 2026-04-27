@@ -38,14 +38,14 @@ $phoneDisplay = setting('phone', '07127 18231');
         <tbody>
           <?php foreach ($vehicles as $v): ?>
           <tr>
-            <th scope="row"><a href="/fahrzeuge/<?= e($v['slug']) ?>"><?= e($v['name']) ?></a></th>
-            <td class="num"><?= e(format_meters($v['length_m'] !== null ? (float) $v['length_m'] : null)) ?></td>
-            <td class="num"><?= e(format_meters($v['width_m'] !== null ? (float) $v['width_m'] : null)) ?></td>
-            <td class="num"><?= e(format_meters($v['height_m'] !== null ? (float) $v['height_m'] : null)) ?></td>
-            <td class="num"><?= e(format_kg($v['payload_kg'] !== null ? (int) $v['payload_kg'] : null)) ?></td>
-            <td class="num"><?= e($v['euro_pallets'] !== null ? (string) $v['euro_pallets'] : '–') ?></td>
-            <td class="num"><?= e($v['axles'] !== null ? (string) $v['axles'] : '–') ?></td>
-            <td><?= e($v['special_features'] ?? '') ?></td>
+            <td><a href="/fahrzeuge/<?= e($v['slug']) ?>"><?= e($v['name']) ?></a></td>
+            <td class="num" data-label="Länge"><?= e(format_meters($v['length_m'] !== null ? (float) $v['length_m'] : null)) ?></td>
+            <td class="num" data-label="Breite"><?= e(format_meters($v['width_m'] !== null ? (float) $v['width_m'] : null)) ?></td>
+            <td class="num" data-label="Höhe"><?= e(format_meters($v['height_m'] !== null ? (float) $v['height_m'] : null)) ?></td>
+            <td class="num" data-label="Nutzlast"><?= e(format_kg($v['payload_kg'] !== null ? (int) $v['payload_kg'] : null)) ?></td>
+            <td class="num" data-label="Paletten"><?= e($v['euro_pallets'] !== null ? (string) $v['euro_pallets'] : '–') ?></td>
+            <td class="num" data-label="Achsen"><?= e($v['axles'] !== null ? (string) $v['axles'] : '–') ?></td>
+            <td data-label="Besonderheit"><?= e($v['special_features'] ?? '') ?></td>
           </tr>
           <?php endforeach; ?>
         </tbody>
