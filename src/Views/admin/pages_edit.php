@@ -145,30 +145,19 @@ $isStandard = in_array($page['slug'] ?? '', $standardSlugs, true);
 
     <!-- Tab: Bilder -->
     <div id="tab-images" class="tabs__panel" data-tab-panel hidden role="tabpanel">
-        <div class="form-group">
-            <label class="form-label" for="page-hero-image">Hero-Bild</label>
-            <select class="form-input form-select" id="page-hero-image" name="hero_image_id">
-                <option value="">— kein Bild —</option>
-                <?php foreach ($media as $m): ?>
-                    <option value="<?= (int) $m['id'] ?>" <?= (int) ($page['hero_image_id'] ?? 0) === (int) $m['id'] ? 'selected' : '' ?>>
-                        <?= e($m['original_name'] ?? $m['filename']) ?><?= !empty($m['alt_text']) ? ' – ' . e($m['alt_text']) : '' ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+        <?= \App\Core\View::partial('admin_media_picker', [
+            'name'  => 'hero_image_id',
+            'value' => $page['hero_image_id'] ?? null,
+            'media' => $media,
+            'label' => 'Hero-Bild',
+        ]) ?>
 
-        <div class="form-group">
-            <label class="form-label" for="page-og-image">OG-Bild (Open Graph / Social Media)</label>
-            <select class="form-input form-select" id="page-og-image" name="og_image_id">
-                <option value="">— kein Bild —</option>
-                <?php foreach ($media as $m): ?>
-                    <option value="<?= (int) $m['id'] ?>" <?= (int) ($page['og_image_id'] ?? 0) === (int) $m['id'] ? 'selected' : '' ?>>
-                        <?= e($m['original_name'] ?? $m['filename']) ?><?= !empty($m['alt_text']) ? ' – ' . e($m['alt_text']) : '' ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <p class="form-hint">Empfehlung: mind. 1200 × 630 Pixel. Wird beim Teilen in sozialen Netzwerken angezeigt.</p>
-        </div>
+        <?= \App\Core\View::partial('admin_media_picker', [
+            'name'  => 'og_image_id',
+            'value' => $page['og_image_id'] ?? null,
+            'media' => $media,
+            'label' => 'OG-Bild (Open Graph / Social Media) – mind. 1200 × 630 px',
+        ]) ?>
     </div>
 
     <div class="form-actions">

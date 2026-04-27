@@ -199,6 +199,72 @@
     initSlugGenerator();
     initFlashDismiss();
     initSidebar();
+    initMediaPicker();
   });
+
+  // ── Media picker (modal grid for image_id fields) ─────────────────────
+  function initMediaPicker() {
+    document.querySelectorAll('[data-picker-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var modal = document.getElementById(btn.dataset.pickerOpen);
+        if (modal) modal.hidden = false;
+      });
+    });
+    document.querySelectorAll('[data-picker-close]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var modal = document.getElementById(el.dataset.pickerClose);
+        if (modal) modal.hidden = true;
+      });
+    });
+    document.querySelectorAll('[data-picker-search]').forEach(function (input) {
+      input.addEventListener('input', function () {
+        var grid = input.closest('.media-modal').querySelector('[data-picker-grid]');
+        if (!grid) return;
+        var q = (input.value || '').toLowerCase().trim();
+        grid.querySelectorAll('.media-tile').forEach(function (t) {
+          if (!q) { t.classList.remove('is-hidden'); return; }
+          var hay = (t.dataset.search || '').toLowerCase();
+          t.classList.toggle('is-hidden', hay.indexOf(q) === -1);
+        });
+      });
+    });
+    document.querySelectorAll('[data-picker-pick]').forEach(function (tile) {
+      tile.addEventListener('click', function () {
+        var pickerId = tile.dataset.pickerPick;
+        var picker = document.querySelector('[data-picker="' + pickerId + '"]');
+        if (!picker) return;
+        var input = picker.querySelector('[data-picker-input]');
+        if (input) input.value = tile.dataset.id || '';
+        var current = picker.querySelector('[data-picker-current]');
+        if (current) {
+          var meta = (tile.dataset.w && tile.dataset.h)
+            ? '#' + tile.dataset.id + ' · ' + tile.dataset.w + '×' + tile.dataset.h
+            : '#' + tile.dataset.id;
+          current.innerHTML = ''
+            + '<img src="' + (tile.dataset.thumb || '') + '" alt="' + (tile.dataset.alt || '') + '" width="120" height="80" loading="lazy">'
+            + '<div class="media-picker__meta"><strong>' + (tile.dataset.name || '') + '</strong>'
+            + '<span class="muted">' + meta + '</span></div>';
+        }
+        var modal = document.getElementById(pickerId);
+        if (modal) modal.hidden = true;
+      });
+    });
+    document.querySelectorAll('[data-picker-clear]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var picker = document.querySelector('[data-picker="' + btn.dataset.pickerClear + '"]');
+        if (!picker) return;
+        var input = picker.querySelector('[data-picker-input]');
+        if (input) input.value = '0';
+        var current = picker.querySelector('[data-picker-current]');
+        if (current) current.innerHTML = '<span class="muted">Kein Bild ausgewaehlt</span>';
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('.media-modal').forEach(function (m) {
+        if (!m.hidden) m.hidden = true;
+      });
+    });
+  }
 
 }());

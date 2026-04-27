@@ -147,17 +147,12 @@
     <div class="form-section">
         <h2 class="form-section__title">Bild &amp; Status</h2>
 
-        <div class="form-group">
-            <label class="form-label" for="v-image">Fahrzeugbild</label>
-            <select class="form-input form-select" id="v-image" name="image_id">
-                <option value="">— kein Bild —</option>
-                <?php foreach ($media as $m): ?>
-                    <option value="<?= (int) $m['id'] ?>" <?= (int) ($vehicle['image_id'] ?? 0) === (int) $m['id'] ? 'selected' : '' ?>>
-                        <?= e($m['original_name'] ?? $m['filename']) ?><?= !empty($m['alt_text']) ? ' – ' . e($m['alt_text']) : '' ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+        <?= \App\Core\View::partial('admin_media_picker', [
+            'name'  => 'image_id',
+            'value' => $vehicle['image_id'] ?? null,
+            'media' => $media,
+            'label' => 'Fahrzeugbild',
+        ]) ?>
 
         <div class="input-row">
             <div class="form-group">

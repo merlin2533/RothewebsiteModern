@@ -48,8 +48,16 @@ $structured_data = [
 <section class="section vehicle-detail" data-reveal>
   <div class="container vehicle-detail__grid">
     <figure class="vehicle-detail__media">
-      <img src="<?= e($v['image_filename'] ? '/uploads/' . $v['image_filename'] : '/assets/images/placeholders/vehicle-' . preg_replace('#-.*$#', '', $v['slug']) . '.svg') ?>"
-           alt="<?= e($v['image_alt'] ?? $v['name']) ?>" loading="eager">
+      <?php
+        $vMedia = !empty($v['image_id']) ? $GLOBALS['mediaRepo']->find((int) $v['image_id']) : null;
+        if ($vMedia) {
+            echo media_picture($vMedia, $v['image_alt'] ?? $v['name'],
+                '(min-width: 900px) 60vw, 100vw', [1600, 1200, 800], 'eager');
+        } else {
+            $fallback = '/assets/images/placeholders/vehicle-' . preg_replace('#-.*$#', '', $v['slug']) . '.svg';
+            echo '<img src="' . e($fallback) . '" alt="' . e($v['name']) . '" loading="eager">';
+        }
+      ?>
     </figure>
     <div class="vehicle-detail__body">
       <p class="vehicle-detail__lead"><?= e($v['marketing_text'] ?? '') ?></p>
