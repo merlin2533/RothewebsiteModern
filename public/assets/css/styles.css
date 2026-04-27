@@ -237,27 +237,25 @@ body.is-nav-open .nav-toggle__icon--close { display: block; }
 @media (max-width: 899px) {
   .nav-toggle { display: inline-flex; }
   .primary-nav {
-    /* Full-width dropdown from below the header (marquee + topbar + header = --header-h) */
+    /* Slide in from right, starts BELOW full header stack (marquee+topbar+header = --header-h) */
     position: fixed;
-    top: var(--header-h, 68px); left: 0; right: 0;
-    max-height: calc(100dvh - var(--header-h, 68px));
+    top: var(--header-h, 68px); right: 0; bottom: 0; left: auto;
+    width: min(300px, 100vw);
     background: #fff;
-    color: var(--c-ink);
     flex-direction: column; align-items: stretch;
-    padding: 0 0 1.5rem;
+    padding: 0 0 2rem;
     gap: 0;
     border-top: 3px solid var(--c-accent);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-    /* Hidden: fades slightly down */
-    opacity: 0; visibility: hidden;
-    transform: translateY(-6px);
-    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0.18s;
+    border-left: 1px solid var(--c-line);
+    box-shadow: -6px 0 28px rgba(0,0,0,0.15);
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
     z-index: 60;
     overflow-y: auto;
   }
   .primary-nav a {
     color: var(--c-ink); font-size: 1rem; font-weight: 600;
-    padding: 0.95rem 1.5rem;
+    padding: 0.9rem 1.5rem;
     border-bottom: 1px solid var(--c-line);
     display: flex; align-items: center;
   }
@@ -275,17 +273,14 @@ body.is-nav-open .nav-toggle__icon--close { display: block; }
     padding-left: 1.4rem !important;
     justify-content: center;
   }
-  body.is-nav-open .primary-nav {
-    opacity: 1; visibility: visible; transform: translateY(0);
-    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0s;
-  }
+  body.is-nav-open .primary-nav { transform: translateX(0); }
   body.is-nav-open { overflow: hidden; }
-  /* Dim backdrop below the nav */
+  /* Dark backdrop below the header, behind the nav panel */
   body.is-nav-open::after {
     content: '';
     position: fixed;
     top: var(--header-h, 68px); left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.45);
     z-index: 59;
   }
 }
