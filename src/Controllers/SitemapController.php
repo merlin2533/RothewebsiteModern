@@ -34,6 +34,10 @@ final class SitemapController
         foreach ($landings as $lp) {
             $entries[] = [$base . '/' . $lp['slug'], $lp['updated_at'] ?? date('Y-m-d'), 'monthly', '0.8'];
         }
+        // Galerie (wenn aktiv)
+        if (setting('gallery_enabled', '1') === '1') {
+            $entries[] = [$base . '/galerie', date('Y-m-d'), 'weekly', '0.6'];
+        }
 
         $latest = max(array_map(static fn($e) => $e[1], $entries));
         $this->sendCacheable('application/xml; charset=utf-8', $latest);

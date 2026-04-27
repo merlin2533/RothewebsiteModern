@@ -63,6 +63,7 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
       <a href="/ueber-uns"<?= active_nav('ueber-uns', $cur) ?>>Über uns</a>
       <a href="/leistungen"<?= active_nav('leistungen', $cur) ?>>Leistungen</a>
       <a href="/fahrzeuge"<?= active_nav('fahrzeuge', $cur) ?>>Fahrzeuge</a>
+      <a href="/galerie"<?= active_nav('galerie', $cur) ?>>Galerie</a>
       <a href="/karriere"<?= active_nav('karriere', $cur) ?>>Karriere</a>
       <a href="/kontakt"<?= active_nav('kontakt', $cur) ?>>Kontakt</a>
       <a class="btn btn--primary primary-nav__cta" href="mailto:<?= e($email) ?>?subject=<?= rawurlencode('Transportanfrage') ?>">
@@ -95,6 +96,7 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
       <ul>
         <li><a href="/leistungen">Leistungen</a></li>
         <li><a href="/fahrzeuge">Fahrzeuge</a></li>
+        <li><a href="/galerie">Galerie</a></li>
         <li><a href="/ueber-uns">Über uns</a></li>
         <li><a href="/karriere">Karriere</a></li>
       </ul>
