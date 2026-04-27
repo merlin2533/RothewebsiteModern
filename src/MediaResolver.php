@@ -106,10 +106,13 @@ final class MediaResolver
      */
     private static function findOriginal(array $media): ?string
     {
-        $uploadsDir = self::baseDir() . '/uploads';
-        if (!is_dir($uploadsDir)) return null;
-
         $base = self::baseFromFilename($media['filename'] ?? '');
+        // Check multiple possible upload directories: private uploads/ and public/uploads/
+        $candidates = [
+            self::baseDir() . '/uploads',
+            self::baseDir() . '/public/uploads',
+        ];
+
         $tryNames = array_filter([
             $media['original_name'] ?? null,
             $base ? $base . '.jpg' : null,
@@ -117,18 +120,23 @@ final class MediaResolver
             $base ? $base . '.png' : null,
             $base ? $base . '.webp' : null,
         ]);
-        foreach ($tryNames as $name) {
-            $candidate = $uploadsDir . '/' . $name;
-            if (is_file($candidate)) return $candidate;
-        }
-        // Case-insensitive Suche
-        if ($base) {
-            $low = strtolower($base);
-            foreach ((scandir($uploadsDir) ?: []) as $f) {
-                if ($f === '.' || $f === '..' || str_starts_with($f, '.')) continue;
-                if (strtolower(pathinfo($f, PATHINFO_FILENAME)) === $low
-                    || str_starts_with(strtolower(pathinfo($f, PATHINFO_FILENAME)), $low)) {
-                    return $uploadsDir . '/' . $f;
+
+        foreach ($candidates as $uploadsDir) {
+            if (!is_dir($uploadsDir)) continue;
+            foreach ($tryNames as $name) {
+                $candidate = $uploadsDir . '/' . $name;
+                if (is_file($candidate)) return $candidate;
+            }
+            // Case-insensitive search within this directory
+            if ($base) {
+                $low = strtolower($base);
+                foreach ((scandir($uploadsDir) ?: []) as $f) {
+                    if ($f === '.' || $f === '..' || str_starts_with($f, '.')) continue;
+                    if (!is_file($uploadsDir . '/' . $f)) continue;
+                    if (strtolower(pathinfo($f, PATHINFO_FILENAME)) === $low
+                        || str_starts_with(strtolower(pathinfo($f, PATHINFO_FILENAME)), $low)) {
+                        return $uploadsDir . '/' . $f;
+                    }
                 }
             }
         }
@@ -187,12 +195,13 @@ final class MediaResolver
     {
         if ($filename === '') return '';
         if (str_starts_with($filename, '/')) return $filename;
-        // Bekannte Praefixe
-        if (str_starts_with($filename, 'from-original/')
-            || str_starts_with($filename, 'assets/')) {
+        if (str_starts_with($filename, 'from-original/')) {
+            return '/assets/images/' . $filename;
+        }
+        if (str_starts_with($filename, 'assets/')) {
             return '/' . ltrim($filename, '/');
         }
-        // Klassischer Upload-Pfad (Datum-Hierarchie aus MediaController::upload)
+        // Classic upload path (date hierarchy from MediaController::upload)
         return '/uploads/' . ltrim($filename, '/');
     }
 

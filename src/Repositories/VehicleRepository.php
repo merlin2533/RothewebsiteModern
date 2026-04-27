@@ -11,7 +11,8 @@ final class VehicleRepository
     public function all(): array
     {
         $rows = $this->pdo->query('
-            SELECT v.*, m.filename AS image_filename, m.alt_text AS image_alt
+            SELECT v.*, m.filename AS image_filename, m.alt_text AS image_alt,
+                   m.width AS image_width, m.height AS image_height
             FROM vehicles v LEFT JOIN media m ON v.image_id = m.id
             ORDER BY v.sort_order, v.id
         ')->fetchAll();
@@ -21,7 +22,8 @@ final class VehicleRepository
     public function allActive(): array
     {
         $rows = $this->pdo->query('
-            SELECT v.*, m.filename AS image_filename, m.alt_text AS image_alt
+            SELECT v.*, m.filename AS image_filename, m.alt_text AS image_alt,
+                   m.width AS image_width, m.height AS image_height
             FROM vehicles v LEFT JOIN media m ON v.image_id = m.id
             WHERE v.is_active = 1
             ORDER BY v.sort_order, v.id
@@ -32,7 +34,8 @@ final class VehicleRepository
     public function findBySlug(string $slug): ?array
     {
         $stmt = $this->pdo->prepare('
-            SELECT v.*, m.filename AS image_filename, m.alt_text AS image_alt
+            SELECT v.*, m.filename AS image_filename, m.alt_text AS image_alt,
+                   m.width AS image_width, m.height AS image_height
             FROM vehicles v LEFT JOIN media m ON v.image_id = m.id
             WHERE v.slug = ? LIMIT 1
         ');

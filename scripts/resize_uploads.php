@@ -25,7 +25,12 @@ set_time_limit(0);
 ini_set('memory_limit', '512M');
 
 $baseDir   = dirname(__DIR__);
-$srcDir    = $argv[1] ?? ($baseDir . '/uploads');
+// Default: public/uploads/ so web-uploaded images are processed correctly.
+// Fallback to private uploads/ for backward-compat.
+$defaultSrc = is_dir($baseDir . '/public/uploads') && count(scandir($baseDir . '/public/uploads')) > 3
+    ? $baseDir . '/public/uploads'
+    : $baseDir . '/uploads';
+$srcDir    = $argv[1] ?? $defaultSrc;
 $outDir    = $baseDir . '/public/assets/images/from-original';
 $manifestF = $outDir . '/_manifest.json';
 @mkdir($outDir, 0755, true);

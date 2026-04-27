@@ -25,15 +25,30 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee__track">
-    <?php for ($i = 0; $i < 10; $i++): ?>
-      <span>Touren in&nbsp; <strong>DE · AT · CH · FR · NL · BE</strong>&nbsp; ·&nbsp; </span>
-    <?php endfor; ?>
+    <span>Maschinentransporte &nbsp;·&nbsp; </span>
+    <span>Schwerlast bis <strong>28 Tonnen</strong> &nbsp;·&nbsp; </span>
+    <span>Sondertransporte &nbsp;·&nbsp; </span>
+    <span>Eigene Lagerhallen &nbsp;·&nbsp; </span>
+    <span>Direktfahrten &nbsp;·&nbsp; </span>
+    <span>Kranarbeiten &amp; Montage &nbsp;·&nbsp; </span>
+    <span>Touren: <strong>DE · AT · CH · FR · NL · BE</strong> &nbsp;·&nbsp; </span>
+    <span>Seit <strong><?= e(setting('founded_year', '1978')) ?></strong> &nbsp;·&nbsp; </span>
+    <span>2. Generation &nbsp;·&nbsp; </span>
+    <span>Maschinentransporte &nbsp;·&nbsp; </span>
+    <span>Schwerlast bis <strong>28 Tonnen</strong> &nbsp;·&nbsp; </span>
+    <span>Sondertransporte &nbsp;·&nbsp; </span>
+    <span>Eigene Lagerhallen &nbsp;·&nbsp; </span>
+    <span>Direktfahrten &nbsp;·&nbsp; </span>
+    <span>Kranarbeiten &amp; Montage &nbsp;·&nbsp; </span>
+    <span>Touren: <strong>DE · AT · CH · FR · NL · BE</strong> &nbsp;·&nbsp; </span>
+    <span>Seit <strong><?= e(setting('founded_year', '1978')) ?></strong> &nbsp;·&nbsp; </span>
+    <span>2. Generation &nbsp;·&nbsp; </span>
   </div>
 </div>
 
 <div class="topbar">
   <div class="container topbar__inner">
-    <span class="topbar__label">Ihre Spedition seit <?= e(setting('founded_year', '1978')) ?></span>
+    <span class="topbar__label">Mo – Fr &nbsp;07:00 – 17:00 Uhr &nbsp;·&nbsp; Notfallnummer 24/7</span>
     <div class="topbar__contact">
       <a class="topbar__link" href="tel:<?= e($phoneE164) ?>">
         <svg width="16" height="16" aria-hidden="true"><use href="#icon-phone"/></svg>
@@ -50,7 +65,7 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
 <header class="site-header" data-header>
   <div class="container site-header__inner">
     <a class="brand" href="/" aria-label="Startseite – <?= e($company) ?>">
-      <img src="/assets/images/logo.svg" alt="" width="180" height="48" class="brand__logo">
+      <img src="/uploads/cropped-cropped-cropped-Logo_Vector.png" alt="Rothe Transporte · Spedition" class="brand__logo">
     </a>
 
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="primary-nav" aria-label="Menü öffnen">

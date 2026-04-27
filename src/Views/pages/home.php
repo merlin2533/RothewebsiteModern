@@ -85,13 +85,25 @@ $email = setting('email', 'info@rothe-transporte.de');
       <h2>Klar gerechnet, fair geladen.</h2>
     </header>
     <ul class="card-grid card-grid--2">
-      <?php $i = 0; foreach ($vehicles as $v): $i++; ?>
+      <?php $i = 0; foreach ($vehicles as $v): $i++;
+        $vMedia = !empty($v['image_filename']) ? [
+            'filename' => $v['image_filename'],
+            'alt_text' => $v['image_alt'] ?? $v['name'],
+            'width'    => $v['image_width'] ?? null,
+            'height'   => $v['image_height'] ?? null,
+        ] : null;
+      ?>
       <li class="card card--vehicle">
         <p class="card__index"><?= str_pad((string) $i, 2, '0', STR_PAD_LEFT) ?> / <?= e(strtoupper($v['name'])) ?></p>
         <a class="card__media" href="/fahrzeuge/<?= e($v['slug']) ?>">
+          <?php if ($vMedia):
+            echo media_picture($vMedia, $v['image_alt'] ?? $v['name'],
+                '(min-width: 700px) 45vw, 100vw', [800, 400], 'lazy');
+          else: ?>
           <img loading="lazy" decoding="async"
-               src="<?= e($v['image_filename'] ? '/uploads/' . $v['image_filename'] : '/assets/images/placeholders/vehicle-' . preg_replace('#-.*$#', '', $v['slug']) . '.svg') ?>"
-               alt="<?= e($v['image_alt'] ?? $v['name']) ?>">
+               src="/assets/images/placeholders/vehicle-<?= e(preg_replace('#-.*$#', '', $v['slug'])) ?>.svg"
+               alt="<?= e($v['name']) ?>">
+          <?php endif; ?>
         </a>
         <h3 class="card__title"><a href="/fahrzeuge/<?= e($v['slug']) ?>"><?= e($v['name']) ?></a></h3>
         <dl class="spec-list">

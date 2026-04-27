@@ -59,9 +59,20 @@ $phoneDisplay = setting('phone', '07127 18231');
   <div class="container vehicle-block__grid">
     <div class="vehicle-block__media">
       <p class="card__index"><?= str_pad((string) $i, 2, '0', STR_PAD_LEFT) ?> / <?= e(strtoupper($v['name'])) ?></p>
-      <img loading="lazy" decoding="async"
-           src="<?= e($v['image_filename'] ? '/uploads/' . $v['image_filename'] : '/assets/images/placeholders/vehicle-' . preg_replace('#-.*$#', '', $v['slug']) . '.svg') ?>"
-           alt="<?= e($v['image_alt'] ?? $v['name']) ?>">
+      <?php
+        $imgMedia = !empty($v['image_filename']) ? [
+            'filename' => $v['image_filename'],
+            'alt_text' => $v['image_alt'] ?? $v['name'],
+            'width'    => $v['image_width'] ?? null,
+            'height'   => $v['image_height'] ?? null,
+        ] : null;
+        if ($imgMedia):
+            echo media_picture($imgMedia, $v['image_alt'] ?? $v['name'],
+                '(min-width: 900px) 55vw, 100vw', [1600, 1200, 800], 'lazy');
+        else:
+      ?><img loading="lazy" decoding="async"
+           src="/assets/images/placeholders/vehicle-<?= e(preg_replace('#-.*$#', '', $v['slug'])) ?>.svg"
+           alt="<?= e($v['name']) ?>"><?php endif; ?>
     </div>
     <div class="vehicle-block__body">
       <h2><?= e($v['name']) ?></h2>
