@@ -8,8 +8,8 @@ $email = setting('email', 'info@rothe-transporte.de');
 ?>
 <section class="hero hero--inner" data-reveal>
   <div class="container">
-    <p class="eyebrow">Leistungen</p>
-    <h1><?= e($page['hero_headline'] ?? 'Vier Leistungen.') ?></h1>
+    <p class="eyebrow">Was wir für Sie tun</p>
+    <h1><?= e($page['hero_headline'] ?? 'Alles aus einer Hand.') ?></h1>
     <p class="hero__sub"><?= e($page['hero_sub'] ?? '') ?></p>
   </div>
 </section>
@@ -24,7 +24,7 @@ $email = setting('email', 'info@rothe-transporte.de');
         </span>
         <h2><a href="/leistungen/<?= e($s['slug']) ?>"><?= e($s['title']) ?></a></h2>
         <p><?= e($s['summary'] ?? '') ?></p>
-        <a class="card__cta" href="/leistungen/<?= e($s['slug']) ?>">Mehr erfahren <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg></a>
+        <a class="card__cta" href="/leistungen/<?= e($s['slug']) ?>">Mehr dazu <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg></a>
       </li>
       <?php endforeach; ?>
     </ul>
@@ -40,7 +40,7 @@ $email = setting('email', 'info@rothe-transporte.de');
       </span>
     </div>
     <div class="vehicle-block__body">
-      <p class="eyebrow"><?= str_pad((string) $i, 2, '0', STR_PAD_LEFT) ?> / Leistung</p>
+      <p class="eyebrow"><?= str_pad((string) $i, 2, '0', STR_PAD_LEFT) ?> / Was wir tun</p>
       <h2 id="<?= e($s['slug']) ?>"><?= e($s['title']) ?></h2>
       <div class="prose"><?= $s['body_html'] ?? '' ?></div>
     </div>
@@ -50,10 +50,10 @@ $email = setting('email', 'info@rothe-transporte.de');
 
 <section class="section section--cta cta-final" data-reveal>
   <div class="container cta-final__inner">
-    <p class="eyebrow">Anfrage stellen</p>
+    <p class="eyebrow">Klingt passend? Sprechen wir.</p>
     <p class="cta-final__phone industrial-num industrial-num--outline">
       <a href="tel:<?= e($phoneE164) ?>"><?= e(setting('phone', '07127 18231')) ?></a>
     </p>
-    <p class="cta-final__sub">Oder per E-Mail: <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></p>
+    <p class="cta-final__sub">Lieber schreiben? Per E-Mail an <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></p>
   </div>
 </section>

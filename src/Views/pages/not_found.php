@@ -7,7 +7,7 @@ $page['noindex'] = true;
 <section class="hero hero--inner hero--404" data-reveal>
   <div class="container">
     <p class="eyebrow">404</p>
-    <h1><?= e($page['hero_headline'] ?? 'Diese Strecke führt ins Leere.') ?></h1>
+    <h1><?= e($page['hero_headline'] ?? 'Hier sind wir falsch abgebogen.') ?></h1>
     <p class="hero__sub"><?= e($page['hero_sub'] ?? '') ?></p>
   </div>
 </section>
@@ -17,7 +17,7 @@ $page['noindex'] = true;
     <?= $page['content_html'] ?? '' ?>
     <p>
       <a class="btn btn--primary" href="/">Zur Startseite</a>
-      <a class="btn btn--ghost" href="/fahrzeuge">Fuhrpark ansehen</a>
+      <a class="btn btn--ghost" href="/fahrzeuge">Unsere Fahrzeuge</a>
     </p>
   </div>
 </section>

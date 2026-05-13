@@ -48,7 +48,7 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
 
 <div class="topbar">
   <div class="container topbar__inner">
-    <span class="topbar__label">Mo – Fr &nbsp;07:00 – 17:00 Uhr &nbsp;·&nbsp; Notfallnummer 24/7</span>
+    <span class="topbar__label">Wir sind für Sie da: Mo – Fr &nbsp;07:00 – 17:00 Uhr</span>
     <div class="topbar__contact">
       <a class="topbar__link" href="tel:<?= e($phoneE164) ?>">
         <svg width="16" height="16" aria-hidden="true"><use href="#icon-phone"/></svg>
@@ -82,7 +82,7 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
       <a href="/karriere"<?= active_nav('karriere', $cur) ?>>Karriere</a>
       <a href="/kontakt"<?= active_nav('kontakt', $cur) ?>>Kontakt</a>
       <a class="btn btn--primary primary-nav__cta" href="mailto:<?= e($email) ?>?subject=<?= rawurlencode('Transportanfrage') ?>">
-        Anfrage senden
+        Jetzt anfragen
         <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
       </a>
     </nav>
@@ -107,21 +107,21 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
       </p>
     </div>
     <div>
-      <h2 class="site-footer__h">Schnellzugriff</h2>
+      <h2 class="site-footer__h">Schnell zur Seite</h2>
       <ul>
-        <li><a href="/leistungen">Leistungen</a></li>
-        <li><a href="/fahrzeuge">Fahrzeuge</a></li>
-        <li><a href="/galerie">Galerie</a></li>
+        <li><a href="/leistungen">Was wir tun</a></li>
+        <li><a href="/fahrzeuge">Unsere Fahrzeuge</a></li>
+        <li><a href="/galerie">Bildergalerie</a></li>
         <li><a href="/ueber-uns">Über uns</a></li>
-        <li><a href="/karriere">Karriere</a></li>
+        <li><a href="/karriere">Jobs</a></li>
       </ul>
     </div>
     <div>
-      <h2 class="site-footer__h">Kontakt</h2>
+      <h2 class="site-footer__h">So erreichen Sie uns</h2>
       <ul>
         <li><a href="tel:<?= e($phoneE164) ?>"><?= e($phoneDisplay) ?></a></li>
         <li><a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></li>
-        <li>Mo–Fr 07:00–17:00</li>
+        <li>Mo–Fr von 7 bis 17 Uhr</li>
       </ul>
     </div>
     <div>

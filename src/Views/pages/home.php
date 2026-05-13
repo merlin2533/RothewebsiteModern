@@ -23,15 +23,15 @@ $email = setting('email', 'info@rothe-transporte.de');
   </div>
   <div class="hero__panel">
     <div class="container">
-      <p class="eyebrow">Maschinentransport &middot; seit <?= e(setting('founded_year', '1978')) ?></p>
-      <h1 class="hero__headline"><?= e($page['hero_headline'] ?? 'Schweres bewegen.') ?></h1>
+      <p class="eyebrow">Familienspedition &middot; seit <?= e(setting('founded_year', '1978')) ?></p>
+      <h1 class="hero__headline"><?= e($page['hero_headline'] ?? 'Ihre Maschine in guten Händen.') ?></h1>
       <p class="hero__sub"><?= e($page['hero_sub'] ?? '') ?></p>
       <div class="hero__cta">
         <a class="btn btn--primary" href="mailto:<?= e($email) ?>?subject=<?= rawurlencode('Transportanfrage') ?>">
-          Anfrage senden
+          Jetzt Anfrage senden
           <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
         </a>
-        <a class="btn btn--ghost" href="/fahrzeuge">Fuhrpark ansehen</a>
+        <a class="btn btn--ghost" href="/fahrzeuge">Unsere Fahrzeuge</a>
       </div>
     </div>
   </div>
@@ -45,15 +45,15 @@ $email = setting('email', 'info@rothe-transporte.de');
     </div>
     <div class="stat">
       <span class="stat__num industrial-num"><span data-counter="28">0</span> t</span>
-      <span class="stat__label">Maximale Nutzlast</span>
+      <span class="stat__label">Bis zu Nutzlast</span>
     </div>
     <div class="stat">
       <span class="stat__num industrial-num"><span data-counter="6">0</span></span>
-      <span class="stat__label">Länder befahren</span>
+      <span class="stat__label">Länder, in denen wir fahren</span>
     </div>
     <div class="stat">
       <span class="stat__num industrial-num">2.</span>
-      <span class="stat__label">Generation</span>
+      <span class="stat__label">Generation in der Familie</span>
     </div>
   </div>
 </section>
@@ -61,8 +61,8 @@ $email = setting('email', 'info@rothe-transporte.de');
 <section class="section services-teaser" data-reveal>
   <div class="container">
     <header class="section__head">
-      <p class="eyebrow">Leistungen</p>
-      <h2>Vier Disziplinen. Ein Anspruch.</h2>
+      <p class="eyebrow">Was wir für Sie tun</p>
+      <h2>Alles, was Sie für Ihren Transport brauchen.</h2>
     </header>
     <ul class="card-grid card-grid--4">
       <?php foreach ($services as $s): ?>
@@ -81,8 +81,8 @@ $email = setting('email', 'info@rothe-transporte.de');
 <section class="section section--surface fleet-highlights" data-reveal>
   <div class="container">
     <header class="section__head">
-      <p class="eyebrow">Fuhrpark</p>
-      <h2>Klar gerechnet, fair geladen.</h2>
+      <p class="eyebrow">Unser Fuhrpark</p>
+      <h2>Für jede Maschine das richtige Fahrzeug.</h2>
     </header>
     <ul class="card-grid card-grid--2">
       <?php $i = 0; foreach ($vehicles as $v): $i++;
@@ -111,22 +111,22 @@ $email = setting('email', 'info@rothe-transporte.de');
           <div><dt>Nutzlast</dt><dd><?= e(format_kg($v['payload_kg'] !== null ? (int) $v['payload_kg'] : null)) ?></dd></div>
           <div><dt>Europaletten</dt><dd><?= e($v['euro_pallets'] !== null ? (string) $v['euro_pallets'] : '–') ?></dd></div>
         </dl>
-        <a class="card__cta" href="/fahrzeuge/<?= e($v['slug']) ?>">Detailansicht <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg></a>
+        <a class="card__cta" href="/fahrzeuge/<?= e($v['slug']) ?>">Mehr zum Fahrzeug <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg></a>
       </li>
       <?php endforeach; ?>
     </ul>
-    <p class="section__more"><a class="btn btn--ghost" href="/fahrzeuge">Gesamten Fuhrpark ansehen</a></p>
+    <p class="section__more"><a class="btn btn--ghost" href="/fahrzeuge">Alle Fahrzeuge ansehen</a></p>
   </div>
 </section>
 
 <section class="section industries" data-reveal>
   <div class="container">
-    <p class="eyebrow">Branchen, die wir kennen</p>
+    <p class="eyebrow">Für wen wir fahren</p>
     <ul class="industries__list">
       <li>Maschinen- &amp; Anlagenbau</li>
-      <li>Automotive</li>
-      <li>Landmaschinentechnik</li>
-      <li>Industriegüter &amp; palettierte Ware</li>
+      <li>Automobilbranche</li>
+      <li>Landmaschinen</li>
+      <li>Industrie &amp; Paletten-Ware</li>
     </ul>
   </div>
 </section>
@@ -159,10 +159,10 @@ $email = setting('email', 'info@rothe-transporte.de');
 
 <section class="section section--cta cta-final" data-reveal>
   <div class="container cta-final__inner">
-    <p class="eyebrow">Direkt zur Disposition</p>
+    <p class="eyebrow">Rufen Sie uns an</p>
     <p class="cta-final__phone industrial-num industrial-num--outline">
       <a href="tel:<?= e($phoneE164) ?>"><?= e($phoneDisplay) ?></a>
     </p>
-    <p class="cta-final__sub">Mo–Fr 07:00–17:00 · oder per E-Mail an <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></p>
+    <p class="cta-final__sub">Wir sind Mo–Fr von 7 bis 17 Uhr für Sie da · oder schreiben Sie uns: <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></p>
   </div>
 </section>

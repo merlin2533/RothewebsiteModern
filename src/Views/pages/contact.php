@@ -16,7 +16,7 @@ $mapUrl = "https://www.openstreetmap.org/export/embed.html?bbox={$mapBox}&layer=
 <section class="hero hero--inner" data-reveal>
   <div class="container">
     <p class="eyebrow">Kontakt</p>
-    <h1 class="hero__headline"><?= e($page['hero_headline'] ?? 'Direkt zur Disposition.') ?></h1>
+    <h1 class="hero__headline"><?= e($page['hero_headline'] ?? 'Sprechen wir miteinander.') ?></h1>
     <p class="hero__sub"><?= e($page['hero_sub'] ?? '') ?></p>
   </div>
 </section>
@@ -26,19 +26,19 @@ $mapUrl = "https://www.openstreetmap.org/export/embed.html?bbox={$mapBox}&layer=
     <ul class="card-grid card-grid--3">
       <li class="card card--contact">
         <span class="card__icon" aria-hidden="true"><svg width="32" height="32"><use href="#icon-phone"/></svg></span>
-        <h2>Telefon</h2>
+        <h2>Rufen Sie uns an</h2>
         <a class="card__phone industrial-num" href="tel:<?= e($phoneE164) ?>"><?= e($phone) ?></a>
-        <p class="card__hours">Mo–Fr 07:00–17:00</p>
+        <p class="card__hours">Mo–Fr von 7 bis 17 Uhr</p>
       </li>
       <li class="card card--contact">
         <span class="card__icon" aria-hidden="true"><svg width="32" height="32"><use href="#icon-mail"/></svg></span>
-        <h2>E-Mail</h2>
+        <h2>Schreiben Sie uns</h2>
         <a class="card__email" href="mailto:<?= e($email) ?>"><?= e($email) ?></a>
-        <p class="card__hours">Antwort meist innerhalb eines Werktags.</p>
+        <p class="card__hours">Wir antworten meist am selben Werktag.</p>
       </li>
       <li class="card card--contact">
         <span class="card__icon" aria-hidden="true"><svg width="32" height="32"><use href="#icon-pin"/></svg></span>
-        <h2>Adresse</h2>
+        <h2>Besuchen Sie uns</h2>
         <address>
           <?= e(setting('company_name', 'Rothe-Transporte und Speditions GbR')) ?><br>
           <?= e(setting('address_street', '')) ?><br>
@@ -52,8 +52,8 @@ $mapUrl = "https://www.openstreetmap.org/export/embed.html?bbox={$mapBox}&layer=
 <section class="section section--surface contact-map" data-reveal>
   <div class="container">
     <header class="section__head">
-      <p class="eyebrow">Anfahrt</p>
-      <h2>So finden Sie zu uns</h2>
+      <p class="eyebrow">So finden Sie uns</p>
+      <h2>Hier sind wir zu Hause</h2>
     </header>
     <div class="map-wrap">
       <iframe
