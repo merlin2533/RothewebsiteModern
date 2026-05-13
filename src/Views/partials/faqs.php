@@ -9,8 +9,8 @@ if (empty($faqs)) {
     <div class="container container--narrow">
         <header class="section__head">
             <p class="eyebrow">Häufige Fragen</p>
-            <h2 id="faq-h">Antworten auf einen Blick</h2>
-            <p>Was Anrufer:innen am häufigsten wissen wollen – kurz und sachlich.</p>
+            <h2 id="faq-h">Das fragen unsere Kunden oft</h2>
+            <p>Hier finden Sie die wichtigsten Antworten auf einen Blick. Sie haben eine andere Frage? Rufen Sie uns an – wir helfen gerne.</p>
         </header>
 
         <div class="faq-list">

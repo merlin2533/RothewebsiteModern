@@ -39,7 +39,7 @@ $structured_data = [
     <nav aria-label="Breadcrumb" class="breadcrumb">
       <a href="/">Startseite</a> · <a href="/fahrzeuge">Fahrzeuge</a> · <span aria-current="page"><?= e($v['name']) ?></span>
     </nav>
-    <p class="eyebrow">Fuhrpark</p>
+    <p class="eyebrow">Unser Fuhrpark</p>
     <h1><?= e($v['name']) ?></h1>
     <p class="hero__sub"><?= e($v['special_features'] ?? '') ?></p>
   </div>
@@ -73,8 +73,8 @@ $structured_data = [
         <?php endif; ?>
       </dl>
       <div class="vehicle-detail__cta">
-        <a class="btn btn--primary" href="mailto:<?= e($email) ?>?subject=<?= rawurlencode('Anfrage: ' . $v['name']) ?>">Für dieses Fahrzeug anfragen</a>
-        <a class="btn btn--ghost" href="tel:<?= e($phoneE164) ?>">Anrufen</a>
+        <a class="btn btn--primary" href="mailto:<?= e($email) ?>?subject=<?= rawurlencode('Anfrage: ' . $v['name']) ?>">Dieses Fahrzeug anfragen</a>
+        <a class="btn btn--ghost" href="tel:<?= e($phoneE164) ?>">Lieber anrufen</a>
       </div>
     </div>
   </div>
@@ -83,8 +83,8 @@ $structured_data = [
 <section class="section section--surface" data-reveal>
   <div class="container">
     <header class="section__head">
-      <p class="eyebrow">Auch verfügbar</p>
-      <h2>Weitere Fahrzeuge im Fuhrpark</h2>
+      <p class="eyebrow">Was wir sonst noch haben</p>
+      <h2>Unsere weiteren Fahrzeuge</h2>
     </header>
     <ul class="card-grid card-grid--3">
       <?php foreach ($allVehicles as $other): if ($other['id'] === $v['id']) continue;

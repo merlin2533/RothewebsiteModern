@@ -24,7 +24,7 @@ $structured_data = [[
     <nav aria-label="Breadcrumb" class="breadcrumb">
       <a href="/">Startseite</a> · <a href="/leistungen">Leistungen</a> · <span aria-current="page"><?= e($s['title']) ?></span>
     </nav>
-    <p class="eyebrow">Leistung</p>
+    <p class="eyebrow">Was wir für Sie tun</p>
     <h1><?= e($s['title']) ?></h1>
     <p class="hero__sub"><?= e($s['summary'] ?? '') ?></p>
   </div>
@@ -34,8 +34,8 @@ $structured_data = [[
   <div class="container container--narrow prose">
     <?= $s['body_html'] ?? '' ?>
     <p>
-      <a class="btn btn--primary" href="mailto:<?= e($email) ?>?subject=<?= rawurlencode('Anfrage: ' . $s['title']) ?>">Anfrage senden</a>
-      <a class="btn btn--ghost" href="tel:<?= e($phoneE164) ?>">Anrufen</a>
+      <a class="btn btn--primary" href="mailto:<?= e($email) ?>?subject=<?= rawurlencode('Anfrage: ' . $s['title']) ?>">Jetzt anfragen</a>
+      <a class="btn btn--ghost" href="tel:<?= e($phoneE164) ?>">Lieber anrufen</a>
     </p>
   </div>
 </section>

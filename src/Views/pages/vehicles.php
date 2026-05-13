@@ -8,8 +8,8 @@ $phoneDisplay = setting('phone', '07127 18231');
 ?>
 <section class="hero hero--inner" data-reveal>
   <div class="container">
-    <p class="eyebrow">Fuhrpark</p>
-    <h1><?= e($page['hero_headline'] ?? 'Fahrzeuge') ?></h1>
+    <p class="eyebrow">Unser Fuhrpark</p>
+    <h1><?= e($page['hero_headline'] ?? 'Für jede Aufgabe das passende Fahrzeug.') ?></h1>
     <p class="hero__sub"><?= e($page['hero_sub'] ?? '') ?></p>
   </div>
 </section>
@@ -17,8 +17,8 @@ $phoneDisplay = setting('phone', '07127 18231');
 <section class="section section--surface compare" data-reveal>
   <div class="container">
     <header class="section__head">
-      <p class="eyebrow">Vergleich</p>
-      <h2>Alle Fahrzeuge auf einen Blick</h2>
+      <p class="eyebrow">Im Überblick</p>
+      <h2>Alle unsere Fahrzeuge auf einen Blick</h2>
     </header>
     <div class="table-wrap">
       <table class="spec-compare">
@@ -88,7 +88,7 @@ $phoneDisplay = setting('phone', '07127 18231');
         <div class="spec-list__wide"><dt>Besonderheit</dt><dd><?= e($v['special_features']) ?></dd></div>
         <?php endif; ?>
       </dl>
-      <a class="btn btn--ghost" href="/fahrzeuge/<?= e($v['slug']) ?>">Detailansicht
+      <a class="btn btn--ghost" href="/fahrzeuge/<?= e($v['slug']) ?>">Mehr zu diesem Fahrzeug
         <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg></a>
     </div>
   </div>
@@ -97,10 +97,10 @@ $phoneDisplay = setting('phone', '07127 18231');
 
 <section class="section section--cta cta-final" data-reveal>
   <div class="container cta-final__inner">
-    <p class="eyebrow">Passendes Fahrzeug nicht dabei?</p>
+    <p class="eyebrow">Nicht das Richtige dabei?</p>
     <p class="cta-final__phone industrial-num industrial-num--outline">
       <a href="tel:<?= e($phoneE164) ?>"><?= e($phoneDisplay) ?></a>
     </p>
-    <p class="cta-final__sub">Wir disponieren auch Sondertransporte. Rufen Sie uns an.</p>
+    <p class="cta-final__sub">Wir organisieren auch Sondertransporte. Rufen Sie uns an – wir finden gemeinsam eine Lösung.</p>
   </div>
 </section>
