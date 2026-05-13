@@ -178,7 +178,7 @@ if (isset($structured_data) && is_array($structured_data)) {
 <meta name="twitter:description" content="<?= e($description) ?>">
 <meta name="twitter:image" content="<?= e($ogImage) ?>">
 
-<meta name="theme-color" content="#0B2545">
+<meta name="theme-color" content="#0D2547">
 <meta name="format-detection" content="telephone=yes">
 <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">

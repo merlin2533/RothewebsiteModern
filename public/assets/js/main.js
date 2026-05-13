@@ -24,6 +24,7 @@
 
   // ── Mobile nav toggle ────────────────────────────────────────────────────
   const toggle = document.querySelector('[data-nav-toggle]');
+  const nav    = document.getElementById('primary-nav');
   const closeNav = () => {
     document.body.classList.remove('is-nav-open');
     toggle?.setAttribute('aria-expanded', 'false');
@@ -37,17 +38,17 @@
       toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
     });
   }
-  // Close nav when clicking the backdrop (body::after pseudo-element area)
-  document.addEventListener('click', (e) => {
-    if (!document.body.classList.contains('is-nav-open')) return;
-    const nav = document.getElementById('primary-nav');
-    const btn = document.querySelector('[data-nav-toggle]');
-    if (nav && !nav.contains(e.target) && btn && !btn.contains(e.target)) {
-      closeNav();
-    }
+  // Close nav after tapping a link (full-width panel covers the page on mobile)
+  nav?.addEventListener('click', (e) => {
+    if (e.target.closest('a')) closeNav();
   });
+  // Close on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeNav();
+  });
+  // Auto-close when viewport grows past the mobile breakpoint
+  matchMedia('(min-width: 900px)').addEventListener('change', (e) => {
+    if (e.matches) closeNav();
   });
 
   // ── Reveal sections on scroll ────────────────────────────────────────────
