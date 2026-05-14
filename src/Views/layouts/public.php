@@ -48,7 +48,7 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
 
 <div class="topbar">
   <div class="container topbar__inner">
-    <span class="topbar__label">Wir sind für Sie da: Mo – Fr &nbsp;07:00 – 17:00 Uhr</span>
+    <span class="topbar__label">Wir sind für Sie da: Mo – Fr &nbsp;07:00 – 18:00 Uhr</span>
     <div class="topbar__contact">
       <a class="topbar__link" href="tel:<?= e($phoneE164) ?>">
         <svg width="16" height="16" aria-hidden="true"><use href="#icon-phone"/></svg>
@@ -121,7 +121,7 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
       <ul>
         <li><a href="tel:<?= e($phoneE164) ?>"><?= e($phoneDisplay) ?></a></li>
         <li><a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></li>
-        <li>Mo–Fr von 7 bis 17 Uhr</li>
+        <li>Mo–Fr von 7 bis 18 Uhr</li>
       </ul>
     </div>
     <div>
