@@ -28,7 +28,7 @@ $mapUrl = "https://www.openstreetmap.org/export/embed.html?bbox={$mapBox}&layer=
         <span class="card__icon" aria-hidden="true"><svg width="32" height="32"><use href="#icon-phone"/></svg></span>
         <h2>Rufen Sie uns an</h2>
         <a class="card__phone industrial-num" href="tel:<?= e($phoneE164) ?>"><?= e($phone) ?></a>
-        <p class="card__hours">Mo–Fr von 7 bis 17 Uhr</p>
+        <p class="card__hours">Mo–Fr von 7 bis 18 Uhr</p>
       </li>
       <li class="card card--contact">
         <span class="card__icon" aria-hidden="true"><svg width="32" height="32"><use href="#icon-mail"/></svg></span>

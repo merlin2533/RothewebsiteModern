@@ -34,7 +34,7 @@ $city         = setting('address_city', '');
 $country      = setting('address_country', 'Deutschland');
 $lat          = setting('geo_lat', '');
 $lng          = setting('geo_lng', '');
-$opening      = setting('opening_hours_schema', 'Mo-Fr 07:00-17:00');
+$opening      = setting('opening_hours_schema', 'Mo-Fr 07:00-18:00');
 $founded      = setting('founded_year', '1978');
 $areasServed  = array_map('trim', explode(',', (string) setting('areas_served', 'DE')));
 
@@ -59,7 +59,7 @@ $localBusiness = [
         '@type' => 'OpeningHoursSpecification',
         'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         'opens' => '07:00',
-        'closes' => '17:00',
+        'closes' => '18:00',
     ]],
 ];
 if ($lat !== '' && $lng !== '') {

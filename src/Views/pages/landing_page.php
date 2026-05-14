@@ -114,7 +114,7 @@ $subject    = 'Anfrage: ' . $lp['title'];
             <a href="tel:<?= e($phoneE164) ?>" data-source="lp:<?= e((string) $lp['slug']) ?>"><?= e($phoneShown) ?></a>
         </p>
         <p class="cta-final__sub">
-            Mo–Fr 07:00–17:00 · oder per E-Mail an
+            Mo–Fr 07:00–18:00 · oder per E-Mail an
             <a href="mailto:<?= e($email) ?>?subject=<?= rawurlencode($subject) ?>"
                data-source="lp:<?= e((string) $lp['slug']) ?>"><?= e($email) ?></a>
         </p>

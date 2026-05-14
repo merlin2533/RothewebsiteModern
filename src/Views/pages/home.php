@@ -121,12 +121,12 @@ $email = setting('email', 'info@rothe-transporte.de');
 
 <section class="section industries" data-reveal>
   <div class="container">
-    <p class="eyebrow">Für wen wir fahren</p>
+    <p class="eyebrow">Ihr kompetenter Partner</p>
     <ul class="industries__list">
-      <li>Maschinen- &amp; Anlagenbau</li>
-      <li>Automobilbranche</li>
-      <li>Landmaschinen</li>
-      <li>Industrie &amp; Paletten-Ware</li>
+      <li>Maschinenbau</li>
+      <li>Automobilindustrie</li>
+      <li>Landmaschinentechnik</li>
+      <li>Industrie &amp; Anlagenbau</li>
     </ul>
   </div>
 </section>
@@ -163,6 +163,6 @@ $email = setting('email', 'info@rothe-transporte.de');
     <p class="cta-final__phone industrial-num industrial-num--outline">
       <a href="tel:<?= e($phoneE164) ?>"><?= e($phoneDisplay) ?></a>
     </p>
-    <p class="cta-final__sub">Wir sind Mo–Fr von 7 bis 17 Uhr für Sie da · oder schreiben Sie uns: <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></p>
+    <p class="cta-final__sub">Wir sind Mo–Fr von 7 bis 18 Uhr für Sie da · oder schreiben Sie uns: <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a></p>
   </div>
 </section>
