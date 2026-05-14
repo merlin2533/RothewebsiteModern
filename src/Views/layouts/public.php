@@ -25,21 +25,21 @@ $company = setting('company_name', 'Rothe-Transporte und Speditions GbR');
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee__track">
+    <span>Gütertransporte &nbsp;·&nbsp; </span>
     <span>Maschinentransporte &nbsp;·&nbsp; </span>
-    <span>Schwerlast bis <strong>28 Tonnen</strong> &nbsp;·&nbsp; </span>
-    <span>Sondertransporte &nbsp;·&nbsp; </span>
+    <span>Spezialtransporte &nbsp;·&nbsp; </span>
+    <span>Schwertransporte bis <strong>50 Tonnen</strong> &nbsp;·&nbsp; </span>
     <span>Eigene Lagerhallen &nbsp;·&nbsp; </span>
-    <span>Direktfahrten &nbsp;·&nbsp; </span>
-    <span>Kranarbeiten &amp; Montage &nbsp;·&nbsp; </span>
+    <span>Staplerservice &nbsp;·&nbsp; </span>
     <span>Touren: <strong>DE · AT · CH · FR · NL · BE</strong> &nbsp;·&nbsp; </span>
     <span>Seit <strong><?= e(setting('founded_year', '1978')) ?></strong> &nbsp;·&nbsp; </span>
     <span>2. Generation &nbsp;·&nbsp; </span>
+    <span>Gütertransporte &nbsp;·&nbsp; </span>
     <span>Maschinentransporte &nbsp;·&nbsp; </span>
-    <span>Schwerlast bis <strong>28 Tonnen</strong> &nbsp;·&nbsp; </span>
-    <span>Sondertransporte &nbsp;·&nbsp; </span>
+    <span>Spezialtransporte &nbsp;·&nbsp; </span>
+    <span>Schwertransporte bis <strong>50 Tonnen</strong> &nbsp;·&nbsp; </span>
     <span>Eigene Lagerhallen &nbsp;·&nbsp; </span>
-    <span>Direktfahrten &nbsp;·&nbsp; </span>
-    <span>Kranarbeiten &amp; Montage &nbsp;·&nbsp; </span>
+    <span>Staplerservice &nbsp;·&nbsp; </span>
     <span>Touren: <strong>DE · AT · CH · FR · NL · BE</strong> &nbsp;·&nbsp; </span>
     <span>Seit <strong><?= e(setting('founded_year', '1978')) ?></strong> &nbsp;·&nbsp; </span>
     <span>2. Generation &nbsp;·&nbsp; </span>

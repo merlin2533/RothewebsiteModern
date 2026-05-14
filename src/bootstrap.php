@@ -65,6 +65,16 @@ use App\Core\Database;
 $pdo = Database::getInstance($config['db_path']);
 $GLOBALS['pdo'] = $pdo;
 
+// Apply pending DB migrations. Signature-guarded, so this is a cheap no-op
+// once everything is up to date – but it ensures a freshly deployed set of
+// migration files actually reaches the live database (install.php only runs
+// migrations once).
+try {
+    Database::migrateIfPending();
+} catch (\Throwable $e) {
+    error_log('[bootstrap] migration check failed: ' . $e->getMessage());
+}
+
 $pageRepo     = new \App\Repositories\PageRepository($pdo);
 $vehicleRepo  = new \App\Repositories\VehicleRepository($pdo);
 $serviceRepo  = new \App\Repositories\ServiceRepository($pdo);

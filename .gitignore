@@ -19,6 +19,9 @@ data/installed.lock
 # Login attempts tracker
 data/login_attempts.json
 
+# Migration signature marker (per-deployment, regenerated automatically)
+data/.migrations_sig
+
 # Error log
 data/php-errors.log
 

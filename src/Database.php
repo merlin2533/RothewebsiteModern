@@ -103,4 +103,47 @@ final class Database
 
         return $newlyApplied;
     }
+
+    /**
+     * Runs pending migrations only when the set of *.sql files has changed
+     * since the last check. Cheap enough to call on every request: it reads
+     * one small marker file and compares a signature. Once the signature
+     * matches, no filesystem glob or DB write happens.
+     *
+     * This is what keeps a deployed site in sync – install.php only runs
+     * migrations once, so without this new migration files would never reach
+     * production.
+     *
+     * @return string[] Migrations applied during this call (usually empty).
+     */
+    public static function migrateIfPending(): array
+    {
+        $baseDir       = dirname(__DIR__);
+        $migrationsDir = $baseDir . '/src/Migrations';
+        $markerFile    = $baseDir . '/data/.migrations_sig';
+
+        $files = glob($migrationsDir . '/*.sql');
+        if ($files === false || $files === []) {
+            return [];
+        }
+        sort($files);
+
+        $sigParts = [];
+        foreach ($files as $f) {
+            $sigParts[] = basename($f) . ':' . (filemtime($f) ?: 0) . ':' . (filesize($f) ?: 0);
+        }
+        $signature = md5(implode('|', $sigParts));
+
+        $current = is_file($markerFile) ? trim((string) file_get_contents($markerFile)) : '';
+        if ($current === $signature) {
+            return [];
+        }
+
+        $applied = self::runMigrations();
+
+        @file_put_contents($markerFile, $signature, LOCK_EX);
+        @chmod($markerFile, 0640);
+
+        return $applied;
+    }
 }
