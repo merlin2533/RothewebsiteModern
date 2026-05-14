@@ -81,8 +81,8 @@
   <text x="80" y="158" dy="28" font-size="14" font-weight="600"
         letter-spacing="3.5" fill="#C2410C" text-transform="uppercase">FUHRPARK</text>
   <text x="80" y="158" dy="92" font-size="64" font-weight="700"
-        letter-spacing="-2" fill="#FFFFFF">Vier Fahrzeuge.</text>
+        letter-spacing="-2" fill="#FFFFFF">Fünf Fahrzeuge.</text>
   <text x="80" y="158" dy="130" font-size="20" font-weight="400"
-        fill="#FFFFFF" fill-opacity="0.7">Tieflader 28 t · Tautliner 25 t · Anhänger · Motorwagen mit Ladekran.</text>
+        fill="#FFFFFF" fill-opacity="0.7">Tautliner · Semitrailer · Megatrailer · Tiefbett-Sattelanhänger · Citytrailer.</text>
 </g>
 </svg>

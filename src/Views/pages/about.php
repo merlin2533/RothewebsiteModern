@@ -77,7 +77,7 @@ declare(strict_types=1);
       </li>
       <li class="card">
         <h3>Eigener Fuhrpark</h3>
-        <p>Vom Tieflader bis zum Motorwagen mit Ladekran: Das passende Fahrzeug für Ihren Transport steht auf unserem Hof.</p>
+        <p>Vom Tautliner bis zum Tiefbett-Sattelanhänger: Das passende Fahrzeug für Ihren Transport steht auf unserem Hof.</p>
       </li>
     </ul>
   </div>

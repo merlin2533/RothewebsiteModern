@@ -44,18 +44,21 @@ $vehicleRepo= $GLOBALS['vehicleRepo'];
  * Filename-Heuristiken für Vehicle- und Logo-Zuordnung.
  * Reihenfolge ist absteigend nach Spezifität (das erste Match gewinnt).
  *
- * Quelle: ich kenne die Original-Dateinamen aus rothe-transporte.de:
- *   - Logo.png  + cropped-cropped-cropped-Logo_Vector.png  → Logo
- *   - Semi-Trailer1.png        → Tieflader
- *   - MegaTrailer01.png        → Tieflader (Mega-Variante)
- *   - StandardTrailer01.png    → Tautliner
- *   - CityTrailer02.png        → Anhaenger Alltagsheld / Stadt-LKW / Motorwagen
+ * Die echten Fahrzeug-Renderings liegen unter uploads/ mit sprechenden
+ * Namen (siehe Migration 010_fleet_from_original.sql):
+ *   - tautliner-sattelzug.png       → Tautliner-Sattelzug
+ *   - semitrailer.png               → Semitrailer
+ *   - megatrailer.png               → Megatrailer
+ *   - tiefbett-sattelanhaenger.png  → Tiefbett-Sattelanhänger
+ *   - citytrailer-alltagsheld.png   → Citytrailer „Alltagsheld"
  */
 $rules = [
-    'logo'           => ['logo', 'logo_vector'],
-    'tieflader-sattelauflieger' => ['semi-trailer', 'megatrailer'],
-    'tautliner-sattelzug'       => ['standardtrailer', 'tautliner'],
-    'motorwagen-mit-ladekran'   => ['citytrailer', 'city-trailer'],
+    'logo'                      => ['logo', 'logo_vector'],
+    'tautliner-sattelzug'       => ['tautliner-sattelzug', 'standardtrailer', 'tautliner'],
+    'semitrailer'               => ['semitrailer', 'semi-trailer'],
+    'megatrailer'               => ['megatrailer'],
+    'tieflader-sattelauflieger' => ['tiefbett-sattelanhaenger', 'tiefbett'],
+    'anhaenger-alltagsheld'     => ['citytrailer-alltagsheld', 'citytrailer', 'city-trailer'],
 ];
 
 function variant_for(array $entry, int $preferredW = 1600): ?array
@@ -109,9 +112,11 @@ foreach ($manifest['images'] as $entry) {
 
         // Descriptive German alt text based on vehicle classification or filename
         $vehicleAltMap = [
-            'tieflader-sattelauflieger' => 'Tieflader-Sattelauflieger Rothe-Transporte – Schwerlasttransport und Maschinentransport',
-            'tautliner-sattelzug'       => 'Tautliner-Sattelzug Rothe-Transporte – Standardtransport mit Schiebeplane',
-            'motorwagen-mit-ladekran'   => 'Motorwagen mit Ladekran Rothe-Transporte – Stadtlieferung und enge Baustellen',
+            'tautliner-sattelzug'       => 'Tautliner-Sattelzug von Rothe-Transporte',
+            'semitrailer'               => 'Semitrailer von Rothe-Transporte für Spezialtransporte',
+            'megatrailer'               => 'Megatrailer von Rothe-Transporte für voluminöse Güter',
+            'tieflader-sattelauflieger' => 'Tiefbett-Sattelanhänger von Rothe-Transporte',
+            'anhaenger-alltagsheld'     => 'Citytrailer „Alltagsheld" von Rothe-Transporte',
             'logo'                      => 'Rothe Transporte und Speditions GbR – Logo',
         ];
         $cls2 = classify($entry['source'], $rules);
@@ -153,22 +158,14 @@ foreach ($manifest['images'] as $entry) {
 
 echo "  ✓ {$insertedCount} neue, {$skippedCount} bereits vorhandene media-Eintraege.\n\n";
 
-// Fallback: Fahrzeuge ohne eigenes Bild erhalten ein ähnliches vorhandenes
-$fallbackAssign = [
-    'anhaenger-alltagsheld' => 'motorwagen-mit-ladekran',
-];
-foreach ($fallbackAssign as $slug => $sourceSlug) {
-    if (!isset($mediaIdByVehicle[$slug]) && isset($mediaIdByVehicle[$sourceSlug])) {
-        $mediaIdByVehicle[$slug] = $mediaIdByVehicle[$sourceSlug];
-    }
-}
-
-// Vehicle-Bilder zuweisen
+// Vehicle-Bilder nur zuweisen, wenn das Fahrzeug noch kein Bild hat.
+// Migration 010 setzt die Bilder bereits autoritativ – wir überschreiben sie
+// hier nicht.
 foreach ($mediaIdByVehicle as $vehicleSlug => $mediaId) {
     $v = $vehicleRepo->findBySlug($vehicleSlug);
     if (!$v) continue;
-    if ((int) ($v['image_id'] ?? 0) === $mediaId) {
-        echo "  · {$vehicleSlug} hat bereits image_id={$mediaId}\n";
+    if (!empty($v['image_id'])) {
+        echo "  · {$vehicleSlug} hat bereits ein Bild – übersprungen\n";
         continue;
     }
     $v['image_id'] = $mediaId;
