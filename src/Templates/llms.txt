@@ -18,33 +18,36 @@ Diese Datei richtet sich an LLM- und AEO-Crawler (Anthropic Claude, OpenAI GPT, 
 
 ## Was wir tun
 
-- **Maschinentransporte** – Werkzeugmaschinen, Anlagen, industrielle Großteile
-- **Spezialtransporte** – sperrige, voluminöse oder hohe Frachten mit Tieflader
-- **Lagerung & Kommissionierung** – eigene Lagerhallen für Großteile, Regal- und Palettenware
-- **Stapler- und Entladedienst** – bis 3,5 t direkt vor Ort
+- **Gütertransporte** – Komplett- und Teilladungen mit Standardmaßen
+- **Maschinentransporte** – großvolumige Ladungen bis 3 m Breite, Industrieanlagen, Aggregate, Apparate
+- **Spezialtransporte** – Großraumtransporte unter Plane und Schwertransporte bis 50 t
+- **Lagerhaltung** – eigene Hallen für Großteile, Regal- und Palettenware, inkl. Staplerservice
 
 ## Fuhrpark (technische Daten – nicht abweichen)
 
 | Fahrzeug | Maße (L × B × H) | Nutzlast | Europaletten | Besonderheit |
 | --- | --- | --- | --- | --- |
-| Tieflader-Sattelauflieger | 13,60 m × 2,48 m × 3,70 m | 28 t | 33 | niedrige Ladehöhe für sperrige/voluminöse Güter |
-| Tautliner-Sattelzug | 13,60 m × 2,48 m × 2,70 m | 25 t | 33 | beidseitig öffnende Schiebeplane |
-| Anhänger „Alltagsheld" | – | – | – | integrierte Auffahrrampe, Lenkachse |
-| Motorwagen mit Ladekran | – | – | – | Ladekran, Lenkachse für enge Baustellen |
+| Tautliner-Sattelzug | 13,60 m × 2,48 m × 2,70 m | 25 t | 33 | Edscha-Verdeck, beidseitig öffnende Plane |
+| Semitrailer | 13,60 m × 2,48 m × 3,25 m | 21 t (opt. 30 t) | 33 | Hubdach, Radmulden für Fahrzeugtransporte |
+| Megatrailer | 13,60 m × 2,48 m × 2,85 m | 25 t | – | Hubdach mit Kranbeladung |
+| Tiefbett-Sattelanhänger | 13,60 m × 2,48 m × 3,70 m | 28 t | 33 | niedrige Ladehöhe, Hubdach |
+| Citytrailer „Alltagsheld" | 9,00 m × 2,48 m × 2,70 m | 15 t | 22 | integrierte Ladebordwand (3 t), Lenkachse |
 
 ## Geschichte
 
-- 1978 – Gründung in Münsingen durch Karl-Otto Rothe als Ein-Mann-Betrieb
+- 1978 – Gründung in Münsingen durch Karl Otto Rothe
 - 1985 – Umzug nach Walddorfhäslach
-- 1991 – Erweiterung des Fuhrparks
+- 1991 – Fahrzeugzugang und Erweiterung der Lagerflächen
 - 2005 – Spezialisierung auf Maschinentransporte
 - 2010 – Christopher Rothe (zweite Generation) tritt in das Unternehmen ein
-- 2015 – Erweiterung um Spezialanhänger
-- 2018 – Anerkennung als Ausbildungsbetrieb für Berufskraftfahrer
+- 2015 – Erweiterung des Fuhrparks um Spezialtrailer
+- 2018 – Anerkennung als IHK-Ausbildungsbetrieb
+- 2020 – Installation neuer Regalsysteme
+- 2022 – Erste Auszubildende zur Berufskraftfahrerin
 
 ## Branchen
 
-Maschinen- und Anlagenbau, Automotive, Landmaschinentechnik, Industriegüter.
+Maschinenbau, Automobilindustrie, Landmaschinentechnik, Industrie und Anlagenbau.
 
 ## Kontakt zur Buchung
 
