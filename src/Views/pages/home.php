@@ -44,8 +44,8 @@ $email = setting('email', 'info@rothe-transporte.de');
       <span class="stat__label">Gegründet</span>
     </div>
     <div class="stat">
-      <span class="stat__num industrial-num"><span data-counter="28">0</span> t</span>
-      <span class="stat__label">Bis zu Nutzlast</span>
+      <span class="stat__num industrial-num"><span data-counter="50">0</span> t</span>
+      <span class="stat__label">Schwertransporte bis</span>
     </div>
     <div class="stat">
       <span class="stat__num industrial-num"><span data-counter="6">0</span></span>
